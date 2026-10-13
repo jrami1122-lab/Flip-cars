@@ -1,0 +1,33 @@
+{
+  "id": "./",
+  "name": "Flip Cars \u2014 Online Multiplayer",
+  "short_name": "Flip Cars",
+  "description": "Flip cards, race friends online, dodge combat traps and chase the podium.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#091525",
+  "theme_color": "#102e4a",
+  "orientation": "any",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

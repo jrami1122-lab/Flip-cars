@@ -3,8 +3,9 @@ export {SocialDirectory};
 // Flip Cars 4 — server-authoritative Cloudflare Durable Object racing and combat.
 // Room and profile tokens are secrets; they never appear in invitations or public snapshots.
 const COLORS=['RED','BLUE','YELLOW','GREEN'];
-const DEFAULT_SETTINGS={combat:true,flags:true,turbos:true};
-export const sanitizeSettings=x=>Object.fromEntries(Object.keys(DEFAULT_SETTINGS).map(k=>[k,x?.[k]!==false]));
+const DEFAULT_SETTINGS={combat:true,flags:true,turbos:true,laps:3};
+// Match rules are authoritative; preserve boolean rules and validate the race length.
+export const sanitizeSettings=x=>({combat:x?.combat!==false,flags:x?.flags!==false,turbos:x?.turbos!==false,laps:[3,5,10].includes(Number(x?.laps))?Number(x.laps):3});
 const MOVEMENT=[...Array(8).fill(1),...Array(7).fill(2),...Array(5).fill(3),...Array(4).fill(4),...Array(3).fill(5)];
 const EVENTS={lowfuel:3,fuel:3,turbo:4,spin:3,repair:2,guard:2,cones:3,cheat:2,catch:2,nitro:2,flat:2};
 export const COMBAT_COUNTS={oil:9,spikes:7,missile:7,sniper:4,stall:1,bubble:3};
@@ -39,7 +40,7 @@ const weapon=s=>{if(!s.combatDeck.length)s.combatDeck=combatDeck();return s.comb
 function makePlayer(id,m){return {id,name:COLORS[id],displayName:m.name,profileId:m.profileId||null,color:m.color||COLORS[id],isBot:!!m.isBot,cpu:!!m.isBot,node:TRACK.start,laps:0,deck:deck(),card:null,ready:false,remaining:0,skips:0,needsPit:false,pitStage:-1,fuel:0,repair:0,guard:0,cones:0,nitro:false,flat:false,tireDamaged:false,history:[],moved:false,finished:false,finishRound:null,overshoot:0,bonuses:0,flags:0,flipCount:0,selected:0,selectedNode:null,triggeredNode:null,combat:[],pendingCombat:null,combatUses:0,combatHits:0,crashes:0,spinUntil:0,crashUntil:0,bubble:false}}
 function prepare(s){if(s.phase==='done')return;s.phase='flip';s.choice=null;for(const p of s.players){p.ready=false;p.card=null;p.moved=false;p.remaining=0;p.bonuses=0;p.flags=0;if(!p.finished)p.overshoot=0;p.selected=0;p.selectedNode=null;p.triggeredNode=null;if(p.finished||p.pitStage===0||p.pitStage===1||p.skips>0){p.ready=true}else if(p.isBot){p.card=movement(p);p.ready=true}}if(s.players.every(p=>p.ready))reveal(s)}
 export function startRace(members,settings=DEFAULT_SETTINGS){settings=sanitizeSettings(settings);const s={version:4,round:1,phase:'lobby',players:members.map((m,i)=>makePlayer(i,m)),settings,placements:[],eventDeck:eventDeck(settings),combatDeck:combatDeck(),traps:[],active:0,choice:null,logs:['🏁 Flip together! The combat deck is live.'],winner:null};prepare(s);return s}
-function cross(s,p){p.laps++;p.nitro=false;p.flat=false;p.cones=0;p.bubble=false;log(s,`🏁 ${p.name} lap ${p.laps}/3!`);if(p.laps>=3){p.finished=true;p.finishRound=s.round;p.overshoot=p.remaining;log(s,`🏆 ${p.name} finishes!`)}}
+function cross(s,p){p.laps++;p.nitro=false;p.flat=false;p.cones=0;p.bubble=false;log(s,`🏁 ${p.name} lap ${p.laps}/${s.settings.laps}!`);if(p.laps>=s.settings.laps){p.finished=true;p.finishRound=s.round;p.overshoot=p.remaining;log(s,`🏆 ${p.name} finishes!`)}}
 function step(s,p){const {nodes,forks,pit,start}=TRACK;
  if(p.pitStage===2&&p.node===pit.two){p.pitStage=-1;p.needsPit=false;p.flat=false;p.tireDamaged=false;p.bubble=false;p.node=pit.exit;p.remaining=Math.max(0,p.remaining-1);p.history.push({node:pit.two,lapCross:true});p.moved=true;cross(s,p);log(s,`🔧 ${p.name} exits pit, repaired.`);return 'ok'}
  if(p.node===pit.approach&&p.needsPit){p.node=pit.wait;p.remaining=0;p.pitStage=0;p.needsPit=false;p.bubble=false;p.moved=true;log(s,`🔧 ${p.name} enters pit lane.`);return 'pit'}
@@ -104,7 +105,7 @@ async function verifiedProfile(env,b){try{const id=String(b?.profileId||'');if(!
 
 export default {async fetch(req,env){const url=new URL(req.url),path=url.pathname;
  if(req.method==='OPTIONS')return new Response(null,{status:204,headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'content-type,authorization,x-driver-id','Access-Control-Allow-Methods':'GET,POST,OPTIONS'}});
- if(path==='/api/health')return json({ok:true,game:'Flip Cars',version:'4.3',combat:true,placements:true,matchOptions:true,social:!!env.PROFILES,socialV2:!!env.SOCIAL});
+ if(path==='/api/health')return json({ok:true,game:'Flip Cars',version:'4.4',combat:true,placements:true,matchOptions:true,social:!!env.PROFILES,socialV2:!!env.SOCIAL});
  if(path.startsWith('/api/social/'))return socialApi(req,env,verifiedProfile);
  if(path==='/api/profile/create'&&req.method==='POST'){let b;try{b=await req.json()}catch{return json({error:'Bad JSON'},400)}const id=code(10),secret=token(),stub=env.PROFILES?.get(env.PROFILES.idFromName(id));if(!stub)return json({error:'Profiles not configured'},503);return stub.fetch(new Request('https://profile.internal/create',{method:'POST',body:JSON.stringify({id,secret,name:cleanName(b.name)})}))}
  const pm=path.match(/^\/api\/profile\/([A-HJ-NP-Z2-9]{10})\/(view|friend|remove|stats|update)$/);if(pm){if(!env.PROFILES)return json({error:'Profiles unavailable'},503);let auth=req.headers.get('authorization')||'',stub=env.PROFILES.get(env.PROFILES.idFromName(pm[1]));return stub.fetch(new Request('https://profile.internal/'+pm[2],{method:req.method,headers:{Authorization:auth},body:req.method==='POST'?await req.text():undefined}))}
@@ -129,7 +130,15 @@ export class GameRoom{
   if(path==='/ws'&&req.headers.get('upgrade')==='websocket'){const protocols=(req.headers.get('Sec-WebSocket-Protocol')||'').split(',').map(s=>s.trim()),t=protocols.find(x=>x.startsWith('seat.'))?.slice(5);if(!protocols.includes('flipcars'))return json({error:'Unauthorized'},401);const m=r.members.find(m=>!m.isBot&&m.token===t);if(!m)return json({error:'Unauthorized'},401);const pair=new WebSocketPair(),[client,server]=Object.values(pair);this.ctx.acceptWebSocket(server);server.serializeAttachment({id:m.id});if(r.game?.players[m.id]){r.game.players[m.id].isBot=false;r.game.players[m.id].cpu=false;await this.save(r)}server.send(JSON.stringify({...this.present(r,m.id),type:'welcome',playerId:m.id}));this.broadcast(r);return new Response(null,{status:101,webSocket:client,headers:{'Sec-WebSocket-Protocol':'flipcars'}})}
   return json({error:'Not found'},404)}
  async webSocketMessage(ws,message){return this.ctx.blockConcurrencyWhile(async()=>{let id=ws.deserializeAttachment()?.id;if(!Number.isInteger(id)||typeof message!=='string'||message.length>1024)return;let msg;try{msg=JSON.parse(message)}catch{return}if(!msg||typeof msg!=='object'||Array.isArray(msg))return;const r=await this.data();if(!r||!r.members.some(m=>m.id===id&&!m.isBot))return;
- if(msg.type==='start'&&!r.started&&id===r.hostId){let cpu=Math.max(0,Math.min(4-r.members.length,Math.floor(Number(msg.cpu)||0)));while(cpu--){let i=r.members.length;r.members.push({id:i,name:'CPU '+COLORS[i],color:COLORS[i],token:null,isBot:true})}if(r.members.length<2){ws.send(JSON.stringify({type:'error',error:'Add a friend or a CPU racer.'}));return}r.started=true;r.game=startRace(r.members,r.settings=sanitizeSettings(msg.settings));await this.save(r);this.broadcast(r);return}
+ if(msg.type==='start'&&!r.started&&id===r.hostId){let cpu=Math.max(0,Math.min(4-r.members.length,Math.floor(Number(msg.cpu)||0)));while(cpu--){let i=r.members.length;r.members.push({id:i,name:'CPU '+COLORS[i],color:COLORS[i],token:null,isBot:true})}if(r.members.length<2){ws.send(JSON.stringify({type:'error',error:'Add a friend or a CPU racer.'}));return}r.started=true;r.awarded=false;r.game=startRace(r.members,r.settings=sanitizeSettings(msg.settings));await this.save(r);this.broadcast(r);return}
+ // A rematch opens a fresh lobby under the same room code and guest credentials.
+ // Only the host may reset a fully completed race, after rewards were credited.
+ if(msg.type==='rematch'&&id===r.hostId&&r.started&&r.game?.phase==='done'){
+  await this.award(r);
+  r.members=r.members.filter(m=>!m.isBot);
+  r.started=false;r.game=null;r.awarded=false;
+  await this.save(r);this.broadcast(r);return;
+ }
  if(r.started&&r.game&&['action','combat','discard'].includes(msg.type)){let op=msg.type==='action'?msg.op:msg.type,arg=msg.type==='action'?{}:{index:msg.index,target:msg.target};if(action(r.game,id,op,arg)){await this.award(r);await this.save(r);this.broadcast(r)}}
  })}
  async webSocketClose(ws){return this.ctx.blockConcurrencyWhile(async()=>{let r=await this.data();if(!r)return;let id=ws.deserializeAttachment()?.id,other=this.ctx.getWebSockets().some(w=>w!==ws&&w.deserializeAttachment()?.id===id);if(r.started&&!other&&Number.isInteger(id)){let p=r.game?.players[id];if(p&&!p.finished){p.isBot=true;p.cpu=true;if(r.game.phase==='flip'&&!p.ready){p.isBot=false;action(r.game,id,'flip');p.isBot=true}if(r.game.phase==='choice'&&r.game.choice===id){p.selectedNode=TRACK.forks[p.node][0].first;r.game.phase='resolve';r.game.choice=null;resolve(r.game)}if(p.pendingCombat!=null){p.combat[0]=p.pendingCombat;p.pendingCombat=null}await this.award(r);await this.save(r)}}this.broadcast(r)})}
