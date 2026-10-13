@@ -1,0 +1,19 @@
+FLIP CARS 4.2 — Podium & Player Garage
+====================================
+
+QUICK PLAY OFFLINE:
+1. Extract this ZIP.
+2. Double-click index.html for local/CPU racing. Sounds and music are in audio/ and music/ folders.
+3. Alternatively open Flip_Cars_4_2_Standalone_Playable.html outside the ZIP: this one file has its sound and music embedded and is playable offline.
+
+TO REPLACE THE LIVE GAME:
+1. Upload the CONTENTS of this ZIP to the ROOT of GitHub jrami1122-lab/Flip-cars main. Keep folder names intact.
+2. Replace BOTH index.html and worker/src/index.js. They must be from the SAME 4.2 package: online rules and final placements require the revised server as well as client.
+3. The .github/workflows/deploy-worker.yml workflow can deploy the Worker using your existing repository Cloudflare secrets. Check GitHub Actions status.
+4. Verify your real Worker endpoint responds with ok:true and version:4.2 at /api/health.
+5. In server-config.json supply the real HTTPS Worker URL one time (leave empty until verified). Never put API tokens or credentials in this file.
+6. Verify GitHub Pages root is served, open the live site and hard-refresh.
+7. Run a real multi-device room test: create, join, choose host options, flip, play combat, finish EVERY racer, and verify podium and profile stats.
+
+Users do not need a Cloudflare account or server configuration. Only the publisher sets the backend.
+Live online readiness is not guaranteed by a ZIP; the Worker must be actually deployed and accessible.
