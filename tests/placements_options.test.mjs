@@ -26,7 +26,7 @@ test('disabled combat, flags and turbos stay off for entire race',()=>{
  assert.equal(s.eventDeck.some(x=>x==='turbo'||x==='nitro'),false);
 });
 test('host settings are sanitized, not trusted blindly',()=>{
- assert.deepEqual(sanitizeSettings({combat:false,flags:0,turbos:false,admin:true}),{combat:false,flags:true,turbos:false});
+ assert.deepEqual(sanitizeSettings({combat:false,flags:0,turbos:false,admin:true}),{combat:false,flags:true,turbos:false,laps:3,mode:'classic'});
  assert.ok(COMBAT_COUNTS.bubble<COMBAT_COUNTS.oil);
 });
 

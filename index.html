@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091525"><title>Flip Cars 4.4.1 — Installable Online Racing</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091525"><title>Flip Cars 4.5 — Installable Online Racing</title>
 <!-- Flip Cars 4.4 installable web app. Online gaming stays on Cloudflare. -->
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -644,12 +644,78 @@ body .arena .seat.empty,body .arena .seat.remote{display:none!important;visibili
 .hudchip .dot{background:linear-gradient(135deg,var(--driver) 0 50%,var(--driver-secondary,var(--driver)) 51% 100%)}
 .lobbyCarFinish{font-size:10px;color:#d8eaff;white-space:nowrap}
 @media(max-width:700px){.secondaryPick{min-height:40px;font-size:9px}.secondaryColors{gap:3px}}
+
+/* Flip Cars 4.5 — arcade gear shifter, Hybrid Duo parties and Pit Crew Mischief */
+.shell{position:relative}.fc45LocalPanel{background:linear-gradient(150deg,#193552,#0a192e);border:1px solid #456787;border-radius:13px;margin:12px 0;padding:12px;display:grid;gap:9px}
+.fc45LocalPanel label{font-size:12px;font-weight:900;letter-spacing:.5px;color:#d7ebff}
+.fc45LocalPanel input,.fc45LocalPanel select{width:100%;min-height:42px;color:#fff;border:1px solid #5b7594;border-radius:9px;background:#0b1e33;padding:8px;font:inherit}
+.fc45Note{font-size:12px;color:#a4c9e4;line-height:1.5}
+.fc45ModeRow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fc45ModeButton{min-height:54px;background:#0e263c;border:2px solid #375774;border-radius:12px;color:#d5e9fd;font-weight:900;padding:9px;cursor:pointer}
+.fc45ModeButton.active{border-color:#ffc95b;color:#fff;background:linear-gradient(140deg,#39546c,#0c3048);box-shadow:0 0 16px #ffc95b35}
+.fc45ShifterBackdrop{position:absolute;inset:0;z-index:90;background:#020713df;display:grid;place-items:center;padding:10px;overflow:auto}
+.fc45ShifterBackdrop[hidden]{display:none!important}
+.fc45ShiftCard{width:min(490px,100%);max-height:96%;overflow:auto;border:2px solid #ffc860;border-radius:22px;box-shadow:0 0 0 5px #040d1b,0 15px 70px #000e;background:radial-gradient(ellipse at 50% -30%,#386d84 0%,#142840 48%,#060e1e 100%);padding:16px;color:#f6faff}
+.fc45ShiftCard header{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:9px}
+.fc45ShiftCard h2{font-weight:1000;font-size:clamp(19px,4vw,26px);font-style:italic;margin:0;letter-spacing:1px;color:#ffcc64;text-shadow:1px 2px 0 #9c451c}
+.fc45ShiftCard .fc45Sub{font-size:11px;color:#c2e1f6;font-weight:700;line-height:1.4}
+.fc45GearMachine{width:min(285px,100%);height:244px;margin:9px auto 13px;border-radius:26px;background:radial-gradient(ellipse,#2f4c5e 0%,#13202e 60%,#060c14 100%);box-shadow:inset 0 0 25px #000b,0 8px 22px #0008;border:8px solid #617a85;position:relative;overflow:hidden}
+.fc45GearMachine::before{content:'';position:absolute;left:29%;right:29%;top:17%;bottom:17%;border-radius:12px;border:8px solid #0a101a;box-shadow:inset 2px 3px 7px #000,1px 1px 0 #c0d4d9}
+.fc45GearMachine::after{content:'';position:absolute;left:14%;right:14%;height:12px;top:calc(50% - 6px);background:linear-gradient(#040a12,#202f42,#07121e);border-radius:8px;box-shadow:0 2px 3px #0008}
+.fc45GearButton{position:absolute;z-index:4;width:68px;height:68px;border-radius:50%;border:3px solid #bdcbd3;background:linear-gradient(145deg,#edf8ff,#70889f 48%,#172638 52%);box-shadow:inset 2px 2px 6px #fff9,0 4px 7px #000d;color:#111e2b;font-size:26px;font-weight:1000;cursor:pointer;touch-action:manipulation}
+.fc45GearButton[data-gear="1"]{top:8px;left:15px}.fc45GearButton[data-gear="2"]{top:8px;right:15px}.fc45GearButton[data-gear="3"]{bottom:8px;left:15px}.fc45GearButton[data-gear="4"]{bottom:8px;right:15px}
+.fc45GearButton.used{border-color:#7bdba6;color:#85ffc0;background:#193b37;box-shadow:inset 0 0 16px #0b4029}
+.fc45Stick{pointer-events:none;position:absolute;z-index:5;left:calc(50% - 28px);top:calc(50% - 28px);width:56px;height:56px;display:grid;place-items:center;border:6px solid #899aa9;border-radius:50%;font-weight:1000;font-size:12px;color:#e4faff;background:radial-gradient(circle at 30% 24%,#9dbac6,#3c5064 57%,#111e2c 72%);box-shadow:0 0 0 6px #05152366,3px 8px 13px #000c;transition:transform .17s cubic-bezier(.2,.8,.1,1),box-shadow .2s}
+.fc45GearSeq{display:flex;justify-content:center;gap:8px;margin:9px 0}
+.fc45GearSeq span{display:grid;place-items:center;width:44px;height:43px;background:#0a2136;border:1px solid #5b8dab;border-radius:8px;color:#fbe1a0;font-size:20px;font-weight:1000}
+.fc45ShiftCard .fc45Row{display:flex;gap:8px;flex-wrap:wrap}.fc45ShiftCard .fc45Row button{flex:1;min-height:41px}
+.fc45Waiting{font-weight:800;color:#b3d6ee;line-height:1.5;text-align:center;padding:24px 8px}
+.fc45Taunts{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;padding:5px}
+.fc45Taunts button{font-size:12px;font-weight:850;background:#183652;color:#fff;border:1px solid #50728c;border-radius:8px;padding:9px;min-height:39px}
+.fc45TauntFx{position:absolute;pointer-events:none;inset:0;z-index:88;display:flex;align-items:center;justify-content:center;font-size:clamp(26px,8vw,78px);font-weight:1000;color:#ffec95;text-shadow:4px 5px 0 #4e1c43,0 0 20px #000;animation:fc45Taunt .9s ease-in-out both}
+.fc45TauntFx[hidden]{display:none!important}
+@keyframes fc45Rattle{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.fc45Rattle .boardwrap{animation:fc45Rattle .38s ease-out}
+.fc45TauntFx.slime::before{content:'';position:absolute;inset:15%;z-index:-1;background:radial-gradient(ellipse at 15% 20%,#aaff60b8 0 10%,transparent 12%),radial-gradient(ellipse at 40% 50%,#50db21a9 0 16%,transparent 18%),radial-gradient(ellipse at 75% 29%,#bcff66b0 0 13%,transparent 15%),radial-gradient(ellipse at 67% 72%,#8de93eb8 0 11%,transparent 13%);filter:blur(3px)}
+.fc45TauntFx.slime{color:#b7ff60;text-shadow:4px 5px 0 #146531,0 0 30px #4aff5c;transform:rotate(-9deg)}
+@keyframes fc45Taunt{0%{opacity:0;transform:translateY(-80px) scale(1.4)}26%{opacity:1;transform:translateY(5px) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateY(35px) scale(.92)}}
+@media(max-height:530px){.fc45ShifterBackdrop{align-items:start}.fc45ShiftCard{width:min(740px,100%);max-width:740px;display:grid;grid-template-columns:minmax(240px,45%) minmax(0,55%);gap:5px}.fc45ShiftCard header,.fc45ShiftCard .fc45Sub,.fc45ShiftCard .fc45GearSeq,.fc45ShiftCard .fc45Row{grid-column:2}.fc45GearMachine{grid-column:1;grid-row:1/5;margin:0 auto;max-height:218px}.fc45ShiftCard h2{font-size:19px}}
+@media(prefers-reduced-motion:reduce){.fc45Stick,.fc45TauntFx,.fc45Rattle .boardwrap{transition:none!important;animation:none!important}}
+
+/* 4.5 final: user-facing cockpit seating, never based on paint color, tag, or room ID. */
+body .arena .seat.cpu{display:none!important}
+/* Phones can't physically face four sides of a tabletop. Put the active board first,
+   then compact player stations in P1/P2/P3/P4 order without phantom empty rows. */
+@media(max-width:700px) and (orientation:portrait){
+ body:not(.solo) .arena{display:flex!important;flex-direction:column;min-height:0;overflow:hidden;gap:3px}
+ body:not(.solo) .boardwrap{order:0;flex:1 1 0;min-height:120px;width:100%;height:auto;align-self:stretch}
+ body:not(.solo) .seat[data-position]{flex:0 0 auto;width:100%;height:83px!important;min-height:83px!important;max-height:83px;transform:none!important}
+ body:not(.solo) .seat[data-position=bottom]{order:1}
+ body:not(.solo) .seat[data-position=left]{order:2}
+ body:not(.solo) .seat[data-position=top]{order:3}
+ body:not(.solo) .seat[data-position=right]{order:4}
+ body:not(.solo) .seat .matRow{grid-template-rows:1fr 27px;gap:2px}
+ body:not(.solo) .seat .matCell.driver .matCar{display:none}
+ body:not(.solo) .seat .matCell.driver{padding:2px 5px;gap:0;justify-content:center}
+ body:not(.solo) .seat .matCell.driver .matDriverName{font-size:11px;line-height:1.15}
+ body:not(.solo) .seat .matCell.driver .matMini{font-size:9px;line-height:1.1}
+ body:not(.solo) .seat .matAction{min-height:24px}
+}
+@media(max-width:700px) and (orientation:landscape){
+ body:not(.solo) .arena{grid-template-rows:minmax(0,1fr) repeat(2,auto)}
+ body:not(.solo) .seat[data-position]{height:69px!important;min-height:69px!important;transform:none!important}
+ body:not(.solo) .seat .matRow{grid-template-rows:1fr 27px;gap:2px}
+ body:not(.solo) .seat[data-position=bottom]{grid-column:1;grid-row:2}
+ body:not(.solo) .seat[data-position=top]{grid-column:2;grid-row:2}
+ body:not(.solo) .seat[data-position=left]{grid-column:1;grid-row:3}
+ body:not(.solo) .seat[data-position=right]{grid-column:2;grid-row:3}
+}
 </style>
 </head>
 <body>
 <div class="pwaSplash" id="pwaSplash" aria-hidden="true"><img src="icons/icon-192.png" alt=""><strong>FLIP CARS</strong><span>READY. SET. FLIP.</span></div>
 <div class="pwaOfflineFlag" id="pwaOfflineFlag" hidden>📡 OFFLINE · Online rooms and friends need internet</div>
-<div class="shell" id="gameShell"><header class="header"><div class="brand"><div><div class="logo">FLIP <span>CARS</span> 🏁</div><div class="sub">Installable Edition 4.4 • Local & Online Racing</div></div></div><div class="head-actions"><span class="badge" id="roundBadge">ROUND 1</span><button class="mini" id="onlineBtn" title="Create or join an online race">🌐 ONLINE</button><button class="mini" id="focusBtn" title="Toggle complete circuit / follow camera" aria-label="Change board camera">◎ FIT</button><button class="mini" id="fullBtn" title="Use full screen" aria-label="Toggle fullscreen">⛶ FULL</button><button class="mini" id="soundBtn" aria-label="Toggle sound">♫ ON</button><button class="mini" id="musicBtn" title="Choose music">🎵</button><button class="mini" id="profileBtn" title="Driver stats and friends">👤</button><button class="mini" id="socialBtn" title="Friends, invites and messages">👥 FRIENDS</button><button class="mini" id="tableBtn" title="Tabletop seating directions">⇄ TABLE</button><button class="mini pwaHeaderInstall" id="pwaHeaderInstall" type="button" title="Install Flip Cars as an app" aria-label="Install Flip Cars">⬇ APP</button><button class="mini" id="helpBtn">? RULES</button><button class="mini" id="newBtn">↻ NEW</button></div></header>
+<div class="shell" id="gameShell"><header class="header"><div class="brand"><div><div class="logo">FLIP <span>CARS</span> 🏁</div><div class="sub">Installable Edition 4.5 • Hybrid & Team Racing</div></div></div><div class="head-actions"><span class="badge" id="roundBadge">ROUND 1</span><button class="mini" id="onlineBtn" title="Create or join an online race">🌐 ONLINE</button><button class="mini" id="focusBtn" title="Toggle complete circuit / follow camera" aria-label="Change board camera">◎ FIT</button><button class="mini" id="fullBtn" title="Use full screen" aria-label="Toggle fullscreen">⛶ FULL</button><button class="mini" id="soundBtn" aria-label="Toggle sound">♫ ON</button><button class="mini" id="musicBtn" title="Choose music">🎵</button><button class="mini" id="profileBtn" title="Driver stats and friends">👤</button><button class="mini" id="socialBtn" title="Friends, invites and messages">👥 FRIENDS</button><button class="mini" id="tableBtn" title="Tabletop seating directions">⇄ TABLE</button><button class="mini pwaHeaderInstall" id="pwaHeaderInstall" type="button" title="Install Flip Cars as an app" aria-label="Install Flip Cars">⬇ APP</button><button class="mini" id="helpBtn">? RULES</button><button class="mini" id="newBtn">↻ NEW</button></div></header>
 <main class="arena"><section class="seat" data-position="top" id="seat0" style="--color:#ff5959"></section><section class="seat" data-position="left" id="seat1" style="--color:#40b5ff"></section><div class="boardwrap" id="boardwrap"><div class="leaderhud" id="leaderHud" aria-label="Race standings"></div><canvas id="board" width="1200" height="800" aria-label="Interactive racing circuit, with three forks and two pit-stop spaces"></canvas><div class="routePrompt" id="routePrompt"></div><div class="boardcaption" id="boardCaption">🏁 Three laps. Three forks. Flip cards together.</div><div class="eventTicker" id="eventTicker"></div><div id="combatHUD" class="combatHUD" aria-label="Combat card deck">🎴 COMBAT DECK</div><div class="followHint" id="followHint">FOLLOW CAM · TAP FIT FOR WHOLE TRACK</div></div><section class="seat" data-position="right" id="seat2" style="--color:#ffdc55"></section><section class="seat" data-position="bottom" id="seat3" style="--color:#62e2a1"></section></main>
 <div class="strip"><div class="feed"><div class="feedtitle">RACE CONTROL / FLAG EVENTS</div><div class="feedtext" id="feed">Choose the number of drivers to start your race.</div><div id="inventory" class="legend"></div></div><div class="rules"><h3>HOW TO RACE</h3><p>Every driver has the same shuffled 1–5 movement deck. Flip simultaneously, then all cars move. <b>⚑ Flags</b> draw a surprise event; <b>⚡ boosts</b> grant an extra flip. Pick routes at forks. A shared space causes a crash. Pit on the next approach to the lap line when required.</p><div class="legend"><span>⚑ Flag</span><span>⚡ Boost</span><span>🔧 Pit</span><span>🏁 3 laps wins</span></div></div></div>
 </div>
@@ -720,7 +786,7 @@ const supportedLaps=[3,5,10];
 const safeLapCount=x=>supportedLaps.includes(Number(x))?Number(x):3;
 let selectedLapCount=(()=>{try{return safeLapCount(localStorage.getItem('flipcars_laps'))}catch{return 3}})();
 let lastLocalSetup=null;
-const raceLapLimit=()=>safeLapCount(state?.laps??state?.settings?.laps??selectedLapCount);
+const raceLapLimit=()=>state?.settings?.mode==='team'?2:safeLapCount(state?.laps??state?.settings?.laps??selectedLapCount);
 function setLapChoice(n){selectedLapCount=safeLapCount(n);storeSet('flipcars_laps',String(selectedLapCount));}
 const lapOptions=selected=>supportedLaps.map(n=>'<option value="'+n+'" '+(n===selected?'selected':'')+'>'+n+' laps'+(n===3?' · Quick':n===5?' · Standard':' · Endurance')+'</option>').join('');
 const loadTag=()=>{try{return String(JSON.parse(localStorage.getItem(TAG_KEY)||'null')?.tag||'').slice(0,18)}catch{return ''}};
@@ -747,7 +813,7 @@ function targetsFor(p,type){if(['oil','stall','bubble'].includes(type))return []
 function blockHit(p,harm){if(p.bubble){p.bubble=false;log('🫧 '+p.name+' bubble blocks '+harm+'!');return true}return false}
 function combatMessage(msg){const box=$('combatMessage');if(box)box.textContent=msg}
 function doCombat(id,index,target){if(!settingsFor(state).combat)return;const p=state?.players?.[id];if(!p||!Number.isInteger(index)||index<0||index>=p.combat?.length)return;
- if(onlineMode){if(id===onlinePlayerId&&onlineWs?.readyState===1)onlineWs.send(JSON.stringify({type:'combat',index,target}));return}
+ if(onlineMode){if(onlineConnections.get(id)?.readyState===1)onlineConnections.get(id).send(JSON.stringify({type:'combat',index,target}));return}
  if(state.phase!=='flip'||p.cpu||p.ready||p.pendingCombat)return;
  const type=p.combat[index],opts=targetsFor(p,type);if(!['oil','stall','bubble'].includes(type)&&!opts.includes(target))return;
  if(type==='bubble'&&p.bubble){combatMessage('Bubble already active');return}
@@ -762,7 +828,7 @@ function doCombat(id,index,target){if(!settingsFor(state).combat)return;const p=
  }p.combatHits++}
  sfx(type==='bubble'?'flip':type==='spikes'?'burnout':type==='oil'?'flip':'crash');renderSeats();drawAll()
 }
-function discardCombat(id,index){if(onlineMode){if(id===onlinePlayerId&&onlineWs?.readyState===1)onlineWs.send(JSON.stringify({type:'discard',index}));return}
+function discardCombat(id,index){if(onlineMode){if(onlineConnections.get(id)?.readyState===1)onlineConnections.get(id).send(JSON.stringify({type:'discard',index}));return}
  const p=state?.players?.[id];if(!p||!p.pendingCombat)return;if(index!==-1){p.combat[index]=p.pendingCombat}p.pendingCombat=null;renderSeats();drawAll()
 }
 function giveCombat(p){if(!settingsFor(state).combat)return;if(!state.combatDeck.length)state.combatDeck=shuffle(Object.entries(COMBAT_COUNTS).flatMap(([id,num])=>Array(num).fill(id)));const item=state.combatDeck.pop();if(p.combat.length<2){p.combat.push(item);log('🎴 '+p.name+' draws a combat card!')}else if(p.cpu){p.combat[Math.floor(Math.random()*2)]=item;log('🎴 '+p.name+' swaps a combat card.')}else{p.pendingCombat=item;log('🎴 '+p.name+' must replace a card or pass.')}}
@@ -773,18 +839,18 @@ function recordResult(){if(recordedRace||!state||state.phase!=='done')return;rec
  stats.history=[{date:new Date().toISOString().slice(0,10),place:placement,racers:state.players.length,mode:onlineMode?'Online':'Local',drivers:state.placements.map(x=>({place:x.place,name:state.players[x.id]?.displayName||state.players[x.id]?.name||'RACER'}))},...(stats.history||[])].slice(0,25);
  storeSet(localStatsKey,JSON.stringify(stats));}
 
-let state=null,soundOn=menuOptions.sfx,audio=null;let viewMode='fit',resizeQueued=false,lastCanvasW=0,lastCanvasH=0;const $=id=>document.getElementById(id); let onlineRoomSettings=null;let onlineMode=false,onlinePlayerId=-1,onlineWs=null,onlineRoom='',onlineToken='',onlineHost=false,onlineRoster=[],onlineBackend='',onlineWinnerShown=false;
+let onlineSeats=[],onlineConnections=new Map(),onlinePrivateHands=new Map(),onlineModePick='classic',onlineLocalCount=1,fc45ShiftKey='',fc45ShiftSequence=[],fc45LastTauntSerial=0;let state=null,soundOn=menuOptions.sfx,audio=null;let viewMode='fit',resizeQueued=false,lastCanvasW=0,lastCanvasH=0;const $=id=>document.getElementById(id); let onlineRoomSettings=null;let onlineMode=false,onlinePlayerId=-1,onlineWs=null,onlineRoom='',onlineToken='',onlineHost=false,onlineRoster=[],onlineBackend='',onlineWinnerShown=false;
 function shuffle(a){let arr=a.slice();for(let i=arr.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
 function makeEventDeck(config=menuOptions){let arr=[];Object.entries(eventPool).forEach(([id,cnt])=>{if(!config.turbos&&(id==='turbo'||id==='nitro'))return;for(let k=0;k<cnt;k++)arr.push(id)});return shuffle(arr)}
 function drawEvent(){if(!state.eventDeck.length)state.eventDeck=makeEventDeck(settingsFor(state));return state.eventDeck.pop()}
 function beep(freq=460,duration=.1,kind='sine',gain=.06){if(!soundOn)return;try{let Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;if(!audio)audio=new Audio();audio.resume();let o=audio.createOscillator(),g=audio.createGain();o.type=kind;o.frequency.setValueAtTime(freq,audio.currentTime);g.gain.setValueAtTime(gain,audio.currentTime);g.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+duration);o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+duration)}catch(e){}}
-function initGame(config=null){disconnectOnline();let humans=config?.humans??+$('humanCount').value,cpu=config?.cpu??+$('cpuCount').value,number=humans+cpu,laps=safeLapCount(config?.laps??selectedLapCount);setLapChoice(laps);lastLocalSetup={humans,cpu,laps};const chosenColor=selectedCarColor||storeGet('flipcars_color')||'RED',raceColors=[chosenColor,...['RED','BLUE','YELLOW','GREEN'].filter(c=>c!==chosenColor)];recordedRace=false;state={round:1,phase:'flip',players:[],eventDeck:makeEventDeck(menuOptions),combatDeck:shuffle(Object.entries(COMBAT_COUNTS).flatMap(([id,n])=>Array(n).fill(id))),traps:[],active:0,choice:null,logs:[],winner:null,placements:[],laps,settings:{...menuOptions,laps},humans};for(let i=0;i<number;i++){state.players.push({color:raceColors[i],secondary:i===0&&['BLACK','WHITE','SILVER','GOLD'].includes(selectedSecondaryColor||storeGet('flipcars_secondary'))?(selectedSecondaryColor||storeGet('flipcars_secondary')):'',id:i,name:i>=humans?'AI Racer '+(i-humans+1):i===0?(loadTag()||'Player 1'):'Player '+(i+1),displayName:i>=humans?'AI Racer '+(i-humans+1):i===0?(loadTag()||'Player 1'):'Player '+(i+1),isBot:i>=humans,cpu:i>=humans,node:start,laps:0,deck:shuffle(movementValues),card:null,ready:false,remaining:0,skips:0,needsPit:false,pitStage:-1,fuel:0,repair:0,guard:0,cones:0,nitro:false,flat:false,tireDamaged:false,bubble:false,combat:[],pendingCombat:null,combatUses:0,combatHits:0,crashes:0,spinUntil:0,crashUntil:0,history:[],moved:false,finished:false,finishRound:null,overshoot:0,bonuses:0,flags:0,flipCount:0,selected:0,selectedNode:null,justEnteredPit:false})}state.logs=['🏁 Lights out! Flip your movement cards together.'];document.body.classList.toggle('solo',humans===1);document.body.classList.toggle('multi',humans>1);viewMode=(humans===1&&window.innerWidth<650&&window.innerHeight>window.innerWidth)?'follow':'fit';updateViewControls();$('startModal').classList.add('hidden');prepareFlipRound(true);startDefaultMusic();sfx('engine',.27);drawAll()}
+function initGame(config=null){disconnectOnline();let humans=config?.humans??+$('humanCount').value,cpu=config?.cpu??+$('cpuCount').value,number=humans+cpu,laps=safeLapCount(config?.laps??selectedLapCount);setLapChoice(laps);lastLocalSetup={humans,cpu,laps};const chosenColor=selectedCarColor||storeGet('flipcars_color')||'RED',raceColors=[chosenColor,...['RED','BLUE','YELLOW','GREEN'].filter(c=>c!==chosenColor)];recordedRace=false;state={round:1,phase:'flip',players:[],eventDeck:makeEventDeck(menuOptions),combatDeck:shuffle(Object.entries(COMBAT_COUNTS).flatMap(([id,n])=>Array(n).fill(id))),traps:[],active:0,choice:null,logs:[],winner:null,placements:[],laps,settings:{...menuOptions,laps},humans};for(let i=0;i<number;i++){state.players.push({color:raceColors[i],secondary:i===0&&['BLACK','WHITE','SILVER','GOLD'].includes(selectedSecondaryColor||storeGet('flipcars_secondary'))?(selectedSecondaryColor||storeGet('flipcars_secondary')):'',id:i,name:i>=humans?'AI Racer '+(i-humans+1):i===0?(loadTag()||'Player 1'):'Player '+(i+1),displayName:i>=humans?'AI Racer '+(i-humans+1):i===0?(loadTag()||'Player 1'):'Player '+(i+1),isBot:i>=humans,cpu:i>=humans,node:start,laps:0,deck:shuffle(movementValues),card:null,ready:false,remaining:0,skips:0,needsPit:false,pitStage:-1,fuel:0,repair:0,guard:0,cones:0,nitro:false,flat:false,tireDamaged:false,bubble:false,combat:[],pendingCombat:null,combatUses:0,combatHits:0,crashes:0,spinUntil:0,crashUntil:0,history:[],moved:false,finished:false,finishRound:null,overshoot:0,bonuses:0,flags:0,flipCount:0,selected:0,selectedNode:null,justEnteredPit:false})}state.logs=['🏁 Lights out! Flip your movement cards together.'];document.body.classList.toggle('solo',humans===1);document.body.classList.toggle('multi',humans>1);viewMode='fit';setTabletopMode(humans>1);updateViewControls();$('startModal').classList.add('hidden');prepareFlipRound(true);startDefaultMusic();sfx('engine',.27);drawAll()}
 function log(text){state.logs.unshift(text);state.logs=state.logs.slice(0,5)}
 function takeCard(p){if(!p.deck.length)p.deck=shuffle(movementValues);return p.deck.pop()}
 function readyStatus(p){return p.ready?'READY':(p.pitStage>=0&&p.pitStage<2?'PITTING':p.skips?'SKIPPING':'FLIP')}
 function cpuUseCombat(p){if(!settingsFor(state).combat||!p.cpu||!p.combat.length||Math.random()>.42)return;const ix=p.combat.findIndex(type=>['bubble','oil','stall'].includes(type)||targetsFor(p,type).length);if(ix<0)return;const type=p.combat[ix],target=targetsFor(p,type)[0]??-1;p.cpu=false;doCombat(p.id,ix,target);p.cpu=true}
 function prepareFlipRound(initial=false){if(!state||state.phase==='done')return;state.phase='flip';state.choice=null;for(const p of state.players){p.ready=false;p.card=null;p.moved=false;p.remaining=0;p.bonuses=0;p.flags=0;if(!p.finished)p.overshoot=0;p.selected=0;p.selectedNode=null;if(p.finished||p.pitStage===0||p.pitStage===1||p.skips>0){p.ready=true;p.card=null}else if(p.cpu){cpuUseCombat(p);p.card=takeCard(p);p.flipCount++;p.ready=true}}renderSeats();drawAll();if(state.players.every(p=>p.ready))setTimeout(revealRound,440)}
-function playerAction(id,which){if(onlineMode){if(id===onlinePlayerId && onlineWs?.readyState===WebSocket.OPEN && ["flip","route"].includes(which))onlineWs.send(JSON.stringify({type:"action",op:which}));return;}if(!state||state.phase==='done')return;let p=state.players[id];if(!p||p.cpu)return;if(state.phase==='choice'){if(state.choice!==id)return;if(which==='route'){p.selected=(p.selected+1)%forks[p.node].length;beep(430,.045);renderSeats();drawAll()}else{p.selectedNode=forks[p.node][p.selected].first;state.phase='resolve';state.choice=null;log('🛣️ '+p.name+' chooses '+forks[p.node][p.selected].name+'.');beep(640,.08);renderSeats();setTimeout(processResolve,210)}return}if(state.phase!=='flip'||which!=='flip'||p.ready||p.pendingCombat)return;p.card=takeCard(p);p.flipCount++;p.ready=true;sfx('flip',.29);beep(310+p.id*100,.08);renderSeats();if(state.players.every(q=>q.ready))setTimeout(revealRound,480)}
+function playerAction(id,which){if(onlineMode){if(onlineConnections.get(id)?.readyState===WebSocket.OPEN && ["flip","route"].includes(which))onlineConnections.get(id).send(JSON.stringify({type:"action",op:which}));return;}if(!state||state.phase==='done')return;let p=state.players[id];if(!p||p.cpu)return;if(state.phase==='choice'){if(state.choice!==id)return;if(which==='route'){p.selected=(p.selected+1)%forks[p.node].length;beep(430,.045);renderSeats();drawAll()}else{p.selectedNode=forks[p.node][p.selected].first;state.phase='resolve';state.choice=null;log('🛣️ '+p.name+' chooses '+forks[p.node][p.selected].name+'.');beep(640,.08);renderSeats();setTimeout(processResolve,210)}return}if(state.phase!=='flip'||which!=='flip'||p.ready||p.pendingCombat)return;p.card=takeCard(p);p.flipCount++;p.ready=true;sfx('flip',.29);beep(310+p.id*100,.08);renderSeats();if(state.players.every(q=>q.ready))setTimeout(revealRound,480)}
 function revealRound(){if(!state||state.phase!=='flip'||!state.players.every(p=>p.ready))return;state.phase='resolve';log('🃏 Round '+state.round+': '+state.players.map(p=>p.name+' '+(p.card??'—')).join(' · '));sfx('engine',.36);state.active=0;for(let p of state.players){if(p.pitStage===0){p.pitStage=1;p.node=pitOne;log('🔧 '+p.name+' rolls into PIT 1.');}else if(p.pitStage===1){p.pitStage=2;p.node=pitTwo;log('🔧 '+p.name+' advances to PIT 2.');}else if(p.skips>0){p.skips--;log('🌀 '+p.name+' misses the flip.')}else if(p.card!==null){p.remaining=Math.max(0,p.card+(p.nitro?1:0)-(p.flat||p.tireDamaged?1:0)-p.cones);p.cones=0;}}renderSeats();drawAll();setTimeout(processResolve,520)}
 function finishCrossed(p){p.laps++;p.nitro=false;p.flat=false;p.cones=0;p.bubble=false;beep(900,.17);log('🏁 '+p.name+' crosses the lap line: '+p.laps+' / '+raceLapLimit()+'!');if(p.laps>=raceLapLimit()){p.finished=true;p.finishRound=state.round;p.overshoot=p.remaining;log('🏆 '+p.name+' finishes!')}}
 function takeStep(p){if(p.pitStage===2&&p.node===pitTwo){p.pitStage=-1;p.needsPit=false;p.flat=false;p.tireDamaged=false;p.bubble=false;p.node=pit.exit;p.remaining=Math.max(0,p.remaining-1);p.history.push({node:pitTwo,lapCross:true});p.moved=true;finishCrossed(p);log('🛠️ '+p.name+' rejoins after the line.');return 'ok'}
@@ -811,7 +877,7 @@ if(finishers.length)log('🏆 '+finishers.length+' finished · '+(state.players.
 state.round++;renderSeats();drawAll();setTimeout(()=>prepareFlipRound(),1050)}
 function showWinner(winners){$('dialogContent').classList.remove('mainMenu');if(!onlineMode)recordResult();
  const all=(state.placements||[]).map(x=>({p:state.players.find(p=>p.id===x.id),place:x.place}));
- const winnerNames=all.filter(x=>x.place===1).map(x=>x.p?.displayName||x.p?.name||'RACER').join(' & ');
+ const winnerNames=state?.settings?.mode==='team'?('TEAM '+((all[0]?.p?.team??0)+1)+' — '+state.players.filter(p=>p.team===all[0]?.p?.team).map(p=>p.name).join(' & ')):all.filter(x=>x.place===1).map(x=>x.p?.displayName||x.p?.name||'RACER').join(' & ');
  const stats=loadStats();
  $('dialogContent').classList.remove('cardDetails');
  $('dialogContent').innerHTML='<div class="podiumHero"><span class="cup">🏆</span><div><span class="eyebrow">RACE COMPLETE</span><h1>CHECKERED <span>FLAG!</span></h1><p>'+safeText(winnerNames)+' TAKES FIRST!</p></div></div>'+heroHTML+'<div class="finishList">'+all.map(({p,place})=>'<div class="finishLine"><span class="finishRank">'+(rankMarks[place-1]||'🏁')+'</span><span class="finishWho"><b style="color:'+carPaint(p)+'">'+safeText(p.displayName||p.name)+'</b><small>'+safeText(finishName(p))+' · '+(p.flipCount||0)+' flips · '+(p.combatUses||0)+' combat uses</small></span><strong>'+place+getOrdinal(place)+'</strong></div>').join('')+'</div><p class="helper">Stats saved locally. '+stats.wins+' 1st-place finishes across '+stats.races+' recorded races.</p><button class="start" id="againBtn">'+(onlineMode?(onlineHost?'↻ REMATCH SAME PARTY':'⏳ WAIT FOR HOST / LOBBY'):'↻ REPLAY SAME RACE')+'</button><button class="mini" id="viewResultsStats">📊 DRIVER STATS</button><button class="mini" id="mainMenuBtn">⌂ MAIN MENU</button>';
@@ -820,7 +886,7 @@ function showWinner(winners){$('dialogContent').classList.remove('mainMenu');if(
 const getOrdinal=n=>n===1?'st':n===2?'nd':n===3?'rd':'th';
 function showSetup(tab='race'){
  $('dialogContent').classList.remove('cardDetails');
- const heading='<div class="menuMast"><span class="eyebrow">COMBAT CIRCUIT · 4.4</span><h1>FLIP <span>CARS</span><i>🏁</i></h1><p>SMALL CARS. BIG CHAOS.</p></div>';
+ const heading='<div class="menuMast"><span class="eyebrow">COMBAT CIRCUIT · 4.5</span><h1>FLIP <span>CARS</span><i>🏁</i></h1><p>SMALL CARS. BIG CHAOS.</p></div>';
  const tabs='<nav class="menuTabs" aria-label="Main menu">'+[['race','🏎️ PLAY'],['rules','📖 RULES / CONTROLS'],['options','⚙️ OPTIONS'],['stats','🏆 STATS'],['friends','👥 FRIENDS']].map(([id,name])=>'<button type="button" class="menuTab '+(id===tab?'selected':'')+'" data-tab="'+id+'">'+name+'</button>').join('')+'</nav>';
  let content='';
  if(tab==='friends'){showSocialHub('friends');return}
@@ -862,7 +928,7 @@ function matHand(p,id){
 }
 function chooseCombat(id,index){$('dialogContent').classList.remove('mainMenu');
  const p=state?.players?.[id],type=p?.combat?.[index],card=COMBAT[type];if(!p||!type||!card||p.cpu)return;
- const opts=targetsFor(p,type),canUse=settingsFor(state).combat&&state.phase==='flip'&&!p.ready&&!p.pendingCombat&&(id===(onlineMode?onlinePlayerId:id));
+ const opts=targetsFor(p,type),canUse=settingsFor(state).combat&&state.phase==='flip'&&!p.ready&&!p.pendingCombat&&(!onlineMode||onlineSeats.some(seat=>seat.id===id));
  const needsTarget=!['oil','stall','bubble'].includes(type);
  const alreadyBubble=type==='bubble'&&p.bubble;
  const blockedOil=type==='oil'&&state.traps?.some(t=>t.node===p.node);
@@ -886,38 +952,59 @@ function syncStationSizes(){
   seat.style.setProperty('--station-short',Math.max(80,seat.clientWidth-12)+'px');
  }
 }
+// Physical seating is a DEVICE concern, not a racer color or server seat number.
+// With two humans, face each other; with three or four, add seats clockwise.
+function physicalSeatMap(ids){
+ const order=ids.length===2?['bottom','top']:['bottom','left','top','right'];
+ return Object.fromEntries(ids.map((id,index)=>[id,order[index]]));
+}
+function localSeatIds(){
+ if(!state)return [];
+ return onlineMode?onlineSeats.filter(s=>state.players.some(p=>p.id===s.id)).map(s=>s.id)
+  :state.players.filter(p=>!p.cpu&&!p.isBot).map(p=>p.id);
+}
+function setTabletopMode(enabled){
+ tabletop=!!enabled;
+ document.body.classList.toggle('tabletop',tabletop);
+ const button=$('tableBtn');if(button)button.textContent=tabletop?'⇄ TABLE ✓':'⇄ TABLE';
+ syncStationSizes();scheduleBoardResize();
+}
 function renderSeats(){
  if(!state)return;
+ const controlled=localSeatIds();const seatMap=physicalSeatMap(controlled);
+ const unused=['bottom','top','left','right'].filter(v=>!Object.values(seatMap).includes(v));
  for(let i=0;i<4;i++){
   const div=$('seat'+i),p=state.players[i];
+  div.dataset.position=seatMap[i]||unused.shift()||'right';
+  div.setAttribute('aria-label',p?(driverLabel(p)+' — '+div.dataset.position+' station'):'Empty racing station');
   if(!p){div.className='seat empty';div.hidden=true;div.innerHTML='';continue}
-   div.hidden=false;div.classList.remove('empty');div.classList.toggle('remote',onlineMode&&p.id!==onlinePlayerId);
+   div.hidden=false;div.classList.remove('empty');div.classList.toggle('remote',onlineMode&&!onlineSeats.some(seat=>seat.id===p.id));
   div.style.setProperty('--color',carPaint(p));div.classList.toggle('inactive',false);div.classList.toggle('cpu',!!p.isBot||(!onlineMode&&p.cpu));div.classList.toggle('human',!p.cpu);
   div.classList.toggle('activeChoice',state.phase==='choice'&&state.choice===i);div.classList.toggle('finish',p.finished);
   const choiceActive=state.phase==='choice'&&state.choice===i;
-  const canFlip=((state.phase==='flip'&&!p.ready)||choiceActive)&&!p.cpu&&!p.pendingCombat;
-  const flipText=choiceActive?'CHOOSE ROUTE':p.card!=null&&state.phase!=='flip'?'MOVE '+p.card:p.pitStage>=0?'IN THE PITS':p.skips&&state.phase==='flip'?'SKIP TURN':p.ready?'READY':'WAITING';
+  const canFlip=((state.phase==='flip'&&!p.ready)||choiceActive)&&!p.cpu&&!p.relayWaiting&&!p.relayRetired&&!p.pendingCombat;
+  const flipText=choiceActive?'CHOOSE ROUTE':p.card!=null&&state.phase!=='flip'?'MOVE '+p.card:p.relayWaiting?'WAITING IN PIT':p.relayRetired?'HANDOFF COMPLETE':p.pitStage>=0?'IN THE PITS':p.skips&&state.phase==='flip'?'SKIP TURN':p.ready?'READY':'WAITING';
   const stats=[p.bubble?'🫧 Shield':'',p.tireDamaged?'🛞 Tire':'',p.needsPit?'🔧 Pit':'',p.fuel?'⛽ '+p.fuel:'',p.repair?'🧰 '+p.repair:'',p.guard?'🛡️ '+p.guard:'',p.nitro?'⚡ Nitro':'',p.flat?'🛞 Flat':''].filter(Boolean);
   const label=safeText(driverLabel(p));
   const deckNum=p.deck?.length??'?';
   const flipValue=p.card!=null&&state.phase!=='flip'?String(p.card):'？';
   div.innerHTML='<div class="stationFace"><div class="matRow">'+
-    '<div class="matCell driver"><span class="matCar">🏎️ '+(p.isBot?'AI':onlineMode?(i===onlinePlayerId?'YOU':'RIVAL'):'PLAYER '+(i+1))+'</span>'+(onlineMode&&p.profileId?'<button class="matDriverName lobbyProfileBtn" data-player-profile="'+safeText(p.profileId)+'" title="View player profile">'+label+' ↗</button>':'<span class="matDriverName">'+label+'</span>')+'<span class="matMini">🏁 Lap '+Math.min(raceLapLimit(),p.laps+1)+'/'+raceLapLimit()+'</span></div>'+
+    '<div class="matCell driver"><span class="matCar">🏎️ '+(p.isBot?'AI':onlineMode?(controlled.includes(i)?'PLAYER '+(controlled.indexOf(i)+1):'RIVAL'):'PLAYER '+(controlled.indexOf(i)+1))+'</span>'+(onlineMode&&p.profileId?'<button class="matDriverName lobbyProfileBtn" data-player-profile="'+safeText(p.profileId)+'" title="View player profile">'+label+' ↗</button>':'<span class="matDriverName">'+label+'</span>')+'<span class="matMini">🏁 Lap '+Math.min(raceLapLimit(),p.laps+1)+'/'+raceLapLimit()+'</span></div>'+
     '<div class="matCell deck"><span class="matTitle">DECK</span><span class="matDeckIcon">🏁</span><span class="matMini">'+deckNum+' left</span></div>'+
     '<div class="matCell flipped"><span class="matTitle">FLIP</span><span class="matFlipIcon matNum">'+flipValue+'</span><span class="matMini">'+flipText+'</span></div>'+
     '<div class="matCell combat"><span class="matTitle">🎴 COMBAT '+(p.cpu?'':(p.combat?.length||0)+'/2')+'</span>'+matHand(p,i)+'</div>'+
-    '<div class="matCell stats"><span class="matTitle">STATUS</span><span class="matInfo">'+(stats.length?stats.map(safeText).join(' · '):'✓ Ready')+'<br>⚑ '+(p.flags||0)+' · ⚡ '+(p.bonuses||0)+'</span></div>'+
-    '<div class="matCell actions matActionCell"><button class="matAction primary" data-id="'+i+'" data-op="flip" '+(!canFlip?'disabled':'')+'>'+(choiceActive?'✓ SELECT':p.ready?'✓ READY':'🃏 FLIP')+'</button><button class="matAction" data-id="'+i+'" data-op="route" '+(!choiceActive||p.cpu?'disabled':'')+'>⇄ ROUTE</button></div>'+
+    '<div class="matCell stats"><span class="matTitle">STATUS</span><span class="matInfo">'+(stats.length?stats.map(safeText).join(' · '):(p.relayWaiting?'🔧 PIT CREW READY':p.relayRetired?'🏁 HANDOFF COMPLETE':'✓ Ready'))+(state?.settings?.mode==='team'?' · TEAM '+(p.team+1)+' '+(p.relayRole==='reserve'?'RESERVE':'LEAD'):'')+'<br>⚑ '+(p.flags||0)+' · ⚡ '+(p.bonuses||0)+'</span></div>'+
+    '<div class="matCell actions matActionCell"><button class="matAction primary" data-id="'+i+'" data-op="flip" '+(!canFlip?'disabled':'')+'>'+(choiceActive?'✓ SELECT':p.ready?'✓ READY':'🃏 FLIP')+'</button><button class="matAction" data-id="'+i+'" data-op="route" '+(!choiceActive||p.cpu?'disabled':'')+'>⇄ ROUTE</button>'+(p.relayWaiting&&!p.isBot&&onlineSeats.some(seat=>seat.id===i)&&state?.settings?.mode==='team'?'<button class="matAction" data-pit-taunt="'+i+'">📣 TAUNT'+(state.round-(p.lastTauntRound??-2)<2?' · WAIT':'')+'</button>':'')+'</div>'+
     '</div></div>';
  }
  $('roundBadge').textContent='ROUND '+state.round;
- const choice=state.choice!=null&&state.phase==='choice'&&(!onlineMode||state.choice===onlinePlayerId);
+ const choice=state.choice!=null&&state.phase==='choice'&&(!onlineMode||onlineSeats.some(seat=>seat.id===state.choice));
  $('routePrompt').classList.toggle('visible',choice);
  $('routePrompt').innerHTML=choice?'<strong>🛣️ '+safeText(driverLabel(state.players[state.choice]))+' — PICK A ROUTE</strong><span>'+safeText(forks[state.players[state.choice].node][state.players[state.choice].selected].name)+' · ROUTE cycles, SELECT confirms</span>':'';
  $('feed').innerHTML=state.logs.slice(0,2).map(l=>'<div>'+safeText(l)+'</div>').join('');
  $('inventory').innerHTML=state.players.map(p=>'<span class="chip" style="border-color:'+carPaint(p)+'">'+safeText(driverLabel(p))+': '+p.laps+'/'+raceLapLimit()+'</span>').join('');
  $('boardCaption').textContent=choice?'🛣️ Pick your path':state.phase==='flip'?'🃏 Everyone flip!':state.phase==='done'?'🏆 Checkered flag!':'🏎️ Racing!';
- $('leaderHud').innerHTML=state.players.map(p=>'<div class="hudchip '+(!p.cpu?'me':'')+'" style="--driver:'+carPaint(p)+';--driver-secondary:'+(carAccent(p)||carPaint(p))+'"><i class="dot"></i>'+safeText(driverLabel(p))+' <small>'+(p.finished?'FIN #'+((state.placements||[]).find(x=>x.id===p.id)?.place||'–'):(p.laps+'/'+raceLapLimit()))+'</small></div>').join('');
+ $('leaderHud').innerHTML=state.players.map(p=>'<div class="hudchip '+(!p.cpu?'me':'')+'" style="--driver:'+carPaint(p)+';--driver-secondary:'+(carAccent(p)||carPaint(p))+'"><i class="dot"></i>'+safeText(driverLabel(p))+' <small>'+(p.relayWaiting?'PIT READY':p.relayRetired?'RETIRED':p.finished?'FIN #'+((state.placements||[]).find(x=>x.id===p.id)?.place||'–'):(p.laps+'/'+raceLapLimit()))+'</small></div>').join('');
  $('eventTicker').textContent=state.logs[0]||'';eventAudio(state.logs[0]||'');
  $('combatHUD').innerHTML='<b>🎴 COMBAT</b><small>'+((state.players?.[onlineMode?onlinePlayerId:0]?.combat?.length)||0)+'/2 CARDS</small>';
  syncStationSizes();
@@ -1021,7 +1108,7 @@ const isSafeServer=value=>{try{const u=new URL(value);return (u.protocol==='http
 const invitedServer=isSafeServer(urlParams.get('server')||'')?urlParams.get('server').replace(/\/+$/,''):'';
 let preferredServer=invitedServer||'';
 // --- Guest-first online play; authoritative race stays on the separately deployed Worker. ---
-function disconnectOnline(){try{onlineWs?.close(1000,'Leaving room')}catch{}onlineWs=null;onlineMode=false;onlinePlayerId=-1;onlineRoom='';onlineToken='';onlineWinnerShown=false;}
+function disconnectOnline(){for(const ws of onlineConnections.values())try{ws.onclose=null;ws.close(1000,'Leaving room')}catch{}onlineConnections.clear();onlineSeats=[];onlinePrivateHands.clear();onlineWs=null;onlineMode=false;onlinePlayerId=-1;onlineRoom='';onlineToken='';onlineWinnerShown=false;fc45HideShift()}
 let discoveredServerPromise=null;
 async function discoverServer(){
  if(!discoveredServerPromise)discoveredServerPromise=fetch('server-config.json',{cache:'no-store'}).then(async res=>{
@@ -1037,13 +1124,13 @@ function onlineFormError(msg){let el=$('onlineError');if(el){el.textContent=msg;
 function showOnlineSetup(msg=''){$('dialogContent').classList.remove('mainMenu');
  const joining=Boolean(invitedRoom);
  const top=joining?'<h2>🏁 You’re invited to race!</h2><div class="guestIntro"><span class="guestMark">🚗</span><span><strong>Join your friends in Flip Cars</strong><small>No account, app download, or password needed.</small></span></div><div class="inviteBanner">ROOM '+invitedRoom+'</div>':'<h2>🌐 Race with friends</h2><div class="guestIntro"><span class="guestMark">🏎️</span><span><strong>Race together from different devices</strong><small>Create a private room, then send one link. Your guests just enter a nickname.</small></span></div>';
- $('dialogContent').innerHTML='<h1>FLIP <span>CARS</span></h1>'+top+'<label class="onlineNote" for="onlineName">YOUR RACING NICKNAME</label><input class="onlineInput" id="onlineName" maxlength="18" placeholder="e.g. Speedster" autocomplete="nickname" enterkeyhint="go">'+(joining?'<button class="start onlineStart" id="joinRoom">🏁 JOIN RACE</button>':'<button class="start onlineStart" id="createRoom">+ HOST A RACE</button><div class="hostTools"><label class="onlineNote" for="roomInput">ALREADY HAVE A ROOM CODE?</label><input class="onlineInput" id="roomInput" maxlength="6" placeholder="Enter 6-letter code" autocomplete="off" autocapitalize="characters"><button class="start onlineStart" id="joinRoom">→ JOIN WITH CODE</button></div>')+colorSelector()+'<div id="resumeRoomBox"></div><div class="onlineError" id="onlineError" aria-live="polite"></div><p class="helper">Just want to play now? Solo and local racing work offline.</p><button class="mini" id="backOffline">← PLAY OFFLINE INSTEAD</button>';
- $('onlineName').value=loadTag()||storeGet('flipcars_name')||'';wireColors();wireSecondary();$('onlineName').insertAdjacentHTML('afterend','<p class="helper">'+(loadTag()?'Driver tag <b>'+safeText(loadTag())+'</b> is prefilled. Change this field to race under a different name for this room.':'Create a permanent driver tag from the main-menu Stats tab, or race as a guest.')+'</p>');
+ $('dialogContent').innerHTML='<h1>FLIP <span>CARS</span></h1>'+top+'<label class="onlineNote" for="onlineName">YOUR RACING NICKNAME</label><input class="onlineInput" id="onlineName" maxlength="18" placeholder="e.g. Speedster" autocomplete="nickname" enterkeyhint="go">'+'<div class="fc45LocalPanel"><label for="fc45LocalCount">RACERS ON THIS DEVICE</label><select id="fc45LocalCount"><option value="1">1 — SOLO</option><option value="2">2 — DUO (+1)</option></select><div id="fc45DuoFields" hidden><label for="fc45SecondName">PLAYER 2 NICKNAME</label><input id="fc45SecondName" maxlength="18" placeholder="e.g. PitKing"><label for="fc45SecondColor">PLAYER 2 CAR COLOR</label><select id="fc45SecondColor">'+Object.keys(palette).map(c=>'<option value="'+c+'">'+c+'</option>').join('')+'</select></div><p class="fc45Note">A duo uses two race seats on one device. Each racer gets independent controls and cards.</p></div>'+(joining?'<button class="start onlineStart" id="joinRoom">🏁 JOIN RACE</button>':'<button class="start onlineStart" id="createRoom">+ HOST A RACE</button><div class="hostTools"><label class="onlineNote" for="roomInput">ALREADY HAVE A ROOM CODE?</label><input class="onlineInput" id="roomInput" maxlength="6" placeholder="Enter 6-letter code" autocomplete="off" autocapitalize="characters"><button class="start onlineStart" id="joinRoom">→ JOIN WITH CODE</button></div>')+colorSelector()+'<div id="resumeRoomBox"></div><div class="onlineError" id="onlineError" aria-live="polite"></div><p class="helper">Just want to play now? Solo and local racing work offline.</p><button class="mini" id="backOffline">← PLAY OFFLINE INSTEAD</button>';
+ $('onlineName').value=loadTag()||storeGet('flipcars_name')||'';wireColors();wireSecondary();$('fc45LocalCount').value=String(onlineLocalCount);$('fc45DuoFields').hidden=onlineLocalCount!==2;$('fc45LocalCount').onchange=()=>{onlineLocalCount=+$('fc45LocalCount').value;$('fc45DuoFields').hidden=onlineLocalCount!==2};$('onlineName').insertAdjacentHTML('afterend','<p class="helper">'+(loadTag()?'Driver tag <b>'+safeText(loadTag())+'</b> is prefilled. Change this field to race under a different name for this room.':'Create a permanent driver tag from the main-menu Stats tab, or race as a guest.')+'</p>');
  if($('roomInput')){$('roomInput').value=invitedRoom;$('roomInput').addEventListener('input',ev=>ev.target.value=ev.target.value.toUpperCase().replace(/[^A-HJ-NP-Z2-9]/g,''));}
  const btnCreate=$('createRoom'),btnJoin=$('joinRoom');if(btnCreate)btnCreate.onclick=()=>onlineEnter('create');if(btnJoin)btnJoin.onclick=()=>onlineEnter('join');
  $('onlineName').addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();onlineEnter(joining?'join':'create')}});
  $('backOffline').onclick=()=>{invitedRoom='';showSetup()};
- const last=storeGet('flipcars_last_room');if(last){try{const d=JSON.parse(last);if(d.code&&d.token&&isSafeServer(d.backend)&&(!joining||d.code===invitedRoom)){$('resumeRoomBox').innerHTML='<button class="start" id="resumeRoom">↻ REJOIN MY PREVIOUS SEAT</button>';$('resumeRoom').onclick=()=>{onlineBackend=d.backend;onlineRoom=d.code;onlineToken=d.token;onlinePlayerId=d.id;onlineHost=d.id===0;onlineMode=true;onlineWinnerShown=false;connectRoom()};}}catch{}}
+ const last=storeGet('flipcars_last_room');if(last){try{const d=JSON.parse(last);if(d.code&&d.token&&isSafeServer(d.backend)&&(!joining||d.code===invitedRoom)){$('resumeRoomBox').innerHTML='<button class="start" id="resumeRoom">↻ REJOIN MY PREVIOUS SEAT</button>';$('resumeRoom').onclick=()=>{onlineBackend=d.backend;onlineRoom=d.code;onlineToken=d.token;onlinePlayerId=d.id;onlineSeats=Array.isArray(d.seats)?d.seats:[{id:d.id,token:d.token}];onlineHost=d.id===0;onlineMode=true;onlineWinnerShown=false;document.body.classList.toggle('solo',onlineSeats.length===1);document.body.classList.toggle('multi',onlineSeats.length>1);viewMode='fit';setTabletopMode(onlineSeats.length>1);updateViewControls();connectRoom()};}}catch{}}
  if(msg)onlineFormError(msg);
  $('startModal').classList.remove('hidden');
  if(joining && !$('onlineName').value)setTimeout(()=>{$('onlineName')?.focus()},40);
@@ -1059,14 +1146,14 @@ async function onlineEnter(mode){
  try{
   const base=await serverBase();
   if(!isSafeServer(base))throw new Error('Online hosting is not connected yet. The publisher must configure the multiplayer service once.');
-  const driver=await ensureDriverProfile(loadTag()||name,base);if(driver&&loadTag())await syncOnlineTag(driver,loadTag());
+  const plusOne=+$('fc45LocalCount').value===2?{name:($('fc45SecondName').value||'Player 2').trim(),color:$('fc45SecondColor').value,secondary:'AUTO'}:null;const driver=await ensureDriverProfile(loadTag()||name,base);if(driver&&loadTag())await syncOnlineTag(driver,loadTag());
   const api=base+(mode==='create'?'/api/rooms':'/api/rooms/'+encodeURIComponent(code)+'/join');
-  const res=await fetch(api,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,color:selectedCarColor||storeGet('flipcars_color')||'RED',secondary:selectedSecondaryColor||storeGet('flipcars_secondary')||'AUTO',profileId:driver?.id,profileToken:driver?.token,settings:menuOptions})});
+  const res=await fetch(api,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,color:selectedCarColor||storeGet('flipcars_color')||'RED',secondary:selectedSecondaryColor||storeGet('flipcars_secondary')||'AUTO',profileId:driver?.id,profileToken:driver?.token,settings:menuOptions,plusOne})});
   const data=await res.json();if(!res.ok)throw new Error(data.error||'Cannot connect to the race');
   storeSet('flipcars_server',base);if(!loadTag())storeSet('flipcars_name',name);preferredServer=base;invitedRoom='';
-  onlineBackend=base;onlineMode=true;onlineRoom=data.code;onlineToken=data.token;onlinePlayerId=data.playerId;onlineHost=!!data.host;onlineWinnerShown=false;recordedRace=false;state=null;
-  storeSet('flipcars_last_room',JSON.stringify({code:onlineRoom,token:onlineToken,id:onlinePlayerId,backend:onlineBackend}));
-  document.body.classList.add('solo');document.body.classList.remove('multi');viewMode=(window.innerWidth<650&&window.innerHeight>window.innerWidth)?'follow':'fit';updateViewControls();connectRoom();
+  onlineBackend=base;onlineMode=true;onlineRoom=data.code;onlineToken=data.token;onlinePlayerId=data.playerId;onlineHost=!!data.host;onlineSeats=data.seats||[{id:data.playerId,token:data.token}];onlineWinnerShown=false;recordedRace=false;state=null;
+  storeSet('flipcars_last_room',JSON.stringify({code:onlineRoom,token:onlineToken,id:onlinePlayerId,backend:onlineBackend,seats:onlineSeats}));
+  document.body.classList.toggle('solo',onlineSeats.length===1);document.body.classList.toggle('multi',onlineSeats.length>1);viewMode='fit';setTabletopMode(onlineSeats.length>1);updateViewControls();connectRoom();
   if(mode==='create'&&queuedFriendInvite){const to=queuedFriendInvite;queuedFriendInvite='';socialFetch('invite',{target:to,room:onlineRoom}).then(()=>{const notice=$('onlineError');if(notice)notice.textContent='🏁 Direct party invitation sent!' }).catch(err=>{const notice=$('onlineError');if(notice)notice.textContent='Party created, but invitation failed: '+err.message})}
  }catch(err){if(btn)btn.disabled=false;if(join)join.disabled=false;onlineFormError(err.message||'Connection failed. Ask the host to check the race server.');}
 }
@@ -1090,12 +1177,20 @@ async function shareInvite(){
 }
 function connectRoom(){
  try{
- try{if(onlineWs){onlineWs.onclose=null;onlineWs.close()}}catch{}
- const url=onlineBackend.replace(/^http/,'ws')+'/api/rooms/'+encodeURIComponent(onlineRoom)+'/ws';
- onlineWs=new WebSocket(url,['flipcars','seat.'+onlineToken]);onlineWs.onopen=()=>{$('onlineBtn').textContent='● ONLINE';$('onlineBtn').style.color='#93f7ba'};
- onlineWs.onmessage=event=>{let data;try{data=JSON.parse(event.data)}catch{return};if(data.type==='error'){onlineFormError(data.error);return}if(data.type==='welcome'||data.type==='snapshot'){onlineRoster=data.members||[];onlineRoomSettings=data.settings||null;onlineHost=data.host===onlinePlayerId;if(data.started&&data.game){applyOnlineState(data.game)}else{state=null;onlineWinnerShown=false;recordedRace=false;if(!socialOpen)showOnlineLobby()}}};
- onlineWs.onclose=()=>{if(!onlineMode)return;$('onlineBtn').textContent='○ OFFLINE';$('onlineBtn').style.color='#ffb6a3';if(state?.phase!=='done')showOnlineDisconnected()};
- onlineWs.onerror=()=>onlineFormError('Connection failed. Confirm your Worker is deployed and the server URL is correct.');
+  for(const sock of onlineConnections.values())try{sock.onclose=null;sock.close()}catch{}onlineConnections.clear();onlinePrivateHands.clear();
+  const seats=onlineSeats.length?onlineSeats:[{id:onlinePlayerId,token:onlineToken}];
+  for(const seat of seats){
+   const ws=new WebSocket(onlineBackend.replace(/^http/,'ws')+'/api/rooms/'+encodeURIComponent(onlineRoom)+'/ws',['flipcars','seat.'+seat.token]);onlineConnections.set(seat.id,ws);if(seat.id===onlinePlayerId)onlineWs=ws;
+   ws.onopen=()=>{$('onlineBtn').textContent='● ONLINE';$('onlineBtn').style.color='#93f7ba'};
+   ws.onmessage=event=>{let data;try{data=JSON.parse(event.data)}catch{return}
+    if(data.type==='error'){onlineFormError(data.error);return}if(data.type!=='welcome'&&data.type!=='snapshot')return;
+    onlineRoster=data.members||[];onlineRoomSettings=data.settings||null;onlineHost=data.host===onlinePlayerId;
+    if(data.started&&data.game){const mine=data.game.players.find(p=>p.id===seat.id);if(mine)onlinePrivateHands.set(seat.id,{combat:mine.combat,pendingCombat:mine.pendingCombat});applyOnlineState(data.game)}
+    else{state=null;onlineWinnerShown=false;recordedRace=false;fc45HideShift();if(!socialOpen)showOnlineLobby()}
+   };
+   ws.onclose=()=>{if(!onlineMode)return;const living=[...onlineConnections.values()].some(sock=>sock.readyState===WebSocket.OPEN);if(!living){$('onlineBtn').textContent='○ OFFLINE';$('onlineBtn').style.color='#ffb6a3';if(state?.phase!=='done')showOnlineDisconnected()}};
+   ws.onerror=()=>onlineFormError('Connection issue. Check the game server and your network.');
+  }
  }catch(err){showOnlineSetup('Connection failed: '+err.message)}
 }
 function showOnlineLobby(){
@@ -1103,7 +1198,7 @@ function showOnlineLobby(){
  const members=onlineRoster.map(m=>'<div class="lobbyPlayer"><span style="color:'+(palette[m.color]||C[m.id])+'">🏎️ '+(m.profileId?'<button class="lobbyProfileBtn" data-driver="'+safeText(m.profileId)+'">'+safeText(m.name)+' ↗</button>':safeText(m.name))+'</span><span class="lobbyCarFinish">'+safeText(m.color+(m.secondary?' / '+m.secondary:''))+'</span><span class="onlineStatus">'+(m.isBot?'AI':m.online?'CONNECTED':'WAITING')+'</span></div>').join('');
  const invite=getInviteLink();
  $('dialogContent').classList.remove('mainMenu');
- $('dialogContent').innerHTML='<h1>FLIP <span>CARS</span></h1><h2>🏁 Private Race Garage</h2><p>'+(onlineHost?'Your race is ready! Send the invite link. Guests open it, enter a nickname, and tap Join Race.':'You’re in! Wait here for the host to start.')+'</p><div class="roomCode" id="copyRoom" title="Copy room code">'+onlineRoom+'</div>'+(onlineHost?'<div class="inviteActions"><button class="start onlineStart" id="shareInvite">↗ SHARE INVITE</button><button class="start onlineStart" id="copyInvite">⧉ COPY LINK</button></div><input class="shareLink" id="inviteLink" readonly aria-label="Shareable race invitation" value="'+safeText(invite)+'"><p class="onlineNote">No guest account or server setup needed. Simply send this link.</p>':'<p class="onlineNote">Room code: '+onlineRoom+'</p>')+'<p class="onlineNote">Host settings: '+safeText(optionsSummary(onlineRoomSettings||menuOptions))+' · 🏁 '+safeLapCount(onlineRoomSettings?.laps||selectedLapCount)+' laps'+'</p><p class="onlineNote">Players: '+onlineRoster.filter(m=>!m.isBot).length+' of 4</p>'+(onlineHost?'<button class="start onlineStart" id="inviteFriendsFromLobby">👥 INVITE FRIENDS DIRECTLY</button>':'')+members+(onlineHost?'<div class="selectrow"><label for="lobbyCpu">Fill empty slots with CPU opponents</label><select id="lobbyCpu"></select></div><div class="selectrow"><label for="lobbyLaps">🏁 Race length</label><select id="lobbyLaps">'+lapOptions(selectedLapCount)+'</select></div><button class="start" id="startOnline">🏁 START THE RACE</button>':'<p class="modalResult">Waiting for the host to start the race…</p>')+'<div class="onlineError" id="onlineError" aria-live="polite"></div><button class="mini" id="leaveRoom">← LEAVE ROOM</button>';
+ $('dialogContent').innerHTML='<h1>FLIP <span>CARS</span></h1><h2>🏁 Private Race Garage</h2><p>'+(onlineHost?'Your race is ready! Send the invite link. Guests open it, enter a nickname, and tap Join Race.':'You’re in! Wait here for the host to start.')+'</p><div class="roomCode" id="copyRoom" title="Copy room code">'+onlineRoom+'</div>'+(onlineHost?'<div class="inviteActions"><button class="start onlineStart" id="shareInvite">↗ SHARE INVITE</button><button class="start onlineStart" id="copyInvite">⧉ COPY LINK</button></div><input class="shareLink" id="inviteLink" readonly aria-label="Shareable race invitation" value="'+safeText(invite)+'"><p class="onlineNote">No guest account or server setup needed. Simply send this link.</p>':'<p class="onlineNote">Room code: '+onlineRoom+'</p>')+'<p class="onlineNote">Host settings: '+safeText(optionsSummary(onlineRoomSettings||menuOptions))+' · 🏁 '+safeLapCount(onlineRoomSettings?.laps||selectedLapCount)+' laps'+'</p><p class="onlineNote">Players: '+onlineRoster.filter(m=>!m.isBot).length+' of 4 seats across '+new Set(onlineRoster.filter(m=>!m.isBot).map(m=>m.deviceGroup)).size+' devices</p>'+(onlineHost?'<button class="start onlineStart" id="inviteFriendsFromLobby">👥 INVITE FRIENDS DIRECTLY</button>':'')+members+(onlineHost?'<div class="selectrow"><label for="lobbyCpu">Fill empty slots with CPU opponents</label><select id="lobbyCpu"></select></div><div class="fc45LocalPanel"><label>RACE MODE</label><div class="fc45ModeRow"><button type="button" id="fc45Classic" class="fc45ModeButton active">🏁 CLASSIC<br>3 / 5 / 10 LAPS</button><button type="button" id="fc45Team" class="fc45ModeButton">🔧 PIT WARS<br>2-LAP TEAM RELAY</button></div><p class="fc45Note" id="fc45TeamDesc">Up to four racers. One device may control two seats.</p></div><div class="selectrow"><label for="lobbyLaps">🏁 Race length</label><select id="lobbyLaps">'+lapOptions(selectedLapCount)+'</select></div><button class="start" id="startOnline">🏁 START THE RACE</button>':'<p class="modalResult">Waiting for the host to start the race…</p>')+'<div class="onlineError" id="onlineError" aria-live="polite"></div><button class="mini" id="leaveRoom">← LEAVE ROOM</button>';
  if($('inviteFriendsFromLobby'))$('inviteFriendsFromLobby').onclick=()=>showSocialHub('friends');
  $('dialogContent').querySelectorAll('.lobbyProfileBtn').forEach(b=>b.onclick=()=>showDriverCard(b.dataset.driver));
  $('copyRoom').onclick=async()=>{const ok=await copyInviteText(onlineRoom);onlineFormError(ok?'Room code copied':'Select the room code to copy it.')};
@@ -1112,7 +1207,8 @@ function showOnlineLobby(){
   $('shareInvite').onclick=shareInvite;
   $('copyInvite').onclick=async()=>{const ok=invite&&await copyInviteText(invite);onlineFormError(ok?'Invite link copied! Send it to your friends.':'Select and copy the link above.');};
   const sl=$('lobbyCpu');sl.innerHTML=Array.from({length:5-onlineRoster.length},(_,i)=>'<option value="'+i+'">'+i+' CPU</option>').join('');sl.value=String(Math.max(0,4-onlineRoster.length));
-  $('lobbyLaps').onchange=()=>setLapChoice($('lobbyLaps').value);$('startOnline').onclick=()=>{if(onlineWs?.readyState===1){setLapChoice($('lobbyLaps').value);onlineWs.send(JSON.stringify({type:'start',cpu:+sl.value,settings:{...menuOptions,laps:selectedLapCount}}));}else onlineFormError('Not connected yet. Check your internet connection.')};
+  const updateMode=()=>{const team=onlineModePick==='team';$('fc45Team').classList.toggle('active',team);$('fc45Classic').classList.toggle('active',!team);$('lobbyLaps').disabled=team;$('fc45TeamDesc').textContent=team?'Four seats, two teams, one lead + one reserve car each. Reserve enters from pit exit after the lead crosses the checkered line.':'Standard 4-car racing; mix solo players, duos and AI.';sl.value=team?String(4-onlineRoster.length):sl.value;sl.disabled=team};$('fc45Classic').onclick=()=>{onlineModePick='classic';updateMode()};$('fc45Team').onclick=()=>{onlineModePick='team';updateMode()};updateMode();
+  $('lobbyLaps').onchange=()=>setLapChoice($('lobbyLaps').value);$('startOnline').onclick=()=>{if(onlineWs?.readyState===1){setLapChoice($('lobbyLaps').value);onlineWs.send(JSON.stringify({type:'start',cpu:onlineModePick==='team'?4-onlineRoster.length:+sl.value,settings:{...menuOptions,laps:onlineModePick==='team'?2:selectedLapCount,mode:onlineModePick}}));}else onlineFormError('Not connected yet. Check your internet connection.')};
   if(!invite)onlineFormError('The game needs a public website URL before you can share clickable invitations.');
  }
  $('startModal').classList.remove('hidden');
@@ -1122,14 +1218,50 @@ function showOnlineDisconnected(){
  $('reconnectRoom').onclick=connectRoom;$('leaveDisconnected').onclick=()=>{disconnectOnline();$('onlineBtn').textContent='🌐 ONLINE';showSetup()};$('startModal').classList.remove('hidden');
 }
 function applyOnlineState(game){
- const old=state;const incoming=game.players.map(p=>({...p,cpu:p.id!==onlinePlayerId}));state={...game,players:incoming,humans:1};if(old?.players?.some(p=>state.players[p.id]?.node!==p.node))sfx('engine',.26);
- document.body.classList.add('solo');document.body.classList.remove('multi');
+ const old=state;const incoming=game.players.map(p=>({...p,...(onlinePrivateHands.get(p.id)||{}),cpu:!onlineSeats.some(seat=>seat.id===p.id)&&!p.isBot}));state={...game,players:incoming,humans:onlineSeats.length||1};if(old?.players?.some(p=>state.players[p.id]?.node!==p.node))sfx('engine',.26);
+ document.body.classList.toggle('solo',onlineSeats.length===1);document.body.classList.toggle('multi',onlineSeats.length>1);
  if(game.phase==='done'){if(!onlineWinnerShown){onlineWinnerShown=true;recordResult();showWinner((game.placements||[]).map(x=>state.players[x.id]))}}else if(!socialOpen)$('startModal').classList.add('hidden');
- renderSeats();drawAll();
+ renderSeats();drawAll();fc45UpdateShift();fc45ShowTaunt(game.lastTaunt);
 }
 
+// 4.5 PIT WARS — animated shifter. Only the server knows the lead racer's secret.
+let fc45UiRole=null,fc45LastSignalKey='',fc45TauntHideTimer=null;
+const fc45ShiftOverlay=document.createElement('div');fc45ShiftOverlay.className='fc45ShifterBackdrop';fc45ShiftOverlay.id='fc45ShiftOverlay';fc45ShiftOverlay.hidden=true;fullscreenRoot.appendChild(fc45ShiftOverlay);
+const fc45TauntOverlay=document.createElement('div');fc45TauntOverlay.id='fc45TauntOverlay';fc45TauntOverlay.hidden=true;fullscreenRoot.appendChild(fc45TauntOverlay);
+function fc45HideShift(){fc45ShiftOverlay.hidden=true;fc45UiRole=null;fc45ShiftKey='';fc45ShiftSequence=[];fc45LastSignalKey=''}
+function fc45GearSlot(gear){const b=fc45ShiftOverlay.querySelector('.fc45Stick');if(b){const x=gear===1||gear===3?-62:62,y=gear<=2?-68:68;b.style.transform='translate('+x+'px,'+y+'px)';b.textContent='GEAR '+gear}}
+function fc45ShifterHTML(role,p,h){const prev=h.previous||'';const signal=state?.lastSignal?.team===h.team?({up:'ASCENDING',down:'DESCENDING',mix:'MIXED',ready:'READY'}[state.lastSignal.signal]||''):'';const actions=role==='lead'?'Set a secret order. Each gear can be used once. The waiting racers will race to copy it.':'Race the opposing pit driver to match the secret four-gear order.'+(signal?' PUBLIC SIGNAL: '+signal:'');
+ return '<div class="fc45ShiftCard" role="dialog" aria-modal="true" aria-label="Four speed gear selector"><header><h2>⚙️ '+(role==='lead'?'SET YOUR SHIFT!':role==='guess'?'PIT LANE GEAR SYNC':'GEAR CHALLENGE')+'</h2><strong style="color:#f9d773">🏁 4.5</strong></header><div class="fc45Sub">🏎️ '+safeText(p.name)+' · '+safeText(actions)+'</div>'+
+ '<div class="fc45GearMachine"><div class="fc45Stick" aria-hidden="true">N</div>'+[1,2,3,4].map(n=>'<button type="button" class="fc45GearButton" data-gear="'+n+'" aria-label="Shift to gear '+n+'">'+n+'</button>').join('')+'</div>'+
+ '<div class="fc45Sub" style="text-align:center">SHIFT PATTERN · '+(role==='lead'?'Previous '+(prev?prev.split('').join(' → '):'NONE'):'One attempt · order matters')+'</div><div class="fc45GearSeq">'+[0,1,2,3].map(()=>'<span>—</span>').join('')+'</div><div class="fc45Row"><button class="mini" id="fc45ShiftReset">↺ RESET</button><button class="start" id="fc45ShiftSubmit" disabled>⚡ LOCK SHIFT</button></div>'+
+ (role==='lead'?'<p class="fc45Sub" style="margin-top:8px">PUBLIC SIGNALS — useful to your teammate, but your rivals also see them.</p><div class="fc45Taunts">'+[['up','⬆ ASCENDING'],['down','⬇ DESCENDING'],['mix','🔀 MIXED'],['ready','🤝 READY!']].map(([k,v])=>'<button data-shift-signal="'+k+'">'+v+'</button>').join('')+'</div>':'')+
+ '<p class="fc45Sub" id="fc45ShiftNotice" aria-live="polite" style="text-align:center;margin-top:8px">The stick moves to each selected gear. No duplicates allowed.</p></div>'}
+function fc45ShiftRefresh(){const seq=fc45ShiftSequence;fc45ShiftOverlay.querySelectorAll('[data-gear]').forEach(btn=>{const used=seq.includes(+btn.dataset.gear);btn.classList.toggle('used',used);btn.disabled=used});fc45ShiftOverlay.querySelectorAll('.fc45GearSeq span').forEach((x,i)=>{x.textContent=seq[i]||'—'});const submit=fc45ShiftOverlay.querySelector('#fc45ShiftSubmit');if(submit)submit.disabled=seq.length!==4}
+function fc45UpdateShift(){
+ const h=state?.handoff;if(!onlineMode||state?.phase!=='handoff'||!h){fc45HideShift();return}
+ const leadSeat=onlineSeats.find(x=>x.id===h.lead),reserveSeat=onlineSeats.find(x=>x.id===h.reserve);
+ const opponentReserve=state.players.find(p=>p.team!==h.team&&p.relayRole==='reserve'&&!p.isBot);
+ const rivalSeat=onlineSeats.find(x=>x.id===opponentReserve?.id);
+ let role=null,seat=null;
+ if(h.stage==='lead'&&leadSeat){role='lead';seat=leadSeat}
+ if(h.stage==='guess'){
+  if(reserveSeat&&!h.submitted.includes(h.reserve)){role='guess';seat=reserveSeat}
+  else if(rivalSeat&&!h.submitted.includes(rivalSeat.id)){role='guess';seat=rivalSeat}
+ }
+ if(!role||!seat){fc45UiRole=null;fc45ShiftOverlay.hidden=false;fc45ShiftOverlay.innerHTML='<div class="fc45ShiftCard"><h2>🔧 PIT LANE</h2><p class="fc45Waiting">'+(h.stage==='lead'?'Lead driver is choosing the secret gear pattern…':'Waiting for the pit drivers to submit their shifts…')+'</p><p class="fc45Sub">'+(state.lastSignal?.team===h.team?'📢 PUBLIC SIGNAL: '+({up:'ASCENDING',down:'DESCENDING',mix:'MIXED',ready:'READY'}[state.lastSignal.signal]||''):'No public signals yet.')+'</p><small>Challenge expires automatically if no one submits.</small></div>';return}
+ const key=[h.team,h.stage,seat.id,h.deadline].join(':');if(key===fc45ShiftKey&&fc45UiRole===role&&!fc45ShiftOverlay.hidden)return;
+ fc45ShiftKey=key;fc45UiRole=role;fc45ShiftSequence=[];fc45ShiftOverlay.hidden=false;fc45ShiftOverlay.innerHTML=fc45ShifterHTML(role,state.players[seat.id],h);
+ fc45ShiftOverlay.querySelectorAll('[data-gear]').forEach(button=>button.onclick=()=>{const n=+button.dataset.gear;if(fc45ShiftSequence.includes(n))return;fc45ShiftSequence.push(n);fc45GearSlot(n);fc45ShiftRefresh();beep(210+n*125,.045)});
+ fc45ShiftOverlay.querySelector('#fc45ShiftReset').onclick=()=>{fc45ShiftSequence=[];fc45ShiftRefresh();const knob=fc45ShiftOverlay.querySelector('.fc45Stick');if(knob){knob.style.transform='translate(0px,0px)';knob.textContent='N'}};
+ fc45ShiftOverlay.querySelector('#fc45ShiftSubmit').onclick=()=>{if(fc45ShiftSequence.length!==4)return;const ws=onlineConnections.get(seat.id);if(!ws||ws.readyState!==1){$('fc45ShiftNotice').textContent='Connection interrupted. Reconnect to submit.';return}ws.send(JSON.stringify({type:'shift',op:role==='lead'?'set':'guess',code:fc45ShiftSequence.join('')}));fc45ShiftOverlay.innerHTML='<div class="fc45ShiftCard"><h2>⚙️ SHIFT LOCKED!</h2><p class="fc45Waiting">Waiting for official pit-lane results…</p></div>';fc45UiRole='submitted'};
+ fc45ShiftOverlay.querySelectorAll('[data-shift-signal]').forEach(b=>b.onclick=()=>{const ws=onlineConnections.get(seat.id);if(ws?.readyState===1)ws.send(JSON.stringify({type:'signal',signal:b.dataset.shiftSignal}));$('fc45ShiftNotice').textContent='Public signal sent — rival pit crew can see the hint.'});
+}
+function fc45OpenTaunts(id){if(state?.phase==='handoff')return;const ws=onlineConnections.get(id);if(!ws||ws.readyState!==1)return;const p=state?.players[id];if(!p?.relayWaiting)return;if(state.round-(p.lastTauntRound??-2)<2){showGameNotice('📣 Taunt recharging. Try again in '+(2-(state.round-(p.lastTauntRound??-2)))+' race round(s).');return}const items=['📢 BOOOOO!','🐌 SLOWPOKE!','🟢 SLIME SPLASH!','💥 RATTLE!'];$('dialogContent').innerHTML='<h2>📣 PIT CREW MISCHIEF</h2><p>One taunt every two race rounds. Your opponent can turn these effects off.</p><div class="fc45Taunts">'+items.map((x,i)=>'<button data-taunt-pick="'+i+'">'+x+'</button>').join('')+'</div><button class="mini" id="fc45TauntBack">BACK TO TRACK</button>';htmlAssignTaunts();function htmlAssignTaunts(){$('startModal').classList.remove('hidden');$('fc45TauntBack').onclick=()=>{$('startModal').classList.add('hidden')};$('dialogContent').querySelectorAll('[data-taunt-pick]').forEach(b=>b.onclick=()=>{ws.send(JSON.stringify({type:'taunt',effect:+b.dataset.tauntPick}));$('startModal').classList.add('hidden')})}}
+setInterval(()=>{const e=document.getElementById('fc45ShiftClock'),deadline=state?.handoff?.deadline;if(e&&deadline)e.textContent=' · ⏱ '+Math.max(0,Math.ceil((deadline-Date.now())/1000))+'s'},1000);
+function fc45ShowTaunt(value){if(!value||value.serial===fc45LastTauntSerial)return;fc45LastTauntSerial=value.serial;const local=onlineSeats.some(seat=>seat.id===value.target);if(!local||storeGet('flipcars_taunt_off')==='1')return;const words=['📢 BOOOOO!','🐌 SLOWPOKE!','🟢 SPLAAAT!','💥 RATTLE!'];fc45TauntOverlay.hidden=false;fc45TauntOverlay.className='fc45TauntFx'+(value.effect===2?' slime':'');fc45TauntOverlay.textContent=words[value.effect]||'📣 BOO!';if(fc45TauntHideTimer)clearTimeout(fc45TauntHideTimer);if(value.effect===3&&window.matchMedia?.('(prefers-reduced-motion: reduce)').matches!==true)fullscreenRoot.classList.add('fc45Rattle');fc45TauntHideTimer=setTimeout(()=>{fc45TauntOverlay.hidden=true;fullscreenRoot.classList.remove('fc45Rattle')},1050)}
+
 // UI wiring: event delegation survives re-render.
-document.querySelector('.arena').addEventListener('click',ev=>{const profileBtn=ev.target.closest('[data-player-profile]');if(profileBtn){showDriverCard(profileBtn.dataset.playerProfile);return}const combat=ev.target.closest('[data-combat]');if(combat&&!combat.disabled){chooseCombat(+combat.dataset.id,+combat.dataset.combat);return}const discard=ev.target.closest('[data-discard]');if(discard){discardCombat(+discard.dataset.id,+discard.dataset.discard);return}let btn=ev.target.closest('[data-id][data-op]');if(btn&&!btn.disabled)playerAction(+btn.dataset.id,btn.dataset.op)});
+document.querySelector('.arena').addEventListener('click',ev=>{const tauntBtn=ev.target.closest('[data-pit-taunt]');if(tauntBtn){fc45OpenTaunts(+tauntBtn.dataset.pitTaunt);return}const profileBtn=ev.target.closest('[data-player-profile]');if(profileBtn){showDriverCard(profileBtn.dataset.playerProfile);return}const combat=ev.target.closest('[data-combat]');if(combat&&!combat.disabled){chooseCombat(+combat.dataset.id,+combat.dataset.combat);return}const discard=ev.target.closest('[data-discard]');if(discard){discardCombat(+discard.dataset.id,+discard.dataset.discard);return}let btn=ev.target.closest('[data-id][data-op]');if(btn&&!btn.disabled)playerAction(+btn.dataset.id,btn.dataset.op)});
 window.addEventListener('keydown',e=>{if(e.repeat||e.altKey||e.ctrlKey||e.metaKey)return;let key=e.key.toLowerCase();if(key==='escape'&&$('startModal').classList.contains('hidden')){$('helpBtn').click();return}if(!$('startModal').classList.contains('hidden'))return;if(state&&state.humans===1&&(key===' '||key==='enter'||key==='arrowright')){e.preventDefault();playerAction(onlineMode?onlinePlayerId:0,key==='arrowright'?'route':'flip');return}let found=keys.findIndex(pair=>pair.includes(key));if(found>=0){e.preventDefault();playerAction(found,keys[found][0]===key?'flip':'route')}});
 $('focusBtn').onclick=()=>{viewMode=viewMode==='fit'?'follow':'fit';updateViewControls();drawAll();beep(550,.06)};
 $('fullBtn').onclick=async()=>{
@@ -1144,7 +1276,7 @@ window.addEventListener('resize',()=>{syncStationSizes();scheduleBoardResize()},
 if(typeof ResizeObserver!=='undefined'){new ResizeObserver(()=>{syncStationSizes();scheduleBoardResize()}).observe($('boardwrap'))}
 $('soundBtn').onclick=()=>{soundOn=!soundOn;menuOptions.sfx=soundOn;storeSet(OPTIONS_KEY,JSON.stringify(menuOptions));$('soundBtn').textContent=soundOn?'🔊 SFX':'🔇 SFX';if(!soundOn)engineAudio.pause();else sfx('engine',.2)};
 $('musicBtn').onclick=()=>{$('dialogContent').classList.remove('cardDetails');$('dialogContent').innerHTML='<h1>🎵 RACE <span>RADIO</span></h1><p>Five original looping instrumentals. Select a station after interacting with the page. Sound effects have their own toggle.</p>'+playlist.map(([id,name],ix)=>'<button class="start" data-song="'+id+'">'+['🌇','🎸','🚘','🌊','🌃'][ix]+' '+name+(currentlyPlaying===id?' ✓':'')+'</button>').join('')+'<button class="start" data-song="off">🔇 STOP MUSIC</button><button class="mini" id="closeMusic">BACK</button>';$('startModal').classList.remove('hidden');$('dialogContent').querySelectorAll('[data-song]').forEach(b=>b.onclick=()=>{playTrack(b.dataset.song);$('startModal').classList.add('hidden')});$('closeMusic').onclick=()=>$('startModal').classList.add('hidden')};
-$('tableBtn').onclick=()=>{tabletop=!tabletop;document.body.classList.toggle('tabletop',tabletop);$('tableBtn').textContent=tabletop?'⇄ TABLE ✓':'⇄ TABLE';syncStationSizes();scheduleBoardResize()};
+$('tableBtn').onclick=()=>setTabletopMode(!tabletop);
 async function openProfile(){return showSocialHub('friends')}
 // 4.3 FRIENDS GARAGE: searchable tags, requests, presence, messages and direct lobby invites.
 let socialOpen=false,socialPage='friends',socialViewer='',socialCache=null,socialRegistered=false,socialUnread=0,socialBase='',queuedFriendInvite='',socialPolling=false;
@@ -1250,6 +1382,8 @@ setInterval(pollSocial,12000);setTimeout(pollSocial,1200);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)pollSocial()});
 window.addEventListener('focus',pollSocial);
 
+// Taunt controls are optional on every device; disable all visual banter locally.
+const fc45TauntToggle=document.createElement('button');fc45TauntToggle.className='mini';fc45TauntToggle.id='fc45TauntToggle';fc45TauntToggle.textContent=storeGet('flipcars_taunt_off')==='1'?'🔇 TAUNTS OFF':'📣 TAUNTS ON';fc45TauntToggle.title='Enable or disable on-screen taunts';fc45TauntToggle.onclick=()=>{const off=storeGet('flipcars_taunt_off')!=='1';storeSet('flipcars_taunt_off',off?'1':'0');fc45TauntToggle.textContent=off?'🔇 TAUNTS OFF':'📣 TAUNTS ON';fc45TauntOverlay.hidden=true};document.querySelector('.head-actions')?.appendChild(fc45TauntToggle);
 $('profileBtn').onclick=()=>showSetup('stats');
 $('helpBtn').onclick=()=>showSetup('rules');
 $('newBtn').onclick=()=>{if(state&&state.phase!=='done'&&!window.confirm('Leave this race and start a new one?'))return;if(onlineMode){disconnectOnline();showOnlineSetup()}else showSetup()};

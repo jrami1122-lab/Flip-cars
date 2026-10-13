@@ -1,5 +1,5 @@
-/* Flip Cars 4.4.1: local-play resilience; live multiplayer is never cached. */
-const VERSION='flipcars-v4.4.1-static-1';
+/* Flip Cars 4.5: local-play resilience; live multiplayer is never cached. */
+const VERSION='flipcars-v4.5-static-2';
 const STATIC=['./','./index.html','./manifest.webmanifest',
 './icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./icons/apple-touch-icon.png','./icons/favicon-32.png',
 './audio/flip.mp3','./audio/crash.mp3','./audio/engine.mp3','./audio/boost.mp3','./audio/burnout.mp3',
