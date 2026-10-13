@@ -7,7 +7,7 @@ const CODE=/^[A-HJ-NP-Z2-9]{6}$/;
 const norm=s=>String(s||'').trim().toLowerCase();
 const cleanHandle=s=>String(s||'').replace(/[^A-Za-z0-9_-]/g,'').slice(0,18);
 const present=(s,id,viewer,now=Date.now())=>{const u=s.users[id];if(!u)return null;const friend=!!s.friends[viewer]?.includes(id),isSelf=id===viewer;const blocked=!!s.blocks[viewer]?.includes(id)||!!s.blocks[id]?.includes(viewer);return {id:u.id,tag:u.tag,name:u.name,online:!blocked&&(isSelf||friend)&&u.showOnline!==false&&now-(s.presence[id]?.at||0)<90000,room:friend&&!blocked&&u.showOnline!==false&&now-(s.presence[id]?.at||0)<90000?s.presence[id]?.room||'':undefined,friend,blocked,...(isSelf?{showOnline:u.showOnline!==false,allowInvites:u.allowInvites!==false,allowMessages:u.allowMessages!==false}:{}),requested:!!s.requests[id]?.includes(viewer),incoming:!!s.requests[viewer]?.includes(id)};};
-const blank=()=>({users:{},tags:{},friends:{},requests:{},messages:{},read:{},invites:{},blocks:{},presence:{},rates:{}});
+const blank=()=>({users:{},tags:{},friends:{},requests:{},messages:{},read:{},invites:{},blocks:{},presence:{},rates:{},notifications:{},notificationRead:{}});
 const key=(a,b)=>[a,b].sort().join(':');
 const unique=(a,id)=>[...new Set([...(a||[]),id])];
 const forget=(a,id)=>(a||[]).filter(x=>x!==id);
@@ -19,6 +19,21 @@ export class SocialDirectory{
   const path=new URL(req.url).pathname;let b;try{b=req.method==='POST'?await req.json():{}}catch{return reply({error:'Invalid request'},400)}
   const id=String(b.id||'');if(!ID.test(id))return reply({error:'Unauthorized'},401);
   const s=await this.ctx.storage.get('social')||blank();let changed=false;
+  s.notifications??={};s.notificationRead??={};
+  const addAlert=(to,type,from,extra={})=>{
+   s.notifications[to]??=[];
+   const now=Date.now();
+   s.notifications[to].push({id:crypto.randomUUID(),type,from,at:now,...extra});
+   s.notifications[to]=s.notifications[to].filter(a=>now-a.at<30*86400000).slice(-90);
+   changed=true;
+  };
+  const seenAlerts=(predicate)=>{
+   const notifications=s.notifications[id]||[];
+   s.notificationRead[id]??=[];
+   const newIds=notifications.filter(predicate).map(x=>x.id);
+   s.notificationRead[id]=[...new Set([...s.notificationRead[id],...newIds])].slice(-150);
+   if(newIds.length)changed=true;
+  };
   const save=async()=>{if(changed)await this.ctx.storage.put('social',s)};
   const error=(message,status=400)=>reply({error:message},status);
   const targetId=x=>{const q=String(x||'').trim();return ID.test(q)?q:(s.tags[norm(q)]||'')};
@@ -60,6 +75,11 @@ export class SocialDirectory{
   if(path==='/privacy'){
    for(const k of ['showOnline','allowInvites','allowMessages'])if(typeof b[k]==='boolean')s.users[id][k]=b[k];changed=true;await save();return reply({profile:summary(id)});
   }
+  if(path==='/alerts-read'){
+   const ids=Array.isArray(b.ids)?b.ids.filter(x=>typeof x==='string').slice(0,90):[];
+   seenAlerts(a=>ids.length?ids.includes(a.id):true);
+   await save();return reply({ok:true});
+  }
   if(path==='/state'){
    // Read-only snapshot. No automatic registration, no raw tokens, no public presence for strangers.
    const friends=(s.friends[id]||[]).map(summary).filter(Boolean).filter(x=>!x.blocked);
@@ -67,7 +87,13 @@ export class SocialDirectory{
    const outgoing=Object.keys(s.requests).filter(target=>s.requests[target]?.includes(id)).map(summary).filter(Boolean).filter(x=>!x.blocked);
    const now=Date.now(),invites=(s.invites[id]||[]).filter(x=>now-x.at<7200000&&x.status==='pending'&&!blocked(x.from)).map(x=>({...x,from:summary(x.from)}));
    const unread=friends.reduce((n,f)=>{const k=key(id,f.id),last=s.read[id]?.[k]||0;return n+(s.messages[k]||[]).filter(m=>m.from!==id&&m.at>last).length},0);
-   return reply({self:summary(id),friends,incoming,outgoing,invites,unread});
+   const chats=friends.map(f=>{
+    const k=key(id,f.id),messages=s.messages[k]||[],last=messages.at(-1),read=s.read[id]?.[k]||0;
+    return {...f,last: last?{from:last.from,text:last.text.slice(0,85),at:last.at}:null,unread:messages.filter(m=>m.from!==id&&m.at>read).length};
+   }).filter(x=>x.last).sort((a,b)=>b.last.at-a.last.at);
+   const valid=s.notifications[id]||[],seen=new Set(s.notificationRead[id]||[]);
+   const alerts=valid.filter(a=>now-a.at<30*86400000&&!blocked(a.from)).slice(-50).reverse().map(a=>({...a,from:summary(a.from),seen:seen.has(a.id)}));
+   return reply({self:summary(id),friends,incoming,outgoing,invites,unread,chats,alerts,alertUnread:alerts.filter(a=>!a.seen).length});
   }
   const to=targetId(b.target);
   if(['request','accept','decline','remove','block','message','thread','invite'].includes(path.slice(1))&&(!to||to===id||!s.users[to]))return error('Player not found.',404);
@@ -77,16 +103,16 @@ export class SocialDirectory{
    if(!throttle(s,id,'requests',20,3600000))return error('Please wait before sending more requests.',429);
    if(s.requests[id]?.includes(to)){
     s.requests[id]=forget(s.requests[id],to);s.friends[id]=unique(s.friends[id],to);s.friends[to]=unique(s.friends[to],id);
-    changed=true;await save();return reply({ok:true,status:'friends'});
+    addAlert(to,'accepted',id);changed=true;await save();return reply({ok:true,status:'friends'});
    }
-   s.requests[to]=unique(s.requests[to],id);changed=true;await save();return reply({ok:true,status:'pending'});
+   s.requests[to]=unique(s.requests[to],id);addAlert(to,'request',id);changed=true;await save();return reply({ok:true,status:'pending'});
   }
   if(path==='/accept'){
    if(!s.requests[id]?.includes(to)||blocked(to))return error('No pending request.',404);
-   s.requests[id]=forget(s.requests[id],to);s.requests[to]=forget(s.requests[to],id);s.friends[id]=unique(s.friends[id],to);s.friends[to]=unique(s.friends[to],id);changed=true;await save();return reply({ok:true});
+   s.requests[id]=forget(s.requests[id],to);s.requests[to]=forget(s.requests[to],id);s.friends[id]=unique(s.friends[id],to);s.friends[to]=unique(s.friends[to],id);seenAlerts(a=>a.type==='request'&&a.from===to);addAlert(to,'accepted',id);changed=true;await save();return reply({ok:true});
   }
   if(path==='/decline'){
-   s.requests[id]=forget(s.requests[id],to);changed=true;await save();return reply({ok:true});
+   s.requests[id]=forget(s.requests[id],to);seenAlerts(a=>a.type==='request'&&a.from===to);changed=true;await save();return reply({ok:true});
   }
   if(path==='/remove'||path==='/block'){
    s.friends[id]=forget(s.friends[id],to);s.friends[to]=forget(s.friends[to],id);
@@ -96,23 +122,23 @@ export class SocialDirectory{
   }
   if(path==='/thread'){
    if(!friend(to)||blocked(to))return error('Messages are for friends only.',403);
-   const k=key(id,to),msgs=(s.messages[k]||[]).slice(-60);s.read[id]??={};s.read[id][k]=msgs.at(-1)?.at||Date.now();changed=true;await save();return reply({messages:msgs,friend:summary(to)});
+   const k=key(id,to),msgs=(s.messages[k]||[]).slice(-60);s.read[id]??={};s.read[id][k]=msgs.at(-1)?.at||Date.now();seenAlerts(a=>a.type==='message'&&a.from===to);changed=true;await save();return reply({messages:msgs,friend:summary(to)});
   }
   if(path==='/message'){
    if(!friend(to)||blocked(to)||s.users[to].allowMessages===false)return error('Messages are unavailable for this driver.',403);
    if(!throttle(s,id,'messages',12,60000))return error('Sending too quickly. Try again shortly.',429);
    const text=String(b.text||'').replace(/[\x00-\x1F\x7F]/g,' ').trim().slice(0,320);
    if(!text)return error('Write a message first.');
-   const k=key(id,to);s.messages[k]??=[];const last=s.messages[k].at(-1)?.at||0;s.messages[k].push({from:id,text,at:Math.max(Date.now(),last+1)});s.messages[k]=s.messages[k].slice(-100);changed=true;await save();return reply({ok:true});
+   const k=key(id,to);s.messages[k]??=[];const last=s.messages[k].at(-1)?.at||0;s.messages[k].push({from:id,text,at:Math.max(Date.now(),last+1)});s.messages[k]=s.messages[k].slice(-100);addAlert(to,'message',id,{preview:text.slice(0,90)});changed=true;await save();return reply({ok:true});
   }
   if(path==='/invite'){
    if(!friend(to)||blocked(to)||s.users[to].allowInvites===false)return error('Invites are unavailable for this driver.',403);
    if(!CODE.test(String(b.room||'')))return error('Open a party lobby before inviting friends.');
    if(!throttle(s,id,'invites',12,3600000))return error('Too many invitations. Please wait.',429);
-   const now=Date.now();s.invites[to]??=[];s.invites[to].push({id:crypto.randomUUID(),from:id,room:b.room,at:now,status:'pending'});s.invites[to]=s.invites[to].filter(x=>now-x.at<7200000).slice(-30);changed=true;await save();return reply({ok:true});
+   const now=Date.now();s.invites[to]??=[];s.invites[to].push({id:crypto.randomUUID(),from:id,room:b.room,at:now,status:'pending'});s.invites[to]=s.invites[to].filter(x=>now-x.at<7200000).slice(-30);addAlert(to,'invite',id,{room:b.room});changed=true;await save();return reply({ok:true});
   }
   if(path==='/dismiss'){
-   const match=(s.invites[id]||[]).find(x=>x.id===b.inviteId);if(match){match.status='dismissed';changed=true;await save()}return reply({ok:true});
+   const match=(s.invites[id]||[]).find(x=>x.id===b.inviteId);if(match){match.status='dismissed';seenAlerts(a=>a.type==='invite'&&a.room===match.room&&a.from===match.from);changed=true;await save()}return reply({ok:true});
   }
   return error('Unsupported social action.',404);
  }
@@ -138,7 +164,7 @@ export async function socialApi(req,env,verify){
   const check=await env.ROOMS.get(env.ROOMS.idFromName(room)).fetch(new Request('https://room.internal/invite-authorize',{headers:{'x-profile-id':id}}));
   if(!check.ok)return reply({error:'Only the host can invite friends to an open lobby.'},403);
  }
- const supported=['register','handle','search','profile','presence','privacy','state','request','accept','decline','remove','block','thread','message','invite','dismiss'];
+ const supported=['register','handle','search','profile','presence','privacy','state','request','accept','decline','remove','block','thread','message','invite','dismiss','alerts-read'];
  if(!supported.includes(op))return reply({error:'Not found'},404);
  const stub=env.SOCIAL.get(env.SOCIAL.idFromName('flipcars-main-social'));
  const result=await stub.fetch(new Request('https://social.internal/'+op,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({...data,id})}));
