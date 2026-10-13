@@ -103,7 +103,7 @@ const token=()=>crypto.randomUUID()+'.'+crypto.randomUUID();
 async function verifiedProfile(env,b){try{const id=String(b?.profileId||'');if(!env.PROFILES||!/^[A-HJ-NP-Z2-9]{10}$/.test(id))return null;const res=await env.PROFILES.get(env.PROFILES.idFromName(id)).fetch(new Request('https://profile.internal/verify',{headers:{Authorization:'Bearer '+String(b.profileToken||'')}}));return res.ok?id:null}catch{return null}}
 
 export default {async fetch(req,env){const url=new URL(req.url),path=url.pathname;
- if(req.method==='OPTIONS')return new Response(null,{status:204,headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'content-type,authorization','Access-Control-Allow-Methods':'GET,POST,OPTIONS'}});
+ if(req.method==='OPTIONS')return new Response(null,{status:204,headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'content-type,authorization,x-driver-id','Access-Control-Allow-Methods':'GET,POST,OPTIONS'}});
  if(path==='/api/health')return json({ok:true,game:'Flip Cars',version:'4.3',combat:true,placements:true,matchOptions:true,social:!!env.PROFILES,socialV2:!!env.SOCIAL});
  if(path.startsWith('/api/social/'))return socialApi(req,env,verifiedProfile);
  if(path==='/api/profile/create'&&req.method==='POST'){let b;try{b=await req.json()}catch{return json({error:'Bad JSON'},400)}const id=code(10),secret=token(),stub=env.PROFILES?.get(env.PROFILES.idFromName(id));if(!stub)return json({error:'Profiles not configured'},503);return stub.fetch(new Request('https://profile.internal/create',{method:'POST',body:JSON.stringify({id,secret,name:cleanName(b.name)})}))}
