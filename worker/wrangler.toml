@@ -17,3 +17,11 @@ new_sqlite_classes = ["GameRoom"]
 [[migrations]]
 tag = "v2"
 new_sqlite_classes = ["DriverProfile"]
+
+[[durable_objects.bindings]]
+name = "SOCIAL"
+class_name = "SocialDirectory"
+
+[[migrations]]
+tag = "v3"
+new_sqlite_classes = ["SocialDirectory"]

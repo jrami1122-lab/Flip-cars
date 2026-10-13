@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091525"><title>Flip Cars 4.2 — Podium & Player Garage</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091525"><title>Flip Cars 4 — Combat Circuit</title>
 <style>
 @import url('data:text/css,');
 :root{--bg:#091421;--panel:#101f33;--line:#304761;--txt:#ebf6ff;--muted:#9cb3c9;--gold:#ffc65b;--cyan:#31dff6}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(ellipse at top,#1e3858 0%,#08121e 69%);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--txt)}button,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.34;cursor:default}button:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}.shell{max-width:1560px;margin:auto;padding:12px 16px 22px}.header{display:flex;gap:12px;justify-content:space-between;align-items:center;margin:0 0 10px}.brand{display:flex;gap:10px;align-items:center}.logo{font-size:clamp(21px,2.6vw,34px);font-weight:1000;font-style:italic;line-height:.9;letter-spacing:-1px;color:#fff;text-shadow:2px 3px 0 #fa781d,4px 5px 0 #a43121}.logo span{color:#ffd053}.sub{font-weight:700;color:#bfd6ec;text-transform:uppercase;letter-spacing:2.5px;font-size:10px;margin-top:5px}.head-actions{display:flex;gap:8px;align-items:center}button.mini{background:#1b3049;color:white;border:1px solid #476483;border-radius:10px;font-weight:850;padding:8px 11px;font-size:12px}.mini:hover{background:#2b496c}.badge{border:1px solid #536c80;background:#102338;border-radius:15px;padding:5px 10px;font-size:11px;font-weight:900;color:#e9f3ff}.arena{display:grid;grid-template-columns:minmax(145px,180px) minmax(0,1fr) minmax(145px,180px);grid-template-rows:auto auto auto;gap:9px;align-items:center}.seat{background:linear-gradient(145deg,#162d46,#0b192b);border:1px solid var(--line);border-top:4px solid var(--color,#87b9d1);border-radius:14px;box-shadow:0 7px 20px #0005;padding:10px 12px;min-width:0;position:relative}.seat[data-position=top]{grid-column:2;grid-row:1}.seat[data-position=left]{grid-column:1;grid-row:2}.seat[data-position=right]{grid-column:3;grid-row:2}.seat[data-position=bottom]{grid-column:2;grid-row:3}.seat.inactive{opacity:.55}.seat.activeChoice{box-shadow:0 0 0 3px var(--gold),0 8px 20px #0008}.seat.finish{border-color:#d9b45a}.seathead{display:flex;justify-content:space-between;align-items:center;gap:4px}.seatname{font-size:13px;font-weight:1000;white-space:nowrap}.seatname .carbullet{display:inline-block;width:12px;height:9px;background:var(--color);border-radius:4px 4px 2px 2px;box-shadow:inset 3px 0 #fff5;margin-right:6px}.laps{font-size:11px;font-weight:1000;color:#ffe6a8}.cardview{margin-top:7px;height:58px;border-radius:9px;background:linear-gradient(145deg,#203955,#111e32);border:1px solid #385775;display:flex;align-items:center;justify-content:center;gap:8px;overflow:hidden}.bigcard{display:flex;align-items:center;justify-content:center;width:48px;height:50px;border-radius:8px;background:linear-gradient(130deg,#f7f9ff,#ccdff1);border:3px solid #fff;color:#13263a;box-shadow:3px 3px 0 #07121d;font-weight:1000;font-size:34px;line-height:1}.hiddenCard{background:linear-gradient(140deg,var(--color),#142b44);color:white;font-size:25px;border:2px dashed #fff8}.cardtext{color:#cfe1f3;font-weight:850;font-size:11px;line-height:1.3;max-width:85px}.controls{display:flex;gap:7px;margin-top:8px}.control{border:0;color:#071827;border-radius:8px;padding:10px 5px;min-width:0;flex:1;font-weight:1000;font-size:12px;background:#e4f2ff;box-shadow:inset 0 -3px #0002}.control.primary{background:var(--color);color:#061421}.control.route{background:#294560;color:white;border:1px solid #56758f}.control:not(:disabled):active{transform:translateY(2px);box-shadow:none}.key{font-size:10px;font-weight:700;opacity:.75;margin-left:2px}.effects{min-height:17px;margin-top:7px;font-size:10px;color:#a3cce2;line-height:1.35}.boardwrap{grid-column:2;grid-row:2;align-self:stretch;position:relative;min-width:0;aspect-ratio:1200/800;border:6px solid #284459;border-radius:19px;overflow:hidden;background:#152b33;box-shadow:0 15px 38px #0009,inset 0 0 0 3px #8da6b7}.boardwrap canvas{display:block;width:100%;height:100%;touch-action:manipulation}.boardcaption{pointer-events:none;position:absolute;bottom:9px;left:50%;transform:translateX(-50%);background:#05121bd9;border:1px solid #7aa3b6ab;border-radius:18px;padding:5px 12px;white-space:nowrap;font-size:clamp(9px,1vw,13px);color:#edf9ff;font-weight:900;text-align:center;max-width:93%;overflow:hidden;text-overflow:ellipsis}.strip{display:flex;gap:12px;align-items:stretch;margin-top:11px}.feed{flex:1;min-width:0;background:#0d1d2f;border:1px solid #36506e;border-radius:12px;padding:12px}.feedtitle{font-size:11px;font-weight:1000;letter-spacing:1.4px;color:var(--gold);margin-bottom:6px}.feedtext{font-size:13px;line-height:1.55;color:#f3f8ff;min-height:26px}.chip{display:inline-flex;background:#264260;border:1px solid #4a7297;padding:3px 7px;margin:3px 4px 0 0;border-radius:10px;font-size:11px;font-weight:800;color:#e6f9ff}.rules{max-width:475px;width:38%;background:#0f2339;border:1px solid #36506e;border-radius:12px;padding:12px}.rules h3{margin:0 0 6px;font-size:12px;letter-spacing:1.4px;color:var(--gold)}.rules p{margin:0;font-size:12px;color:#bdd3e4;line-height:1.48}.legend{display:flex;gap:9px;flex-wrap:wrap;margin-top:6px;font-size:11px}.legend b{font-weight:950}.modal{position:fixed;z-index:30;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:#030b15dc;backdrop-filter:blur(7px)}.modal.hidden{display:none}.dialog{width:min(540px,96vw);max-height:94vh;overflow:auto;background:linear-gradient(145deg,#17344f,#081728);border:2px solid #648eaa;border-radius:22px;padding:24px;box-shadow:0 25px 70px #000e}.dialog h1{font-style:italic;font-weight:1000;text-shadow:3px 3px 0 #e65f14;font-size:clamp(32px,6vw,56px);letter-spacing:-2px;line-height:.95;margin:0 0 8px;color:#ffda66}.dialog h1 span{color:white}.dialog h2{font-size:18px;margin:0 0 10px}.dialog p,.dialog li{font-size:13px;color:#d0e4f3;line-height:1.57}.dialog ul{padding-left:20px}.selectrow{display:flex;gap:11px;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid #46607a}.selectrow label{font-weight:850;font-size:13px}.selectrow select{min-width:112px;padding:10px;border-radius:9px;background:#e6f0f8;color:#162538;border:0;font-weight:900}.start{margin-top:15px;width:100%;background:linear-gradient(#ffda6c,#ff942f);border:0;border-radius:11px;padding:13px;font-weight:1000;font-style:italic;font-size:18px;color:#192536;box-shadow:0 5px 0 #a44719}.start:active{transform:translateY(3px);box-shadow:0 2px 0 #a44719}.helper{font-size:11px;color:#9dc4d9;margin-top:9px}.modalResult{background:#092337;border:1px solid #628ead;border-radius:12px;padding:12px;margin:10px 0}.routePrompt{display:none;position:absolute;top:10px;left:50%;transform:translateX(-50%);pointer-events:none;text-align:center;background:#061628e9;border:2px solid #ffcc59;border-radius:12px;padding:8px 14px;box-shadow:0 8px 30px #0009;min-width:230px;max-width:85%;z-index:5}.routePrompt.visible{display:block}.routePrompt strong{color:#ffe083;display:block;font-size:12px}.routePrompt span{display:block;font-size:11px;color:#e4f2ff;margin-top:2px}.cardCounts{margin-top:11px;font-size:11px;color:#9fb6c7}.helpToggle{font-weight:850}@media(max-width:1050px){.arena{grid-template-columns:126px minmax(0,1fr) 126px;gap:5px}.seat{padding:8px}.seatname{font-size:11px}.cardview{height:48px}.bigcard{height:43px;width:39px;font-size:27px}.cardtext{font-size:10px}.control{font-size:10px;padding:8px 3px}.effects{font-size:9px}.boardwrap{border-width:4px}.shell{padding:9px}.rules{display:none}}@media(max-width:680px){.arena{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto auto auto;gap:7px}.boardwrap{grid-column:1 / 3;grid-row:1;aspect-ratio:1200/800}.seat[data-position=top]{grid-column:1;grid-row:2}.seat[data-position=left]{grid-column:2;grid-row:2}.seat[data-position=right]{grid-column:1;grid-row:3}.seat[data-position=bottom]{grid-column:2;grid-row:3}.seat{min-height:135px}.cardview{height:42px}.bigcard{height:36px;width:35px;font-size:23px}.controls{margin-top:6px}.header{align-items:flex-start}.sub{font-size:8px;letter-spacing:1px}.badge{display:none}.strip{margin-top:8px}.feed{padding:9px}.feedtext{font-size:12px}.boardcaption{bottom:4px;padding:3px 8px;font-size:9px}.routePrompt{top:4px;padding:4px 7px;min-width:0}.routePrompt span{font-size:9px}}
@@ -125,215 +125,33 @@ body.theatermode{overflow:hidden}
 .heroRace .speedLine{position:absolute;left:5%;top:80px;width:30%;height:5px;background:#fee29f;box-shadow:0 15px #9deafa,0 -15px #fff7f244;transform:skewY(-13deg)}
 .carColors{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin:6px 0 13px}.colorPick{height:29px;border:2px solid #73879c;border-radius:7px;background:var(--paint);color:#14253a}.colorPick.selected{border:3px solid white;box-shadow:0 0 0 2px #ffcf67}
 .dialog{background:linear-gradient(155deg,#204461,#101d39 45%,#080f1e);border-color:#7eafcc}
+.seat .stationFace{display:contents}body.tabletop:not(.solo) .seat .stationFace{display:flex;height:100%;min-width:0;flex-direction:column;justify-content:space-around;overflow:hidden}body.solo .seat .stationFace{display:contents}
+body.tabletop .seat{overflow:visible}
+body.tabletop .seat[data-position=top] .stationFace{transform:rotate(180deg)}
+@media(orientation:landscape) and (min-width:780px){body.tabletop .seat[data-position=left] .stationFace{transform:rotate(90deg) scale(.70);width:210px;height:140px;position:absolute;top:calc(50% - 70px);left:calc(50% - 105px)}body.tabletop .seat[data-position=right] .stationFace{transform:rotate(-90deg) scale(.70);width:210px;height:140px;position:absolute;top:calc(50% - 70px);left:calc(50% - 105px)}body.tabletop .seat[data-position=left],body.tabletop .seat[data-position=right]{z-index:4}body.tabletop .seat[data-position=bottom] .stationFace{transform:none}}
+@media(max-width:900px){.combatCard{font-size:9px;padding:3px}.combatHUD{font-size:10px;padding:5px;max-width:116px;min-width:95px}.heroRace{height:118px}}
+@media(max-width:700px){.combatHand{margin-top:2px}.combatCard{font-size:9px}.combatHUD{top:58%;opacity:.88}body.solo .seat:not(.cpu){height:101px;min-height:101px}body.solo .seat:not(.cpu) .combatHand{grid-column:1/-1}.head-actions #musicBtn::after{content:"🎵";font-size:14px}.head-actions #profileBtn::after{content:"👤";font-size:14px}.head-actions #tableBtn::after{content:"⇄";font-size:16px}}
 
+@media (orientation:landscape) and (min-width:780px){
+body.tabletop:not(.solo) .seat[data-position=top] .stationFace,
+body.tabletop:not(.solo) .seat[data-position=bottom] .stationFace{flex-direction:row;align-items:center;justify-content:space-around;gap:7px;overflow:hidden;width:100%;flex:1 1 100%;padding:0 8px}
+body.tabletop:not(.solo) .seat[data-position=top] .seathead,
+body.tabletop:not(.solo) .seat[data-position=bottom] .seathead{min-width:105px}
+body.tabletop:not(.solo) .seat[data-position=top] .controls,
+body.tabletop:not(.solo) .seat[data-position=bottom] .controls{min-width:160px;margin-top:0}
+body.tabletop:not(.solo) .seat[data-position=top] .combatHand,
+body.tabletop:not(.solo) .seat[data-position=bottom] .combatHand{min-width:110px}
+}
 
-/* Flip Cars 4.1 tablet cockpit: unscaled, same information on every side. */
-.seat[data-position]{display:block!important}
-body.solo .seat.cpu{display:none!important}
-
-:root{--panel:#183953;--line:#5b88ac;--txt:#f5fbff;--muted:#d1e2f1;--gold:#ffe47b}
-html,body{background:#123953}
-.shell{background:radial-gradient(circle at 50% 0,#24678c,#0b2944 74%);gap:5px}
-.header{border-radius:18px;background:linear-gradient(90deg,#267e9c,#1b4a77 60%,#103650);border:2px solid #87dcff77;box-shadow:0 4px 14px #001b3555}
-button.mini{border-radius:18px;background:#ffffff1c;border:1px solid #b4e7ff7c}
-.boardwrap{border:3px solid #fbd06d;border-radius:20px;box-shadow:0 5px 23px #051b3780}
-.boardcaption{background:#102d41d9;border-radius:16px}
-.seat{border:2px solid color-mix(in srgb,var(--color) 65%,#ffffff);border-top-width:5px;border-radius:19px;padding:6px!important;min-width:0;min-height:0;background:linear-gradient(140deg,#e2f7ff,#a9cde7);color:#17304b;box-shadow:0 5px 12px #001b3570;overflow:hidden;container-type:size}
-.seat.inactive{opacity:.65}.seat.activeChoice{box-shadow:0 0 0 3px #ffb939,0 6px 17px #0021}
-.seat .stationFace{width:100%;height:100%;min-height:0;min-width:0;display:block!important;position:relative;overflow:hidden;transform:none}
-.seat .matRow{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.55fr) minmax(0,.63fr) minmax(0,1.9fr) minmax(0,.91fr) minmax(0,1.1fr);align-items:stretch;gap:5px;width:100%;height:100%;min-height:0}
-.seat .matCell{display:flex;flex-direction:column;min-height:0;min-width:0;align-items:center;justify-content:center;border-radius:12px;background:#ffffffbb;border:1px solid #ffffffd9;padding:4px;overflow:hidden;text-align:center;position:relative}
-.seat .matCell.driver{align-items:flex-start;text-align:left;padding-left:8px;background:linear-gradient(100deg,var(--color),#e5f8ff 95%)}
-.seat .matDriverName{font-size:clamp(11px,1vw,16px);font-weight:1000;line-height:1.05;letter-spacing:-.3px;overflow-wrap:anywhere;color:#09213a}
-.seat .matCar{font-size:15px;line-height:1;color:#10283d;font-weight:1000}
-.seat .matMini{font-size:clamp(9px,.76vw,12px);font-weight:850;color:#37536d;line-height:1.15}
-.seat .matTitle{font-size:clamp(9px,.7vw,11px);font-weight:950;color:#29435c;white-space:nowrap}
-.seat .matNum{font-size:clamp(17px,2.2vw,29px);font-weight:1000;line-height:1.1;color:#143a65}
-.seat .matDeckIcon{width:35px;height:37px;background:linear-gradient(135deg,#316fc1,#17385d);border:3px solid white;border-radius:8px;box-shadow:3px 2px 0 #143255;color:#fff;display:grid;place-items:center;font-size:23px;line-height:1;margin:2px auto}
-.seat .matFlipIcon{width:40px;height:39px;border-radius:10px;border:3px solid #fff;box-shadow:0 2px 0 #91b4cc;background:linear-gradient(120deg,#ffe49c,#ffac5f);display:grid;place-items:center;margin:2px auto}
-.seat .matSlotPair{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;min-height:0;flex:1;align-items:stretch}
-.seat .combatSlot{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:100%;min-width:0;min-height:32px;padding:4px 2px;border:2px solid #f5d47c;border-radius:11px;background:linear-gradient(140deg,#fff0c9,#f8d5fd);color:#24304d;box-shadow:inset 0 -3px #ba91a544;font-weight:1000;cursor:pointer;touch-action:manipulation}
-.seat .combatSlot .symbol{font-size:clamp(17px,1.8vw,24px);line-height:1.05}
-.seat .combatSlot .name{font-size:clamp(9px,.7vw,11px);line-height:1.1;white-space:normal;overflow-wrap:anywhere}
-.seat .combatSlot:focus-visible{outline:3px solid #ec7f16;outline-offset:1px}
-.seat .combatSlot:active{transform:translateY(1px)}
-.seat .combatSlot.empty{border-style:dashed;background:#e0ebf4;color:#638097;box-shadow:none;cursor:default}
-.seat .matInfo{font-size:clamp(9px,.8vw,11px);color:#2c5270;font-weight:850;overflow:hidden;overflow-wrap:anywhere;line-height:1.15;max-height:100%}
-.seat .matActionCell{gap:4px;background:#d9f2ff}
-.seat .matAction{display:block;width:100%;min-width:0;flex:1;min-height:0;border-radius:11px;border:1px solid #5974a0;background:linear-gradient(#f9fbff,#cee0ed);font-size:clamp(10px,.86vw,14px);color:#1f4065;font-weight:1000;line-height:1;white-space:normal;padding:3px}
-.seat .matAction.primary{background:linear-gradient(#b0ffae,#37d47a);border:1px solid #17884d;color:#082b29}
-.seat .matAction:disabled{opacity:.52}
-.seat .pendingPrompt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;width:100%;height:100%;align-items:center}
-.seat .pendingPrompt .pendingLabel{grid-column:1/-1;font-size:10px;font-weight:950;line-height:1.1;color:#762743}
-.seat .pendingPrompt button{font-size:10px;font-weight:950;min-width:0;min-height:28px;border:0;border-radius:9px;background:#ffc55e;color:#172d45}
-@media(min-width:901px) and (min-height:651px){.arena{grid-template-rows:98px minmax(0,1fr) 98px}}
-/* Side stations are vertical in standard play, readable without any scaling. */
-body:not(.solo) .seat[data-position=left] .matRow,
-body:not(.solo) .seat[data-position=right] .matRow{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:58px 62px minmax(82px,1fr) 42px 69px;gap:4px}
-body:not(.solo) .seat[data-position=left] .matCell.driver,
-body:not(.solo) .seat[data-position=right] .matCell.driver{grid-column:1/-1}
-body:not(.solo) .seat[data-position=left] .matCell.combat,
-body:not(.solo) .seat[data-position=right] .matCell.combat{grid-column:1/-1}
-body:not(.solo) .seat[data-position=left] .matCell.stats,
-body:not(.solo) .seat[data-position=right] .matCell.stats{grid-column:1/-1}
-body:not(.solo) .seat[data-position=left] .matCell.actions,
-body:not(.solo) .seat[data-position=right] .matCell.actions{grid-column:1/-1}
-body:not(.solo) .seat[data-position=left] .matActionCell,
-body:not(.solo) .seat[data-position=right] .matActionCell{flex-direction:row}
-body:not(.solo) .seat[data-position=left] .matDeckIcon,
-body:not(.solo) .seat[data-position=right] .matDeckIcon{width:24px;height:25px;font-size:15px}
-body:not(.solo) .seat[data-position=left] .matFlipIcon,
-body:not(.solo) .seat[data-position=right] .matFlipIcon{height:27px;width:27px}
-body:not(.solo) .seat[data-position=left] .matNum,
-body:not(.solo) .seat[data-position=right] .matNum{font-size:17px}
-body:not(.solo) .seat[data-position=left] .matDriverName,
-body:not(.solo) .seat[data-position=right] .matDriverName{font-size:12px}
-/* Tabletop: four perspectives, side UI has the full available height as its unscaled length. */
-@media (orientation:landscape) and (min-width:710px){
- body.tabletop:not(.solo) .seat[data-position=top]{transform:rotate(180deg)}
- body.tabletop:not(.solo) .seat[data-position=left] .stationFace,
- body.tabletop:not(.solo) .seat[data-position=right] .stationFace{position:absolute;left:50%;top:50%;width:var(--station-long,400px);height:var(--station-short,140px);transform:translate(-50%,-50%) rotate(90deg)}
- body.tabletop:not(.solo) .seat[data-position=right] .stationFace{transform:translate(-50%,-50%) rotate(-90deg)}
- body.tabletop:not(.solo) .seat[data-position=left] .matRow,
- body.tabletop:not(.solo) .seat[data-position=right] .matRow{grid-template-columns:1.1fr .5fr .58fr 1.75fr .8fr 1.18fr;grid-template-rows:1fr;gap:3px}
- body.tabletop:not(.solo) .seat[data-position=left] .matCell,
- body.tabletop:not(.solo) .seat[data-position=right] .matCell{grid-column:auto;grid-row:auto;padding:2px}
- body.tabletop:not(.solo) .seat[data-position=left] .matActionCell,
- body.tabletop:not(.solo) .seat[data-position=right] .matActionCell{flex-direction:column}
- body.tabletop:not(.solo) .seat[data-position=left] .matDriverName,
- body.tabletop:not(.solo) .seat[data-position=right] .matDriverName{font-size:11px}
- body.tabletop:not(.solo) .seat .matTitle{font-size:10px}
- body.tabletop:not(.solo) .seat .matNum{font-size:20px}
- body.tabletop:not(.solo) .seat .combatSlot .name{font-size:9px}
- body.tabletop:not(.solo) .seat .matAction{font-size:11px;min-height:32px}
+@media(orientation:landscape) and (min-width:780px){
+body.tabletop:not(.solo) .seat[data-position=top]{transform:rotate(180deg)}
+body.tabletop:not(.solo) .seat[data-position=top] .stationFace,
+body.tabletop:not(.solo) .seat[data-position=bottom] .stationFace{display:contents!important;transform:none!important}
 }
-body.solo .seat:not(.cpu){width:100%;max-width:none;height:125px;min-height:125px;display:block!important;padding:6px!important;flex:none;align-self:stretch}
-body.solo .seat:not(.cpu) .stationFace{display:block!important}
-body.solo .seat:not(.cpu) .matRow{display:grid;grid-template-columns:1.18fr .55fr .66fr 1.9fr .85fr 1.12fr;grid-template-rows:1fr}
-body.solo .seat:not(.cpu) .matCell{display:flex}
-body.solo .seat:not(.cpu) .matCell.combat{grid-column:auto;grid-row:auto}
-body.solo .seat:not(.cpu) .matAction{min-height:38px}
-body.solo .boardwrap{min-height:0}
-/* Ensure readability on shorter tablet / mobile screens rather than shrinking entire placemats. */
-@media(max-height:650px) and (orientation:landscape){
- .shell{gap:3px}.header{height:34px;flex:none}.arena{grid-template-columns:clamp(130px,13vw,175px) minmax(0,1fr) clamp(130px,13vw,175px);grid-template-rows:106px minmax(0,1fr) 106px}
- body.solo .seat:not(.cpu){height:108px;min-height:108px}
- .strip{display:none}
- .seat .matCell{padding:2px}
- .seat .matDeckIcon{width:25px;height:27px;font-size:15px}
- .seat .matFlipIcon{width:29px;height:29px}
- .seat .matTitle{font-size:10px}
-}
-@media(max-width:700px){
- .arena{min-height:0}
- .seat{height:121px!important;min-height:121px!important}
- .seat .matRow{grid-template-columns:1fr .55fr .6fr 1.55fr;grid-template-rows:1fr 37px;gap:3px}
- .seat .matCell.stats{grid-column:1/3;grid-row:2}
- .seat .matCell.actions{grid-column:3/5;grid-row:2}
- .seat .matCell.actions{flex-direction:row}
- .seat .matAction{min-height:28px;font-size:11px}
- .seat .matDriverName{font-size:11px}
- .seat .matMini{font-size:9px}
- .seat .matCell{padding:2px}
- .seat .matDeckIcon{width:22px;height:23px;font-size:14px}
- .seat .matFlipIcon{width:23px;height:25px}
- .seat .combatSlot .symbol{font-size:16px}
- .seat .combatSlot .name{font-size:9px}
- .seat .matInfo{font-size:9px}
- body.solo .seat:not(.cpu){height:135px!important;min-height:135px!important}
- body.solo .seat:not(.cpu) .matRow{grid-template-columns:1fr .52fr .58fr 1.5fr;grid-template-rows:1fr 39px}
- body.solo .seat:not(.cpu) .matCell.stats{grid-column:1/3;grid-row:2}
- body.solo .seat:not(.cpu) .matCell.actions{grid-column:3/5;grid-row:2}
-}
-@media(max-width:700px) and (orientation:portrait){
- body:not(.solo) .seat[data-position=left] .matRow,
- body:not(.solo) .seat[data-position=right] .matRow{grid-template-columns:1fr .55fr .6fr 1.55fr;grid-template-rows:1fr 37px}
- body:not(.solo) .seat[data-position=left] .matCell,
- body:not(.solo) .seat[data-position=right] .matCell{grid-column:auto;grid-row:auto}
- body:not(.solo) .seat[data-position=left] .matCell.stats,
- body:not(.solo) .seat[data-position=right] .matCell.stats{grid-column:1/3;grid-row:2}
- body:not(.solo) .seat[data-position=left] .matCell.actions,
- body:not(.solo) .seat[data-position=right] .matCell.actions{grid-column:3/5;grid-row:2}
- body:not(.solo) .seat[data-position=left] .matActionCell,
- body:not(.solo) .seat[data-position=right] .matActionCell{flex-direction:row}
-}
-@media(max-width:700px) and (orientation:landscape){
- .arena{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:minmax(0,1fr) auto}
- body:not(.solo) .seat{height:105px!important;min-height:105px!important}
- body.solo .seat:not(.cpu){height:99px!important;min-height:99px!important}
- .seat .matRow{grid-template-rows:1fr 30px}
- .boardcaption,.eventTicker{display:none}
-}
-@media(max-width:700px) and (orientation:portrait){
- body:not(.solo) .arena{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) repeat(4,95px);gap:3px}
- body:not(.solo) .boardwrap{grid-column:1;grid-row:1;min-height:0}
- body:not(.solo) .seat[data-position]{grid-column:1!important;grid-row:auto!important;height:95px!important;min-height:95px!important}
- body:not(.solo) .seat[data-position=top]{grid-row:2!important}
- body:not(.solo) .seat[data-position=left]{grid-row:3!important}
- body:not(.solo) .seat[data-position=right]{grid-row:4!important}
- body:not(.solo) .seat[data-position=bottom]{grid-row:5!important}
- body:not(.solo) .seat .matRow{grid-template-rows:1fr 30px}
- body:not(.solo) .seat .matDriverName{font-size:12px}
-}
-@media(max-width:700px) and (orientation:portrait){
- body:not(.solo) .seat[data-position=left] .matCell.driver,
- body:not(.solo) .seat[data-position=right] .matCell.driver,
- body:not(.solo) .seat[data-position=left] .matCell.combat,
- body:not(.solo) .seat[data-position=right] .matCell.combat{grid-column:auto!important;grid-row:auto!important}
- body:not(.solo) .seat[data-position=left] .matCell.stats,
- body:not(.solo) .seat[data-position=right] .matCell.stats{grid-column:1/3!important;grid-row:2!important}
- body:not(.solo) .seat[data-position=left] .matCell.actions,
- body:not(.solo) .seat[data-position=right] .matCell.actions{grid-column:3/5!important;grid-row:2!important}
-}
-/* Tactical card window, readable at tablet size. */
-.dialog.cardDetails{max-width:620px;background:linear-gradient(140deg,#eafaff,#c4eaff);color:#19324b;border:3px solid #f8d170;border-radius:27px}
-.dialog.cardDetails h2,.dialog.cardDetails p{color:#19324b}
-.cardHero{display:grid;grid-template-columns:125px 1fr;gap:14px;align-items:center;margin:9px 0 15px}
-.cardArt{background:linear-gradient(145deg,#ebaeff,#ffdd9e);border:3px solid #fff;outline:2px solid #977c9d;border-radius:20px;min-height:166px;display:flex;align-items:center;justify-content:center;font-size:75px;box-shadow:0 4px 10px #25436433}
-.cardDescription{font-size:15px!important;line-height:1.5!important;font-weight:700}
-.cardMeta{border-radius:13px;background:#ffffffb8;border:1px solid #8aafc9;padding:10px;font-size:12px;font-weight:850;color:#38516d}
-.cardDetails .mini{color:#17314c;border:1px solid #86b0d3;background:#ebf7ff;padding:12px 20px;font-size:14px}
-.cardDetails .start{font-size:15px;margin:8px 0 0}
-@media(max-width:540px){.cardHero{grid-template-columns:86px 1fr;gap:8px}.cardArt{min-height:120px;font-size:48px}}
-
-
-/* Reduce center overlays so track tiles stay readable. */
-.combatHUD{top:51%;left:49%;min-width:84px;max-width:112px;background:#123751d8;border:1px solid #ffdf8e;border-radius:15px;letter-spacing:.3px;padding:5px;font-size:11px}
-.combatHUD small{font-size:9px}
-.leaderhud{max-width:65%}
-@media(max-height:600px){.combatHUD{transform:translate(-50%,-50%) scale(.82)}}
-
-/* 4.2 — Playful arcade garage menu, comfortably scrollable on short tablets */
-.dialog.mainMenu{max-width:790px;width:min(96vw,790px);max-height:min(92dvh,900px);overflow:auto;text-align:left;padding:0;border:2px solid #ffd76f;border-radius:24px;background:linear-gradient(155deg,#102b4b,#0c1e3a 48%,#07172e);box-shadow:0 18px 65px #000a,0 0 0 7px #277bb133}
-.menuMast{padding:23px 24px 15px;background:radial-gradient(ellipse at right,#3262ae88,transparent 67%),linear-gradient(115deg,#17466d,#0c2545);border-bottom:3px dashed #ffc55599;position:relative;overflow:hidden}
-.menuMast:after{content:'🏁';font-size:112px;position:absolute;right:25px;top:-25px;opacity:.12;transform:rotate(16deg);pointer-events:none}
-.eyebrow{font-weight:1000;color:#89eaff;letter-spacing:2px;font-size:11px}
-.menuMast h1{font-weight:1000;font-style:italic;font-size:clamp(33px,6.5vw,59px);margin:3px 0 0;letter-spacing:-2px;line-height:1.1;color:#fff;text-shadow:2px 3px 0 #1b8cca}.menuMast h1 span{color:#ffd259}.menuMast h1 i{font-size:25px;font-style:normal;vertical-align:middle;margin-left:9px}
-.menuMast p{font-weight:950;letter-spacing:2.4px;color:#d9f9ff;margin:6px 0 0;font-size:11px}
-.menuTabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;padding:10px 16px 0;background:#0b2441}
-.menuTab{background:#12385c;color:#d1e9f5;border:1px solid #3e7399;border-bottom:3px solid #195579;border-radius:12px 12px 5px 5px;padding:12px 5px;min-height:44px;font-size:clamp(10px,1.6vw,13px);font-weight:900;cursor:pointer}
-.menuTab.selected{background:#ffd467;color:#1d2a3b;border-color:#fff1a1;border-bottom-color:#ff8939;box-shadow:inset 0 1px 0 #fff8}
-.menuTab:focus-visible,.menuContent button:focus-visible{outline:3px solid #fff;outline-offset:2px}
-.menuContent{padding:14px clamp(14px,3vw,24px) 22px;display:block}
-.menuLead{display:grid;grid-template-columns:37% 1fr;gap:15px;align-items:center;margin-bottom:9px;border:1px solid #477398;border-radius:17px;padding:10px;background:linear-gradient(110deg,#1b4a7a,#1c3154)}
-.menuCar{text-align:center;font-size:clamp(60px,8vw,95px);filter:drop-shadow(2px 6px 1px #092339);line-height:1.2;border-radius:16px;background:repeating-linear-gradient(45deg,#ffffff06 0 16px,#0000000b 16px 32px)}.menuCar span{display:block;font-weight:950;font-size:11px;letter-spacing:.4px;color:#fff0b5;filter:none;text-shadow:0 1px 2px #00152e}
-.menuPromise h2{font-size:clamp(18px,3vw,26px);font-weight:1000;margin:0 0 5px;color:#fff}.menuPromise p{font-size:13px;line-height:1.45;color:#d5e7f8;margin:0 0 7px}
-.menuStatus{display:inline-block;border:1px solid #7ec5ff55;background:#081c34ad;border-radius:20px;padding:6px 10px;color:#ffe4a1;font-size:11px;font-weight:850}
-.menuSetup{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.menuSetup .selectrow{margin:0;padding:9px 12px;border-radius:12px;background:#163452;border:1px solid #436b87}.menuSetup select{min-width:88px}
-.menuContent .menuPrimary{margin:8px 0;min-height:49px;font-weight:1000;border-radius:14px;font-size:15px}
-.menuFoot{text-align:center;font-size:12px;color:#b3def8}.menuFoot a{color:#ffd36a}
-.tabTitle{margin:2px 0 8px;font-weight:1000;color:#fff;font-size:23px}.rulesGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.ruleTile{border:1px solid #3c7191;border-radius:14px;background:linear-gradient(145deg,#1b4165,#152d49);padding:12px}
-.ruleTile strong{color:#ffe29c;font-weight:1000;font-size:12px}.ruleTile p{margin:6px 0 0;font-size:12px;color:#d8eaf9;line-height:1.5}
-.settingsList{display:grid;gap:8px;margin:14px 0}.settingRow{border:1px solid #50779b;background:#193956;display:flex;align-items:center;justify-content:space-between;gap:15px;border-radius:14px;min-height:67px;padding:10px 15px;position:relative;cursor:pointer}.settingRow>span:first-child{flex:1}.settingRow b{font-size:14px;color:#fff}.settingRow small{font-size:11px;color:#b8d6ec;display:block;margin-top:5px}.settingRow input{position:absolute;right:20px;opacity:0;width:43px;height:32px;z-index:2;cursor:pointer}.switchArt{width:54px;height:30px;border-radius:25px;border:2px solid #92abc3;background:#56677d;position:relative;flex-shrink:0;transition:background .2s}.switchArt:after{content:'';position:absolute;top:3px;left:3px;height:20px;width:20px;border-radius:50%;background:#fff;transition:transform .2s}.settingRow input:checked+.switchArt{background:#32b36d;border-color:#a8edbd}.settingRow input:checked+.switchArt:after{transform:translateX(24px)}.settingRow input:focus-visible+.switchArt{outline:3px solid #ffe188;outline-offset:3px}
-.driverSetup{display:flex;align-items:end;gap:8px}.driverSetup label{flex:1;font-size:11px;font-weight:950;color:#ffe3a0}.driverSetup .onlineInput{margin:6px 0 0}.driverSetup button{margin:0;min-height:46px;width:190px;font-size:12px}
-.statTiles,.trophyGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.statTiles>div,.trophyGrid>div{padding:12px;text-align:center;background:#1c4164;border:1px solid #5081a5;border-radius:13px}.statTiles b{display:block;font-size:28px;color:#ffe28c}.statTiles small,.trophyGrid small{display:block;font-weight:800;font-size:10px;color:#b8daf5;margin-top:3px}.statsHeading{margin:15px 0 8px;color:#ffe19b;font-size:13px}.trophyGrid{grid-template-columns:repeat(4,1fr)}.trophyGrid b{font-size:20px}.recentRaces{max-height:170px;overflow:auto}.recentRaces>div{display:flex;justify-content:space-between;gap:10px;padding:8px;border-bottom:1px solid #35546d}.recentRaces small{color:#a6cfe6}
-.podiumHero{display:flex;align-items:center;gap:10px}.podiumHero .cup{font-size:55px}.podiumHero h1{margin:0}.podiumHero p{font-weight:950;color:#ffda87;margin:5px 0}.finishList{margin:12px 0;border-radius:13px;overflow:hidden;border:1px solid #528db2}.finishLine{display:flex;gap:10px;align-items:center;padding:11px 13px;background:#173859;border-bottom:1px solid #365979}.finishLine:last-child{border-bottom:0}.finishRank{font-size:31px}.finishWho{flex:1}.finishWho b,.finishWho small{display:block}.finishWho small{font-size:11px;color:#a7d1e7;margin-top:4px}
-@media(max-width:580px){.menuMast{padding:15px}.menuTabs{padding:6px 8px 0;gap:3px}.menuTab{font-size:10px;padding:8px 1px}.menuContent{padding:11px}.menuLead{grid-template-columns:1fr 1.5fr;gap:6px}.menuPromise p{font-size:11px}.menuStatus{font-size:9px}.menuSetup{grid-template-columns:1fr}.rulesGrid{grid-template-columns:1fr}.driverSetup{display:block}.driverSetup button{width:100%;margin-top:8px}.statTiles>div{padding:8px}.menuCar{font-size:50px}}
-@media(max-height:600px){.dialog.mainMenu{max-height:97dvh}.menuMast{padding:10px 16px}.menuMast h1{font-size:30px}.menuMast p{font-size:9px}.menuTab{padding:8px 3px;min-height:33px}.menuContent{padding:10px 15px}.menuLead{margin:0 0 7px}.menuCar{font-size:42px}.menuContent .menuPrimary{min-height:41px}}
 </style>
 </head>
 <body>
-<div class="shell" id="gameShell"><header class="header"><div class="brand"><div><div class="logo">FLIP <span>CARS</span> 🏁</div><div class="sub">Combat Circuit 4.2 • Local & Online Racing</div></div></div><div class="head-actions"><span class="badge" id="roundBadge">ROUND 1</span><button class="mini" id="onlineBtn" title="Create or join an online race">🌐 ONLINE</button><button class="mini" id="focusBtn" title="Toggle complete circuit / follow camera" aria-label="Change board camera">◎ FIT</button><button class="mini" id="fullBtn" title="Use full screen" aria-label="Toggle fullscreen">⛶ FULL</button><button class="mini" id="soundBtn" aria-label="Toggle sound">♫ ON</button><button class="mini" id="musicBtn" title="Choose music">🎵</button><button class="mini" id="profileBtn" title="Driver stats and friends">👤</button><button class="mini" id="tableBtn" title="Tabletop seating directions">⇄ TABLE</button><button class="mini" id="helpBtn">? RULES</button><button class="mini" id="newBtn">↻ NEW</button></div></header>
+<div class="shell" id="gameShell"><header class="header"><div class="brand"><div><div class="logo">FLIP <span>CARS</span> 🏁</div><div class="sub">Combat Circuit • Local & Online Racing</div></div></div><div class="head-actions"><span class="badge" id="roundBadge">ROUND 1</span><button class="mini" id="onlineBtn" title="Create or join an online race">🌐 ONLINE</button><button class="mini" id="focusBtn" title="Toggle complete circuit / follow camera" aria-label="Change board camera">◎ FIT</button><button class="mini" id="fullBtn" title="Use full screen" aria-label="Toggle fullscreen">⛶ FULL</button><button class="mini" id="soundBtn" aria-label="Toggle sound">♫ ON</button><button class="mini" id="musicBtn" title="Choose music">🎵</button><button class="mini" id="profileBtn" title="Driver stats and friends">👤</button><button class="mini" id="tableBtn" title="Tabletop seating directions">⇄ TABLE</button><button class="mini" id="helpBtn">? RULES</button><button class="mini" id="newBtn">↻ NEW</button></div></header>
 <main class="arena"><section class="seat" data-position="top" id="seat0" style="--color:#ff5959"></section><section class="seat" data-position="left" id="seat1" style="--color:#40b5ff"></section><div class="boardwrap" id="boardwrap"><div class="leaderhud" id="leaderHud" aria-label="Race standings"></div><canvas id="board" width="1200" height="800" aria-label="Interactive racing circuit, with three forks and two pit-stop spaces"></canvas><div class="routePrompt" id="routePrompt"></div><div class="boardcaption" id="boardCaption">🏁 Three laps. Three forks. Flip cards together.</div><div class="eventTicker" id="eventTicker"></div><div id="combatHUD" class="combatHUD" aria-label="Combat card deck">🎴 COMBAT DECK</div><div class="followHint" id="followHint">FOLLOW CAM · TAP FIT FOR WHOLE TRACK</div></div><section class="seat" data-position="right" id="seat2" style="--color:#ffdc55"></section><section class="seat" data-position="bottom" id="seat3" style="--color:#62e2a1"></section></main>
 <div class="strip"><div class="feed"><div class="feedtitle">RACE CONTROL / FLAG EVENTS</div><div class="feedtext" id="feed">Choose the number of drivers to start your race.</div><div id="inventory" class="legend"></div></div><div class="rules"><h3>HOW TO RACE</h3><p>Every driver has the same shuffled 1–5 movement deck. Flip simultaneously, then all cars move. <b>⚑ Flags</b> draw a surprise event; <b>⚡ boosts</b> grant an extra flip. Pick routes at forks. A shared space causes a crash. Pit on the next approach to the lap line when required.</p><div class="legend"><span>⚑ Flag</span><span>⚡ Boost</span><span>🔧 Pit</span><span>🏁 3 laps wins</span></div></div></div>
 </div>
@@ -343,11 +161,9 @@ body.solo .boardwrap{min-height:0}
 const canvas=document.getElementById('board'),ctx=canvas.getContext('2d');
 const C=['#ff5959','#40b5ff','#ffdc55','#62e2a1'];
 const palette={RED:'#ff5959',BLUE:'#40b5ff',YELLOW:'#ffdc55',GREEN:'#62e2a1',PURPLE:'#b197ff',ORANGE:'#ff9955',WHITE:'#e4ebff',PINK:'#ff73ce'};
-let selectedCarColor=null;
 const carPaint=p=>palette[p.color]||C[p.id]||C[0];
-const driverLabel=p=>p.displayName||((p.color||p.name||'RACER')+' CAR');
-function colorSelector(){let chosen=selectedCarColor||storeGet('flipcars_color')||'RED';selectedCarColor=chosen;return '<label class="onlineNote">YOUR CAR COLOR</label><div class="carColors" id="colorChoices">'+Object.entries(palette).map(([id,col])=>'<button type="button" class="colorPick '+(id===chosen?'selected':'')+'" style="--paint:'+col+'" title="'+id+'" data-color="'+id+'" aria-label="'+id+'" aria-pressed="'+(id===chosen)+'">'+(id===chosen?'✓':'')+'</button>').join('')+'</div>'}
-function wireColors(){let el=$('colorChoices');if(el)el.onclick=ev=>{let btn=ev.target.closest('[data-color]');if(!btn)return;selectedCarColor=btn.dataset.color;storeSet('flipcars_color',btn.dataset.color);el.querySelectorAll('[data-color]').forEach(x=>{x.classList.toggle('selected',x===btn);x.textContent=x===btn?'✓':'';x.setAttribute('aria-pressed',x===btn?'true':'false')})}}
+function colorSelector(){let chosen=storeGet('flipcars_color')||'RED';return '<label class="onlineNote">YOUR CAR COLOR</label><div class="carColors" id="colorChoices">'+Object.entries(palette).map(([id,col])=>'<button type="button" class="colorPick '+(id===chosen?'selected':'')+'" style="--paint:'+col+'" title="'+id+'" data-color="'+id+'" aria-label="'+id+'" aria-pressed="'+(id===chosen)+'">'+(id===chosen?'✓':'')+'</button>').join('')+'</div>'}
+function wireColors(){let el=$('colorChoices');if(el)el.onclick=ev=>{let btn=ev.target.closest('[data-color]');if(!btn)return;storeSet('flipcars_color',btn.dataset.color);el.querySelectorAll('[data-color]').forEach(x=>{x.classList.toggle('selected',x===btn);x.textContent=x===btn?'✓':'';x.setAttribute('aria-pressed',x===btn?'true':'false')})}}
 const heroHTML='<div class="heroRace"><div class="raceTitle">COMBAT CIRCUIT</div><div class="speedLine"></div><div class="raceCar">🏎️</div><div class="raceCar raceCar2">🏎️</div></div>';
 
 const keys=[['q','w'],['a','s'],['k','l'],['n','m']];
@@ -375,26 +191,13 @@ const eventPool={lowfuel:3,fuel:3,turbo:4,spin:3,repair:2,guard:2,cones:3,cheat:
 const COMBAT={oil:{icon:'🛢️',name:'OIL SLICK',hint:'Leave oil on your space; the next rival to land there spins and misses a flip.'},spikes:{icon:'🪛',name:'SPIKES',hint:'Pop the tires of a racer 1–3 spaces behind you.'},missile:{icon:'🚀',name:'MISSILE',hint:'Hit a racer 1–5 spaces ahead. Skip next flip and visit the pit.'},sniper:{icon:'🎯',name:'SNIPER ROCKET',hint:'Hit 1–10 spaces ahead, plus tire damage.'},stall:{icon:'⚡',name:'ENGINE STALL',hint:'Extremely rare: everyone else misses their next flip.'},bubble:{icon:'🫧',name:'DEFENSE BUBBLE',hint:'Blocks one harmful effect until the next lap line or pit.'}};
 const COMBAT_COUNTS={oil:9,spikes:7,missile:7,sniper:4,stall:1,bubble:3};
 const combatTiles=new Set(Object.keys(nodes).filter(id=>nodes[id].type==='normal' && Number(id.slice(1))%13===6));
-const DEFAULT_OPTIONS={sfx:true,music:true,combat:true,flags:true,turbos:true};
-const OPTIONS_KEY='flipcars42_options',TAG_KEY='flipcars42_driver';
-const loadOptions=()=>{try{const d=JSON.parse(localStorage.getItem(OPTIONS_KEY)||'{}');return Object.fromEntries(Object.keys(DEFAULT_OPTIONS).map(k=>[k,d[k]!==false]))}catch{return {...DEFAULT_OPTIONS}}};
-let menuOptions=loadOptions();
-const loadTag=()=>{try{return String(JSON.parse(localStorage.getItem(TAG_KEY)||'null')?.tag||'').slice(0,18)}catch{return ''}};
-function saveTag(tag){tag=String(tag||'').replace(/[^a-zA-Z0-9 _-]/g,'').trim().slice(0,18);if(!tag)return false;storeSet(TAG_KEY,JSON.stringify({tag}));return true}
-const settingsFor=s=>s?.settings||menuOptions;
-const optionsSummary=o=>[o.combat?'🎴 Combat':'🚫 Combat',o.flags?'⚑ Flags':'🚫 Flags',o.turbos?'⚡ Turbos':'🚫 Turbos'].join('  ·  ');
-const rankMarks=['🥇','🥈','🥉','🏁'];
 const localStatsKey='flipcars4_local_stats';
 const loadStats=()=>{try{return JSON.parse(localStorage.getItem(localStatsKey))||{races:0,wins:0}}catch{return {races:0,wins:0}}};
 let recordedRace=false,tabletop=false,lastFXLog='',currentlyPlaying='';
-const engineAudio=new Audio('audio/engine.mp3');engineAudio.preload='auto';engineAudio.volume=.32;
-let lastEngineAt=0;
-function engineRev(){if(!soundOn)return;try{const now=performance.now();if(now-lastEngineAt<400)return;lastEngineAt=now;engineAudio.pause();engineAudio.currentTime=0;engineAudio.playbackRate=1+Math.random()*.17;engineAudio.volume=.32;engineAudio.play().catch(()=>{})}catch{}}
-function sfx(kind,volume=.45){if(!soundOn)return;if(kind==='engine'){engineRev();return}try{let a=new Audio('audio/'+kind+'.mp3');a.volume=volume;a.play().catch(()=>{})}catch{}}
+function sfx(kind,volume=.45){if(!soundOn)return;try{let a=new Audio('audio/'+kind+'.mp3');a.volume=volume;a.play().catch(()=>{})}catch{}}
 const playlist=[['lofi','Lo-fi Sunset'],['rock','Garage Rock'],['cruise','Midnight Cruise'],['relax','Coastal Calm'],['retro','Neon Freeway']];
 const musicEl=new Audio();musicEl.loop=true;musicEl.volume=.29;musicEl.preload='none';
-function playTrack(id){if(id==='off'){musicEl.pause();currentlyPlaying='';menuOptions.music=false;storeSet(OPTIONS_KEY,JSON.stringify(menuOptions));storeSet('flipcars_music','off');return}if(!playlist.some(p=>p[0]===id))return;currentlyPlaying=id;menuOptions.music=true;storeSet(OPTIONS_KEY,JSON.stringify(menuOptions));musicEl.src='music/'+id+'.ogg';musicEl.play().catch(()=>{});storeSet('flipcars_music',id)}
-function startDefaultMusic(){if(!menuOptions.music)return;const requested=storeGet('flipcars_music');const next=requested&&playlist.some(p=>p[0]===requested)?requested:'retro';if(!currentlyPlaying||musicEl.paused)playTrack(currentlyPlaying||next)}
+function playTrack(id){if(id==='off'){musicEl.pause();currentlyPlaying='';storeSet('flipcars_music','off');return}if(!playlist.some(p=>p[0]===id))return;currentlyPlaying=id;musicEl.src='music/'+id+'.ogg';musicEl.play().catch(()=>{});storeSet('flipcars_music',id)}
 let fxRunning=false,fxDeadline=0;
 function runFX(){fxDeadline=Date.now()+1250;if(fxRunning)return;fxRunning=true;const tick=()=>{if(Date.now()>fxDeadline){fxRunning=false;return}drawAll();requestAnimationFrame(tick)};requestAnimationFrame(tick)}
 function eventAudio(logMessage){if(logMessage===lastFXLog)return;lastFXLog=logMessage;if(/crash|spin|slick|rocket|burnout/i.test(logMessage))runFX();if(/crash|rocket|hits .*pit/i.test(logMessage))sfx('crash',.62);else if(/spin|slick|stall/i.test(logMessage))sfx('burnout',.55);else if(/boost|turbo|nitro/i.test(logMessage))sfx('boost',.45);else if(/flip|round|card/i.test(logMessage))sfx('flip',.38)}
@@ -402,7 +205,7 @@ function distanceForward(a,b,max=10){if(a===b)return -1;const q=[[a,0]],seen=new
 function targetsFor(p,type){if(['oil','stall','bubble'].includes(type))return [];let max=type==='spikes'?3:type==='missile'?5:10;return state.players.filter(q=>q.id!==p.id&&!q.finished&&q.pitStage<0&&(type==='spikes'?distanceForward(q.node,p.node,max):distanceForward(p.node,q.node,max))>0).map(q=>q.id)}
 function blockHit(p,harm){if(p.bubble){p.bubble=false;log('🫧 '+p.name+' bubble blocks '+harm+'!');return true}return false}
 function combatMessage(msg){const box=$('combatMessage');if(box)box.textContent=msg}
-function doCombat(id,index,target){if(!settingsFor(state).combat)return;const p=state?.players?.[id];if(!p||!Number.isInteger(index)||index<0||index>=p.combat?.length)return;
+function doCombat(id,index,target){const p=state?.players?.[id];if(!p||!Number.isInteger(index)||index<0||index>=p.combat?.length)return;
  if(onlineMode){if(id===onlinePlayerId&&onlineWs?.readyState===1)onlineWs.send(JSON.stringify({type:'combat',index,target}));return}
  if(state.phase!=='flip'||p.cpu||p.ready||p.pendingCombat)return;
  const type=p.combat[index],opts=targetsFor(p,type);if(!['oil','stall','bubble'].includes(type)&&!opts.includes(target))return;
@@ -421,28 +224,23 @@ function doCombat(id,index,target){if(!settingsFor(state).combat)return;const p=
 function discardCombat(id,index){if(onlineMode){if(id===onlinePlayerId&&onlineWs?.readyState===1)onlineWs.send(JSON.stringify({type:'discard',index}));return}
  const p=state?.players?.[id];if(!p||!p.pendingCombat)return;if(index!==-1){p.combat[index]=p.pendingCombat}p.pendingCombat=null;renderSeats();drawAll()
 }
-function giveCombat(p){if(!settingsFor(state).combat)return;if(!state.combatDeck.length)state.combatDeck=shuffle(Object.entries(COMBAT_COUNTS).flatMap(([id,num])=>Array(num).fill(id)));const item=state.combatDeck.pop();if(p.combat.length<2){p.combat.push(item);log('🎴 '+p.name+' draws a combat card!')}else if(p.cpu){p.combat[Math.floor(Math.random()*2)]=item;log('🎴 '+p.name+' swaps a combat card.')}else{p.pendingCombat=item;log('🎴 '+p.name+' must replace a card or pass.')}}
-function recordResult(){if(recordedRace||!state||state.phase!=='done')return;recordedRace=true;
- const me=onlineMode?onlinePlayerId:0,stats=loadStats(),placement=(state.placements||[]).find(x=>x.id===me)?.place||0;
- stats.races=(stats.races||0)+1;stats.wins=(stats.wins||0)+(placement===1?1:0);stats.flips=(stats.flips||0)+(state.players.find(p=>p.id===me)?.flipCount||0);
- stats.podium=stats.podium||[0,0,0,0];if(placement>=1&&placement<=4)stats.podium[placement-1]=(stats.podium[placement-1]||0)+1;
- stats.history=[{date:new Date().toISOString().slice(0,10),place:placement,racers:state.players.length,mode:onlineMode?'Online':'Local',drivers:state.placements.map(x=>({place:x.place,name:state.players[x.id]?.displayName||state.players[x.id]?.name||'RACER'}))},...(stats.history||[])].slice(0,25);
- storeSet(localStatsKey,JSON.stringify(stats));}
+function giveCombat(p){if(!state.combatDeck.length)state.combatDeck=shuffle(Object.entries(COMBAT_COUNTS).flatMap(([id,num])=>Array(num).fill(id)));const item=state.combatDeck.pop();if(p.combat.length<2){p.combat.push(item);log('🎴 '+p.name+' draws a combat card!')}else if(p.cpu){p.combat[Math.floor(Math.random()*2)]=item;log('🎴 '+p.name+' swaps a combat card.')}else{p.pendingCombat=item;log('🎴 '+p.name+' must replace a card or pass.')}}
+function recordResult(){if(recordedRace||!state||state.phase!=='done')return;recordedRace=true;const stats=loadStats();stats.races++;if((state.winner||[]).some(w=>(typeof w==='number'?w:w.id)===(onlineMode?onlinePlayerId:0)))stats.wins++;stats.flips=(stats.flips||0)+(state.players.find(p=>p.id===(onlineMode?onlinePlayerId:0))?.flipCount||0);storeSet(localStatsKey,JSON.stringify(stats))}
 
-let state=null,soundOn=menuOptions.sfx,audio=null;let viewMode='fit',resizeQueued=false,lastCanvasW=0,lastCanvasH=0;const $=id=>document.getElementById(id); let onlineRoomSettings=null;let onlineMode=false,onlinePlayerId=-1,onlineWs=null,onlineRoom='',onlineToken='',onlineHost=false,onlineRoster=[],onlineBackend='',onlineWinnerShown=false;
+let state=null,soundOn=true,audio=null;let viewMode='fit',resizeQueued=false,lastCanvasW=0,lastCanvasH=0;const $=id=>document.getElementById(id); let onlineMode=false,onlinePlayerId=-1,onlineWs=null,onlineRoom='',onlineToken='',onlineHost=false,onlineRoster=[],onlineBackend='',onlineWinnerShown=false;
 function shuffle(a){let arr=a.slice();for(let i=arr.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
-function makeEventDeck(config=menuOptions){let arr=[];Object.entries(eventPool).forEach(([id,cnt])=>{if(!config.turbos&&(id==='turbo'||id==='nitro'))return;for(let k=0;k<cnt;k++)arr.push(id)});return shuffle(arr)}
-function drawEvent(){if(!state.eventDeck.length)state.eventDeck=makeEventDeck(settingsFor(state));return state.eventDeck.pop()}
+function makeEventDeck(){let arr=[];Object.entries(eventPool).forEach(([id,cnt])=>{for(let k=0;k<cnt;k++)arr.push(id)});return shuffle(arr)}
+function drawEvent(){if(!state.eventDeck.length)state.eventDeck=makeEventDeck();return state.eventDeck.pop()}
 function beep(freq=460,duration=.1,kind='sine',gain=.06){if(!soundOn)return;try{let Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;if(!audio)audio=new Audio();audio.resume();let o=audio.createOscillator(),g=audio.createGain();o.type=kind;o.frequency.setValueAtTime(freq,audio.currentTime);g.gain.setValueAtTime(gain,audio.currentTime);g.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+duration);o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+duration)}catch(e){}}
-function initGame(){disconnectOnline();let humans=+$('humanCount').value,cpu=+$('cpuCount').value,number=humans+cpu;const chosenColor=selectedCarColor||storeGet('flipcars_color')||'RED',raceColors=[chosenColor,...['RED','BLUE','YELLOW','GREEN'].filter(c=>c!==chosenColor)];recordedRace=false;state={round:1,phase:'flip',players:[],eventDeck:makeEventDeck(menuOptions),combatDeck:shuffle(Object.entries(COMBAT_COUNTS).flatMap(([id,n])=>Array(n).fill(id))),traps:[],active:0,choice:null,logs:[],winner:null,placements:[],settings:{...menuOptions},humans};for(let i=0;i<number;i++){state.players.push({color:raceColors[i],id:i,name:raceColors[i],displayName:i===0&&loadTag()?loadTag():null,cpu:i>=humans,node:start,laps:0,deck:shuffle(movementValues),card:null,ready:false,remaining:0,skips:0,needsPit:false,pitStage:-1,fuel:0,repair:0,guard:0,cones:0,nitro:false,flat:false,tireDamaged:false,bubble:false,combat:[],pendingCombat:null,combatUses:0,combatHits:0,crashes:0,spinUntil:0,crashUntil:0,history:[],moved:false,finished:false,finishRound:null,overshoot:0,bonuses:0,flags:0,flipCount:0,selected:0,selectedNode:null,justEnteredPit:false})}state.logs=['🏁 Lights out! Flip your movement cards together.'];document.body.classList.toggle('solo',humans===1);document.body.classList.toggle('multi',humans>1);viewMode=(humans===1&&window.innerWidth<650&&window.innerHeight>window.innerWidth)?'follow':'fit';updateViewControls();$('startModal').classList.add('hidden');prepareFlipRound(true);startDefaultMusic();sfx('engine',.27);drawAll()}
+function initGame(){disconnectOnline();let humans=+$('humanCount').value,cpu=+$('cpuCount').value,number=humans+cpu;recordedRace=false;state={round:1,phase:'flip',players:[],eventDeck:makeEventDeck(),combatDeck:shuffle(Object.entries(COMBAT_COUNTS).flatMap(([id,n])=>Array(n).fill(id))),traps:[],active:0,choice:null,logs:[],winner:null,humans};for(let i=0;i<number;i++){state.players.push({color:i===0?(storeGet('flipcars_color')||'RED'):['RED','BLUE','YELLOW','GREEN'][i],id:i,name:['RED','BLUE','YELLOW','GREEN'][i],cpu:i>=humans,node:start,laps:0,deck:shuffle(movementValues),card:null,ready:false,remaining:0,skips:0,needsPit:false,pitStage:-1,fuel:0,repair:0,guard:0,cones:0,nitro:false,flat:false,tireDamaged:false,bubble:false,combat:[],pendingCombat:null,combatUses:0,combatHits:0,crashes:0,spinUntil:0,crashUntil:0,history:[],moved:false,finished:false,overshoot:0,bonuses:0,flags:0,flipCount:0,selected:0,selectedNode:null,justEnteredPit:false})}state.logs=['🏁 Lights out! Flip your movement cards together.'];document.body.classList.toggle('solo',humans===1);document.body.classList.toggle('multi',humans>1);viewMode=(humans===1&&window.innerWidth<650&&window.innerHeight>window.innerWidth)?'follow':'fit';updateViewControls();$('startModal').classList.add('hidden');prepareFlipRound(true);beep(660,.15);drawAll()}
 function log(text){state.logs.unshift(text);state.logs=state.logs.slice(0,5)}
 function takeCard(p){if(!p.deck.length)p.deck=shuffle(movementValues);return p.deck.pop()}
 function readyStatus(p){return p.ready?'READY':(p.pitStage>=0&&p.pitStage<2?'PITTING':p.skips?'SKIPPING':'FLIP')}
-function cpuUseCombat(p){if(!settingsFor(state).combat||!p.cpu||!p.combat.length||Math.random()>.42)return;const ix=p.combat.findIndex(type=>['bubble','oil','stall'].includes(type)||targetsFor(p,type).length);if(ix<0)return;const type=p.combat[ix],target=targetsFor(p,type)[0]??-1;p.cpu=false;doCombat(p.id,ix,target);p.cpu=true}
-function prepareFlipRound(initial=false){if(!state||state.phase==='done')return;state.phase='flip';state.choice=null;for(const p of state.players){p.ready=false;p.card=null;p.moved=false;p.remaining=0;p.bonuses=0;p.flags=0;if(!p.finished)p.overshoot=0;p.selected=0;p.selectedNode=null;if(p.finished||p.pitStage===0||p.pitStage===1||p.skips>0){p.ready=true;p.card=null}else if(p.cpu){cpuUseCombat(p);p.card=takeCard(p);p.flipCount++;p.ready=true}}renderSeats();drawAll();if(state.players.every(p=>p.ready))setTimeout(revealRound,440)}
+function cpuUseCombat(p){if(!p.cpu||!p.combat.length||Math.random()>.42)return;const ix=p.combat.findIndex(type=>['bubble','oil','stall'].includes(type)||targetsFor(p,type).length);if(ix<0)return;const type=p.combat[ix],target=targetsFor(p,type)[0]??-1;p.cpu=false;doCombat(p.id,ix,target);p.cpu=true}
+function prepareFlipRound(initial=false){if(!state||state.phase==='done')return;state.phase='flip';state.choice=null;for(const p of state.players){p.ready=false;p.card=null;p.moved=false;p.remaining=0;p.bonuses=0;p.flags=0;p.overshoot=0;p.selected=0;p.selectedNode=null;if(p.finished||p.pitStage===0||p.pitStage===1||p.skips>0){p.ready=true;p.card=null}else if(p.cpu){cpuUseCombat(p);p.card=takeCard(p);p.flipCount++;p.ready=true}}renderSeats();drawAll();if(state.players.every(p=>p.ready))setTimeout(revealRound,440)}
 function playerAction(id,which){if(onlineMode){if(id===onlinePlayerId && onlineWs?.readyState===WebSocket.OPEN && ["flip","route"].includes(which))onlineWs.send(JSON.stringify({type:"action",op:which}));return;}if(!state||state.phase==='done')return;let p=state.players[id];if(!p||p.cpu)return;if(state.phase==='choice'){if(state.choice!==id)return;if(which==='route'){p.selected=(p.selected+1)%forks[p.node].length;beep(430,.045);renderSeats();drawAll()}else{p.selectedNode=forks[p.node][p.selected].first;state.phase='resolve';state.choice=null;log('🛣️ '+p.name+' chooses '+forks[p.node][p.selected].name+'.');beep(640,.08);renderSeats();setTimeout(processResolve,210)}return}if(state.phase!=='flip'||which!=='flip'||p.ready||p.pendingCombat)return;p.card=takeCard(p);p.flipCount++;p.ready=true;sfx('flip',.29);beep(310+p.id*100,.08);renderSeats();if(state.players.every(q=>q.ready))setTimeout(revealRound,480)}
-function revealRound(){if(!state||state.phase!=='flip'||!state.players.every(p=>p.ready))return;state.phase='resolve';log('🃏 Round '+state.round+': '+state.players.map(p=>p.name+' '+(p.card??'—')).join(' · '));sfx('engine',.36);state.active=0;for(let p of state.players){if(p.pitStage===0){p.pitStage=1;p.node=pitOne;log('🔧 '+p.name+' rolls into PIT 1.');}else if(p.pitStage===1){p.pitStage=2;p.node=pitTwo;log('🔧 '+p.name+' advances to PIT 2.');}else if(p.skips>0){p.skips--;log('🌀 '+p.name+' misses the flip.')}else if(p.card!==null){p.remaining=Math.max(0,p.card+(p.nitro?1:0)-(p.flat||p.tireDamaged?1:0)-p.cones);p.cones=0;}}renderSeats();drawAll();setTimeout(processResolve,520)}
-function finishCrossed(p){p.laps++;p.nitro=false;p.flat=false;p.cones=0;p.bubble=false;beep(900,.17);log('🏁 '+p.name+' crosses the lap line: '+p.laps+' / 3!');if(p.laps>=3){p.finished=true;p.finishRound=state.round;p.overshoot=p.remaining;log('🏆 '+p.name+' finishes!')}}
+function revealRound(){if(!state||state.phase!=='flip'||!state.players.every(p=>p.ready))return;state.phase='resolve';log('🃏 Round '+state.round+': '+state.players.map(p=>p.name+' '+(p.card??'—')).join(' · '));sfx('engine',.26);beep(760,.12);state.active=0;for(let p of state.players){if(p.pitStage===0){p.pitStage=1;p.node=pitOne;log('🔧 '+p.name+' rolls into PIT 1.');}else if(p.pitStage===1){p.pitStage=2;p.node=pitTwo;log('🔧 '+p.name+' advances to PIT 2.');}else if(p.skips>0){p.skips--;log('🌀 '+p.name+' misses the flip.')}else if(p.card!==null){p.remaining=Math.max(0,p.card+(p.nitro?1:0)-(p.flat||p.tireDamaged?1:0)-p.cones);p.cones=0;}}renderSeats();drawAll();setTimeout(processResolve,520)}
+function finishCrossed(p){p.laps++;p.nitro=false;p.flat=false;p.cones=0;p.bubble=false;beep(900,.17);log('🏁 '+p.name+' crosses the lap line: '+p.laps+' / 3!');if(p.laps>=3){p.finished=true;p.overshoot=p.remaining;log('🏆 '+p.name+' finishes!')}}
 function takeStep(p){if(p.pitStage===2&&p.node===pitTwo){p.pitStage=-1;p.needsPit=false;p.flat=false;p.tireDamaged=false;p.bubble=false;p.node=pit.exit;p.remaining=Math.max(0,p.remaining-1);p.history.push({node:pitTwo,lapCross:true});p.moved=true;finishCrossed(p);log('🛠️ '+p.name+' rejoins after the line.');return 'ok'}
 if(p.node===pit.approach&&p.needsPit){p.node=pitWait;p.remaining=0;p.pitStage=0;p.needsPit=false;p.bubble=false;p.justEnteredPit=true;p.moved=true;log('🔧 '+p.name+' enters pit lane: WAIT → PIT 1 → PIT 2.');beep(200,.19,'sawtooth');return 'pit'}
 let next;if(forks[p.node]){if(!p.selectedNode){if(p.cpu){let opts=forks[p.node];let idx=Math.random()<.6?opts.findIndex(o=>o.hint.includes('Short')):Math.floor(Math.random()*opts.length);p.selected=Math.max(0,idx);p.selectedNode=opts[p.selected].first;log('🛣️ '+p.name+' takes '+opts[p.selected].name+'.')}else{state.phase='choice';state.choice=p.id;p.selected=0;renderSeats();drawAll();beep(600,.12);return 'choice'}}next=p.selectedNode;p.selectedNode=null}else next=nodes[p.node].next;
@@ -452,129 +250,41 @@ return 'ok'}
 function reverseSteps(p,n){let count=0;while(n>0&&p.history.length){let ent=p.history.pop();if(p.node===start&&ent.lapCross&&p.laps>0){p.laps--;p.finished=false}p.node=ent.node;count++;n--;p.moved=true}return count}
 function eventFor(p){let id=drawEvent(),e=eventDefs[id];p.flags++;log(e.icon+' '+p.name+': '+e.title+' — '+e.desc+'.');beep(id==='flat'||id==='spin'||id==='cheat'?230:840,.16);switch(id){case'lowfuel':if(p.fuel>0){p.fuel--;log('⛽ Fuel canister saves '+p.name+'!')}else p.needsPit=true;break;case'fuel':p.fuel++;break;case'turbo':p.remaining+=2;break;case'spin':if(!blockHit(p,'spin-out')){p.skips++;p.spinUntil=state.round+1}break;case'repair':if(p.tireDamaged){p.tireDamaged=false;p.needsPit=false}else p.repair++;break;case'guard':p.guard++;break;case'cones':p.cones+=2;break;case'cheat':reverseSteps(p,3);break;case'catch':p.remaining+=3;break;case'nitro':p.nitro=true;break;case'flat':if(!blockHit(p,'flat tire'))p.flat=true;break;}return id}
 function processResolve(){if(!state||state.phase!=='resolve')return;while(state.active<state.players.length){let p=state.players[state.active];if(p.finished){p.remaining=0;state.active++;continue}let steps=0;while(p.remaining>0&&steps++<40&&!p.finished){let result=takeStep(p);if(result==='choice')return;if(result==='pit'||result==='error')break;}if(p.finished)p.remaining=0;
-if(p.pitStage<0&&p.node!==start&&p.moved&&!p.finished){let node=nodes[p.node];if(settingsFor(state).turbos&&node.type==='boost'&&p.bonuses<2){p.bonuses++;let extra=takeCard(p);p.flipCount++;p.remaining+=extra;log('⚡ '+p.name+' BOOSTS! Extra card +'+extra+'.');sfx('boost',.33);beep(1000,.15);renderSeats();drawAll();setTimeout(processResolve,380);return}if(settingsFor(state).flags&&node.type==='flag'&&p.flags<2){eventFor(p);if(p.remaining>0){renderSeats();drawAll();setTimeout(processResolve,380);return}}}
+if(p.pitStage<0&&p.node!==start&&p.moved&&!p.finished){let node=nodes[p.node];if(node.type==='boost'&&p.bonuses<2){p.bonuses++;let extra=takeCard(p);p.flipCount++;p.remaining+=extra;log('⚡ '+p.name+' BOOSTS! Extra card +'+extra+'.');sfx('boost',.33);beep(1000,.15);renderSeats();drawAll();setTimeout(processResolve,380);return}if(node.type==='flag'&&p.flags<2){eventFor(p);if(p.remaining>0){renderSeats();drawAll();setTimeout(processResolve,380);return}}}
 p.remaining=0;state.active++}
 settleRound()}
 function settleRound(){if(!state)return;
- if(settingsFor(state).combat)for(let p of state.players)if(p.moved&&!p.finished&&p.pitStage<0&&combatTiles.has(p.node))giveCombat(p);
+ for(let p of state.players)if(p.moved&&!p.finished&&p.pitStage<0&&combatTiles.has(p.node))giveCombat(p);
  for(let trap of [...state.traps]){const hit=state.players.filter(p=>p.node===trap.node&&p.moved&&p.id!==trap.owner&&!p.finished);if(hit.length){hit.forEach(p=>{if(!blockHit(p,'oil slick')){p.skips++;p.spinUntil=state.round+1;log('🛢️ '+p.name+' spins on oil and misses a flip!')}});state.traps=state.traps.filter(t=>t!==trap)}}
  let spots={};for(let p of state.players){if(nodes[p.node].type==='pit')continue;(spots[p.node]??=[]).push(p)}for(let same of Object.values(spots)){if(same.length<2||!same.some(p=>p.moved))continue;for(let p of same){if(p.finished)continue;if(blockHit(p,'a crash')){}else if(p.guard>0){p.guard--;log('🛡️ '+p.name+' blocks the crash with a Guard Rail!')}else{p.crashes++;p.crashUntil=state.round+1;p.skips++;sfx('crash',.57);if(p.repair>0){p.repair--;log('🔧 '+p.name+' uses a Repair Kit: skip turn, no pit.')}else{p.needsPit=true;log('💥 '+p.name+' crashes! Miss next flip + required pit.')}beep(125,.24,'sawtooth')}}}
-const finishers=state.players.filter(p=>p.finished).sort((a,b)=>(a.finishRound??state.round)-(b.finishRound??state.round)||b.overshoot-a.overshoot||a.id-b.id);
-state.placements=finishers.map((p,i)=>({id:p.id,place:i+1,round:p.finishRound??state.round,overshoot:p.overshoot}));
-if(finishers.length&&!state.winner){state.winner=[finishers[0].id]}
-if(finishers.length===state.players.length){state.phase='done';recordResult();drawAll();renderSeats();showWinner(finishers);return}
-if(finishers.length)log('🏆 '+finishers.length+' finished · '+(state.players.length-finishers.length)+' racing for the podium.');
+let finishers=state.players.filter(p=>p.finished);if(finishers.length){let best=Math.max(...finishers.map(p=>p.overshoot));let winners=finishers.filter(p=>p.overshoot===best);state.winner=winners;state.phase='done';recordResult();drawAll();renderSeats();showWinner(winners);return}
 state.round++;renderSeats();drawAll();setTimeout(()=>prepareFlipRound(),1050)}
-function showWinner(winners){$('dialogContent').classList.remove('mainMenu');if(!onlineMode)recordResult();
- const all=(state.placements||[]).map(x=>({p:state.players.find(p=>p.id===x.id),place:x.place}));
- const winnerNames=all.filter(x=>x.place===1).map(x=>x.p?.displayName||x.p?.name||'RACER').join(' & ');
- const stats=loadStats();
- $('dialogContent').classList.remove('cardDetails');
- $('dialogContent').innerHTML='<div class="podiumHero"><span class="cup">🏆</span><div><span class="eyebrow">RACE COMPLETE</span><h1>CHECKERED <span>FLAG!</span></h1><p>'+safeText(winnerNames)+' TAKES FIRST!</p></div></div>'+heroHTML+'<div class="finishList">'+all.map(({p,place})=>'<div class="finishLine"><span class="finishRank">'+(rankMarks[place-1]||'🏁')+'</span><span class="finishWho"><b style="color:'+carPaint(p)+'">'+safeText(p.displayName||p.name)+'</b><small>'+safeText(p.color||p.name)+' · '+(p.flipCount||0)+' flips · '+(p.combatUses||0)+' combat uses</small></span><strong>'+place+getOrdinal(place)+'</strong></div>').join('')+'</div><p class="helper">Stats saved locally. '+stats.wins+' 1st-place finishes across '+stats.races+' recorded races.</p><button class="start" id="againBtn">↻ NEW RACE</button><button class="mini" id="viewResultsStats">📊 DRIVER STATS</button><button class="mini" id="mainMenuBtn">⌂ MAIN MENU</button>';
- $('againBtn').onclick=()=>{if(onlineMode){disconnectOnline();showOnlineSetup()}else showSetup()};$('mainMenuBtn').onclick=()=>{disconnectOnline();showSetup()};$('viewResultsStats').onclick=()=>showSetup('stats');$('startModal').classList.remove('hidden');
+function showWinner(winners){if(!onlineMode)recordResult();
+ const names=winners.map(w=>w?.displayName||w?.name||'RACER').join(' & '),sorted=state.players.slice().sort((a,b)=>b.laps-a.laps||b.flipCount-a.flipCount);const stats=loadStats();
+ $('dialogContent').innerHTML='<h1>🏆 CHECKERED <span>FLAG!</span></h1>'+heroHTML+'<h2>'+safeText(names)+' '+(winners.length>1?'TIE FOR THE WIN!':'WINS THE RACE!')+'</h2><div class="modalResult">'+sorted.map((p,i)=>'<p style="margin:5px 0"><strong style="color:'+carPaint(p)+'">'+['🥇','🥈','🥉','🏁'][i]+' '+safeText(p.displayName||p.name)+'</strong> — '+p.laps+' laps · '+(p.flipCount||0)+' flips · '+(p.combatUses||0)+' combat · '+(p.crashes||0)+' crashes</p>').join('')+'</div><p>Saved on this device: '+stats.wins+' victories / '+stats.races+' finished races.</p><button class="start" id="againBtn">↻ REPLAY / NEW ROOM</button><button class="mini" id="mainMenuBtn">⌂ MAIN MENU</button>';
+ $('againBtn').onclick=()=>{if(onlineMode){disconnectOnline();showOnlineSetup()}else showSetup()};$('mainMenuBtn').onclick=()=>{disconnectOnline();showSetup()};$('startModal').classList.remove('hidden')
 }
-const getOrdinal=n=>n===1?'st':n===2?'nd':n===3?'rd':'th';
-function showSetup(tab='race'){
- $('dialogContent').classList.remove('cardDetails');
- const heading='<div class="menuMast"><span class="eyebrow">COMBAT CIRCUIT · 4.2</span><h1>FLIP <span>CARS</span><i>🏁</i></h1><p>SMALL CARS. BIG CHAOS.</p></div>';
- const tabs='<nav class="menuTabs" aria-label="Main menu">'+[['race','🏎️ PLAY'],['rules','📖 RULES / CONTROLS'],['options','⚙️ OPTIONS'],['stats','🏆 STATS']].map(([id,name])=>'<button type="button" class="menuTab '+(id===tab?'selected':'')+'" data-tab="'+id+'">'+name+'</button>').join('')+'</nav>';
- let content='';
- if(tab==='race')content='<div class="menuLead"><div class="menuCar">🏎️<span>3 LAPS · UP TO 4 RACERS</span></div><div class="menuPromise"><h2>READY, SET, FLIP!</h2><p>Race the circuit. Dodge traps. Outwit your rivals. Chase the podium.</p><div class="menuStatus">'+safeText(optionsSummary(menuOptions))+'</div></div></div>'+colorSelector()+'<div class="menuSetup"><div class="selectrow"><label for="humanCount">Local drivers</label><select id="humanCount">'+[1,2,3,4].map(i=>'<option value="'+i+'">'+i+' driver'+(i===1?'':'s')+'</option>').join('')+'</select></div><div class="selectrow"><label for="cpuCount">CPU rivals</label><select id="cpuCount"></select></div></div><button class="start menuPrimary" id="startBtn">🏁 START LOCAL RACE</button><button class="start onlineStart menuPrimary" id="onlineStartBtn">🌐 PLAY ONLINE WITH FRIENDS</button><p class="menuFoot">'+(loadTag()?'Driver tag: <b>'+safeText(loadTag())+'</b> · <a href="#" id="editTagShortcut">Edit in Stats</a>':'Want your own driver tag? Create it under <b>STATS</b>.')+'</p>';
- if(tab==='rules')content='<div class="rulesGrid">'+[
- ['🃏 MOVEMENT','Everyone flips from a 27-card movement deck: eight 1s, seven 2s, five 3s, four 4s, three 5s. All players reveal before cars advance.'],
- ['🏆 FINISHING PLACES','Race 3 laps. Finishing cars park while remaining racers continue for 2nd, 3rd and 4th. Same-round finishes use unused movement as a tiebreak.'],
- ['🎴 COMBAT CARDS','Land exactly on a combat pickup. Hold up to 2, inspect and play before flipping; replace or pass if the hand is full. Oil, spikes, rockets, engine stalls and uncommon bubbles.'],
- ['⚑ FLAG CARDS','Flag spaces trigger surprises: fuel, repairs, shields, spin-outs, hazards and other events. Disabled in Options if desired.'],
- ['⚡ BOOSTS / TURBOS','Boost spaces award an extra movement flip (maximum two per round). Turbo/Nitro effects can be switched off.'],
- ['🔧 DAMAGE / PIT','Cars sharing a tile may crash, miss a flip and require a pit; repair kits or bubbles protect you. Pitting progresses through WAIT → PIT 1 → PIT 2.'],
- ['🛣️ FORKS / CONTROLS','Tap FLIP to move or confirm routes and ⇄ ROUTE to cycle paths. Keyboard: Red Q/W, Blue A/S, Yellow K/L, Green N/M. Solo Space/Enter/→.'],
- ['📱 TABLET / ONLINE','Use FIT or FOLLOW to view the circuit, FULL for fullscreen, TABLE to turn controls toward each racer. Online rooms use a friend invite code.']
- ].map(([a,b])=>'<article class="ruleTile"><strong>'+a+'</strong><p>'+b+'</p></article>').join('')+'</div>';
- if(tab==='options')content='<h2 class="tabTitle">TUNE YOUR RACE</h2><p class="helper">Audio changes take effect immediately. Match rules are locked at race start; online rooms use the host’s settings.</p><div class="settingsList">'+[
- ['sfx','🔊 SOUND EFFECTS','Engine revs, cards, crashes and race sounds'],['music','🎵 MUSIC','Background radio during the race'],['combat','🎴 COMBAT CARDS','Combat pickups, weapons and defensive bubbles'],['flags','⚑ FLAG CARDS','Random bonus and hazard events on flag tiles'],['turbos','⚡ TURBOS / BOOSTS','Extra flips from boost tiles plus Nitro and Turbo flags']
- ].map(([key,title,desc])=>'<label class="settingRow"><span><b>'+title+'</b><small>'+desc+'</small></span><input type="checkbox" data-setting="'+key+'" '+(menuOptions[key]?'checked':'')+'><span class="switchArt"></span></label>').join('')+'</div><button class="mini" id="resetOptions">↻ RESTORE DEFAULTS</button>';
- if(tab==='stats'){
- const st=loadStats();const hist=(st.history||[]).slice(0,10);
- content='<h2 class="tabTitle">YOUR DRIVER CARD</h2><p class="helper">Your driver tag follows you into local races and becomes your default multiplayer display name. You can enter a different nickname for any online room.</p><div class="driverSetup"><label>PROFILE TAG<input id="profileTagInput" class="onlineInput" maxlength="18" autocomplete="nickname" placeholder="Create your racer name" value="'+safeText(loadTag())+'"></label><button class="start" id="saveDriverTag">SAVE DRIVER TAG</button></div><div id="tagSaved" class="onlineError" role="status"></div><div class="statTiles"><div><b>'+(st.races||0)+'</b><small>RACES</small></div><div><b>'+(st.wins||0)+'</b><small>WINS</small></div><div><b>'+(st.flips||0)+'</b><small>FLIPS</small></div></div><h3 class="statsHeading">FINISHES / TROPHIES</h3><div class="trophyGrid">'+rankMarks.map((x,i)=>'<div>'+x+' <b>'+((st.podium||[])[i]||0)+'</b><small>'+(i+1)+getOrdinal(i+1)+'</small></div>').join('')+'</div><h3 class="statsHeading">RECENT RESULTS</h3><div class="recentRaces">'+(hist.length?hist.map(h=>'<div><strong>'+(rankMarks[(h.place||4)-1]||'🏁')+' '+(h.place||'—')+getOrdinal(h.place||4)+' / '+h.racers+'</strong><small>'+safeText(h.date)+' · '+safeText(h.mode)+'</small></div>').join(''):'<p>No races recorded yet. The podium starts here.</p>')+'</div><button class="mini" id="onlineProfileFromStats">🌐 ONLINE FRIENDS & XP</button>';
- }
- $('dialogContent').classList.add('mainMenu');$('dialogContent').innerHTML=heading+tabs+'<section class="menuContent">'+content+'</section>';
- if(state&&state.phase!=='done'){$('dialogContent').querySelector('.menuContent').insertAdjacentHTML('beforeend','<button class="mini" id="backToRace">← BACK TO RACE</button>');$('backToRace').onclick=()=>{$('startModal').classList.add('hidden')}}
- $('dialogContent').querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>showSetup(b.dataset.tab));
- if(tab==='race'){$('humanCount').value=String(window.lastHumans||1);updateCpuOptions(window.lastCpu??3);$('humanCount').onchange=()=>{window.lastHumans=+$('humanCount').value;updateCpuOptions()};$('cpuCount').onchange=()=>{window.lastCpu=+$('cpuCount').value};$('startBtn').onclick=initGame;$('onlineStartBtn').onclick=showOnlineSetup;wireColors();if($('editTagShortcut'))$('editTagShortcut').onclick=e=>{e.preventDefault();showSetup('stats')}}
- if(tab==='options'){$('dialogContent').querySelectorAll('[data-setting]').forEach(input=>input.onchange=()=>{menuOptions[input.dataset.setting]=input.checked;storeSet(OPTIONS_KEY,JSON.stringify(menuOptions));soundOn=menuOptions.sfx;$('soundBtn').textContent=soundOn?'🔊 SFX':'🔇 SFX';if(!soundOn)engineAudio.pause();if(!menuOptions.music){musicEl.pause()}else if(state&&state.phase!=='done')startDefaultMusic()});$('resetOptions').onclick=()=>{menuOptions={...DEFAULT_OPTIONS};storeSet(OPTIONS_KEY,JSON.stringify(menuOptions));soundOn=true;showSetup('options')}}
- if(tab==='stats'){$('saveDriverTag').onclick=()=>{$('tagSaved').textContent=saveTag($('profileTagInput').value)?'✓ Driver tag saved for local and online races.':'Enter a tag of 1–18 letters, numbers, spaces, dashes or underscores.'};$('onlineProfileFromStats').onclick=openProfile}
- $('startModal').classList.remove('hidden');
-}
+function showSetup(){let was=$('humanCount')?.value||'1',npc=$('cpuCount')?.value||'3';$('dialogContent').innerHTML='<h1>FLIP <span>CARS</span></h1><h2>Three laps. Four cars. No dice.</h2><p>All drivers flip from identical shuffled decks. Longer routes pack in more risk and more rewards. Land on the ⚑ flag space to draw an event. Land on ⚡ for an extra flip. Collisions send unprotected cars to the pit.</p>'+heroHTML+colorSelector()+'<div class="selectrow"><label for="humanCount">Human drivers</label><select id="humanCount">'+[1,2,3,4].map(i=>'<option value="'+i+'">'+i+' '+(i===1?'player':'players')+'</option>').join('')+'</select></div><div class="selectrow"><label for="cpuCount">CPU rivals</label><select id="cpuCount"></select></div><button class="start" id="startBtn">🏁 START LOCAL RACE</button><button class="start onlineStart" id="onlineStartBtn">🌐 CREATE / JOIN ONLINE RACE</button><p class="helper">🎴 Combat pickups fill your two-card hand. Play weapons before your movement flip, or choose a card to replace. Press ⇄ TABLE in landscape full screen for opposite-side players.</p><p class="helper">PC: Red Q/W • Blue A/S • Yellow K/L • Green N/M. Solo: Space/→. First key = FLIP / SELECT. Second key = ROUTE. Tablets: use each driver’s two buttons.</p><div class="cardCounts">Deck per player: eight 1s, seven 2s, five 3s, four 4s, three 5s.</div>';let hs=$('humanCount');hs.value=was;updateCpuOptions(+npc);hs.addEventListener('change',()=>updateCpuOptions());$('startBtn').onclick=initGame;$('onlineStartBtn').onclick=showOnlineSetup;wireColors();$('startModal').classList.remove('hidden')}
 function updateCpuOptions(prefer=3){let h=+$('humanCount').value,sel=$('cpuCount'),v=Math.min(prefer,4-h);sel.innerHTML='';for(let i=4-h;i>=0;i--){let o=document.createElement('option');o.value=i;o.textContent=i===0?'No CPU':i+' CPU';sel.append(o)}sel.value=v;}
 function safeText(x){return String(x).replace(/[&<>"']/g,t=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[t]))}
-function matHand(p,id){
- if(p.pendingCombat){const item=COMBAT[p.pendingCombat]||{};return '<div class="pendingPrompt"><span class="pendingLabel">🎴 '+safeText(item.name||p.pendingCombat)+' — REPLACE OR PASS</span>'+[0,1].map(ix=>'<button data-discard="'+ix+'" data-id="'+id+'" title="Replace card '+(ix+1)+'">SWAP '+(ix+1)+'</button>').join('')+'<button data-discard="-1" data-id="'+id+'">PASS</button></div>'}
- const items=p.cpu?[]:(p.combat||[]);
- const visible=Array.from({length:2},(_,ix)=>{
-  const item=items[ix],c=COMBAT[item];return item?'<button class="combatSlot" type="button" data-combat="'+ix+'" data-id="'+id+'" title="Details for '+safeText(c?.name||item)+'"><span class="symbol">'+(c?.icon||'🎴')+'</span><span class="name">'+safeText(c?.name||item)+'</span></button>':'<div class="combatSlot empty" aria-label="Empty combat card slot"><span class="symbol">'+(p.cpu?'🂠':'＋')+'</span><span class="name">'+(p.cpu?'HIDDEN':'EMPTY')+'</span></div>'});
- if(p.cpu)visible[0]='<div class="combatSlot empty"><span class="symbol">🂠</span><span class="name">'+(p.combatCount??p.combat?.length??0)+'/2</span></div>';
- return '<div class="matSlotPair">'+visible.join('')+'</div>';
+function combatControls(p,id){
+ if(p.cpu)return '<div class="combatHand"><span class="combatEmpty">'+(p.combatCount??p.combat?.length??0)+' combat cards</span></div>';
+ if(p.pendingCombat){const c=COMBAT[p.pendingCombat];return '<div class="pendingCard">🎴 PICKUP '+(c?.icon||'')+' '+safeText(c?.name||p.pendingCombat)+' — hand full! '+[0,1].map(ix=>'<button data-discard="'+ix+'" data-id="'+id+'">REPLACE '+(ix+1)+'</button>').join('')+'<button data-discard="-1" data-id="'+id+'">PASS</button></div>'}
+ const items=p.combat||[];
+ return '<div class="combatHand">'+(items.length?items.map((name,ix)=>{const c=COMBAT[name];return '<button class="combatCard" data-combat="'+ix+'" data-id="'+id+'" '+(state.phase==='flip'&&!p.ready?'':'disabled')+' title="'+safeText(c?.hint||'')+'">'+(c?.icon||'🎴')+' '+safeText(c?.name||name)+'</button>'}).join(''):'<span class="combatEmpty">Land on 🎴 to draw a weapon</span>')+'</div>'
 }
-function chooseCombat(id,index){$('dialogContent').classList.remove('mainMenu');
- const p=state?.players?.[id],type=p?.combat?.[index],card=COMBAT[type];if(!p||!type||!card||p.cpu)return;
- const opts=targetsFor(p,type),canUse=settingsFor(state).combat&&state.phase==='flip'&&!p.ready&&!p.pendingCombat&&(id===(onlineMode?onlinePlayerId:id));
- const needsTarget=!['oil','stall','bubble'].includes(type);
- const alreadyBubble=type==='bubble'&&p.bubble;
- const blockedOil=type==='oil'&&state.traps?.some(t=>t.node===p.node);
- const playable=canUse&&!alreadyBubble&&!blockedOil&&(!needsTarget||opts.length>0);
- const range=type==='spikes'?'Cars behind you, within 3 spaces':type==='missile'?'Cars ahead, within 5 spaces':type==='sniper'?'Cars ahead, within 10 spaces':type==='bubble'?'Self defense':type==='oil'?'Current race space; triggers only when a rival lands there':'Every opponent';
- const modal=$('startModal'),pane=$('dialogContent');pane.classList.add('cardDetails');
- pane.innerHTML='<h2>🎴 '+safeText(card.name)+'</h2><div class="cardHero"><div class="cardArt" aria-hidden="true">'+card.icon+'</div><div><p class="cardDescription">'+safeText(card.hint)+'</p><div class="cardMeta">🎯 '+safeText(range)+'<br>🃏 '+COMBAT_COUNTS[type]+' in the combat deck · Hand '+p.combat.length+'/2<br>🏎️ Combat used '+(p.combatUses||0)+'</div></div></div>'+
- (needsTarget&&opts.length?'<p><b>Choose a target to play this card:</b></p>'+opts.map(target=>'<button class="start" data-combat-target="'+target+'">🎯 '+safeText(driverLabel(state.players[target]))+'</button>').join(''):'<button class="start" '+(playable?'data-combat-target="-1"':'disabled')+'>▶ USE CARD</button>')+
- (!playable?'<p class="cardDescription">'+(alreadyBubble?'Your bubble is already active.':blockedOil?'There is already an oil trap here.':!canUse?'You can inspect this card now; play it before flipping your movement card.':'No eligible target in range.')+'</p>':'')+
- '<p id="combatMessage" class="onlineError"></p><button class="mini" id="cancelCombat">← BACK TO GAME</button>';
- modal.classList.remove('hidden');
- const back=()=>{pane.classList.remove('cardDetails');modal.classList.add('hidden')};
- $('cancelCombat').onclick=back;
- pane.querySelectorAll('[data-combat-target]').forEach(button=>{button.onclick=()=>{if(!playable)return;doCombat(id,index,+button.dataset.combatTarget);back()}})
+function chooseCombat(id,index){const p=state?.players?.[id];if(!p||!p.combat?.[index])return;if(p.ready||state.phase!=='flip')return;const name=p.combat[index],card=COMBAT[name],opts=targetsFor(p,name);
+ if(!['oil','stall','bubble'].includes(name)&&!opts.length){showGameNotice('No eligible target in range for '+card.name);return}
+ const modal=$('startModal');$('dialogContent').innerHTML='<h1>🎴 '+safeText(card.name)+'</h1><h2>'+card.icon+' Tactical card</h2><p>'+safeText(card.hint)+'</p>'+(opts.length?opts.map(id=>'<button class="start" data-combat-target="'+id+'">🎯 '+safeText(state.players[id].displayName||state.players[id].name)+'</button>').join(''):'<button class="start" data-combat-target="-1">⚡ PLAY '+safeText(card.name)+'</button>')+'<p id="combatMessage" class="onlineError"></p><button class="mini" id="cancelCombat">CANCEL / BACK</button>';modal.classList.remove('hidden');$('cancelCombat').onclick=()=>modal.classList.add('hidden');$('dialogContent').querySelectorAll('[data-combat-target]').forEach(button=>button.onclick=()=>{doCombat(id,index,+button.dataset.combatTarget);modal.classList.add('hidden')})
 }
-function showGameNotice(message){$('dialogContent').classList.remove('cardDetails');$('dialogContent').innerHTML='<h2>🏁 Race Control</h2><p>'+safeText(message)+'</p><button class="start" id="closeNotice">BACK TO GAME</button>';$('startModal').classList.remove('hidden');$('closeNotice').onclick=()=>$('startModal').classList.add('hidden')}
-function syncStationSizes(){
- for(const position of ['left','right']){
-  const seat=document.querySelector('.seat[data-position="'+position+'"]');if(!seat)continue;
-  seat.style.setProperty('--station-long',Math.max(80,seat.clientHeight-12)+'px');
-  seat.style.setProperty('--station-short',Math.max(80,seat.clientWidth-12)+'px');
- }
-}
-function renderSeats(){
- if(!state)return;
- for(let i=0;i<4;i++){
-  const div=$('seat'+i),p=state.players[i];
-  if(!p){div.className='seat inactive';div.innerHTML='<div class="matMini">🏁 OPEN SLOT</div>';continue}
-  div.style.setProperty('--color',carPaint(p));div.classList.toggle('inactive',false);div.classList.toggle('cpu',p.cpu);div.classList.toggle('human',!p.cpu);
-  div.classList.toggle('activeChoice',state.phase==='choice'&&state.choice===i);div.classList.toggle('finish',p.finished);
-  const choiceActive=state.phase==='choice'&&state.choice===i;
-  const canFlip=((state.phase==='flip'&&!p.ready)||choiceActive)&&!p.cpu&&!p.pendingCombat;
-  const flipText=choiceActive?'CHOOSE ROUTE':p.card!=null&&state.phase!=='flip'?'MOVE '+p.card:p.pitStage>=0?'IN THE PITS':p.skips&&state.phase==='flip'?'SKIP TURN':p.ready?'READY':'WAITING';
-  const stats=[p.bubble?'🫧 Shield':'',p.tireDamaged?'🛞 Tire':'',p.needsPit?'🔧 Pit':'',p.fuel?'⛽ '+p.fuel:'',p.repair?'🧰 '+p.repair:'',p.guard?'🛡️ '+p.guard:'',p.nitro?'⚡ Nitro':'',p.flat?'🛞 Flat':''].filter(Boolean);
-  const label=safeText(driverLabel(p));
-  const deckNum=p.deck?.length??'?';
-  const flipValue=p.card!=null&&state.phase!=='flip'?String(p.card):'？';
-  div.innerHTML='<div class="stationFace"><div class="matRow">'+
-    '<div class="matCell driver"><span class="matCar">🏎️ '+(p.cpu?'CPU':onlineMode?(i===onlinePlayerId?'YOU':'RIVAL'):'PLAYER '+(i+1))+'</span><span class="matDriverName">'+label+'</span><span class="matMini">🏁 Lap '+Math.min(3,p.laps+1)+'/3</span></div>'+
-    '<div class="matCell deck"><span class="matTitle">DECK</span><span class="matDeckIcon">🏁</span><span class="matMini">'+deckNum+' left</span></div>'+
-    '<div class="matCell flipped"><span class="matTitle">FLIP</span><span class="matFlipIcon matNum">'+flipValue+'</span><span class="matMini">'+flipText+'</span></div>'+
-    '<div class="matCell combat"><span class="matTitle">🎴 COMBAT '+(p.cpu?'':(p.combat?.length||0)+'/2')+'</span>'+matHand(p,i)+'</div>'+
-    '<div class="matCell stats"><span class="matTitle">STATUS</span><span class="matInfo">'+(stats.length?stats.map(safeText).join(' · '):'✓ Ready')+'<br>⚑ '+(p.flags||0)+' · ⚡ '+(p.bonuses||0)+'</span></div>'+
-    '<div class="matCell actions matActionCell"><button class="matAction primary" data-id="'+i+'" data-op="flip" '+(!canFlip?'disabled':'')+'>'+(choiceActive?'✓ SELECT':p.ready?'✓ READY':'🃏 FLIP')+'</button><button class="matAction" data-id="'+i+'" data-op="route" '+(!choiceActive||p.cpu?'disabled':'')+'>⇄ ROUTE</button></div>'+
-    '</div></div>';
- }
- $('roundBadge').textContent='ROUND '+state.round;
- const choice=state.choice!=null&&state.phase==='choice'&&(!onlineMode||state.choice===onlinePlayerId);
- $('routePrompt').classList.toggle('visible',choice);
- $('routePrompt').innerHTML=choice?'<strong>🛣️ '+safeText(driverLabel(state.players[state.choice]))+' — PICK A ROUTE</strong><span>'+safeText(forks[state.players[state.choice].node][state.players[state.choice].selected].name)+' · ROUTE cycles, SELECT confirms</span>':'';
- $('feed').innerHTML=state.logs.slice(0,2).map(l=>'<div>'+safeText(l)+'</div>').join('');
- $('inventory').innerHTML=state.players.map(p=>'<span class="chip" style="border-color:'+carPaint(p)+'">'+safeText(driverLabel(p))+': '+p.laps+'/3</span>').join('');
- $('boardCaption').textContent=choice?'🛣️ Pick your path':state.phase==='flip'?'🃏 Everyone flip!':state.phase==='done'?'🏆 Checkered flag!':'🏎️ Racing!';
- $('leaderHud').innerHTML=state.players.map(p=>'<div class="hudchip '+(!p.cpu?'me':'')+'" style="--driver:'+carPaint(p)+'"><i class="dot"></i>'+safeText(driverLabel(p))+' <small>'+(p.finished?'FIN #'+((state.placements||[]).find(x=>x.id===p.id)?.place||'–'):(p.laps+'/3'))+'</small></div>').join('');
- $('eventTicker').textContent=state.logs[0]||'';eventAudio(state.logs[0]||'');
- $('combatHUD').innerHTML='<b>🎴 COMBAT</b><small>'+((state.players?.[onlineMode?onlinePlayerId:0]?.combat?.length)||0)+'/2 CARDS</small>';
- syncStationSizes();
+function showGameNotice(message){$('dialogContent').innerHTML='<h2>🏁 Race Control</h2><p>'+safeText(message)+'</p><button class="start" id="closeNotice">BACK TO GAME</button>';$('startModal').classList.remove('hidden');$('closeNotice').onclick=()=>$('startModal').classList.add('hidden')}
+function renderSeats(){for(let i=0;i<4;i++){let div=$('seat'+i),p=state?.players[i];if(p)div.style.setProperty('--color',carPaint(p));if(!p){div.classList.add('inactive');div.innerHTML='<div class="seatname">EMPTY GARAGE</div><div class="cardview">🏁 &nbsp; Open slot</div>';continue}div.classList.remove('inactive');div.classList.toggle('cpu',p.cpu);div.classList.toggle('human',!p.cpu);div.classList.toggle('activeChoice',state.phase==='choice'&&state.choice===i);div.classList.toggle('finish',p.finished);let choiceActive=state.phase==='choice'&&state.choice===i;let choices=choiceActive?forks[p.node]:null;let needsFlip=state.phase==='flip'&&!p.ready;let canFlip=(needsFlip||choiceActive)&&!p.cpu&&!p.pendingCombat;let status=choiceActive?'<span class="cardtext">'+safeText(choices[p.selected].name)+'<br>'+safeText(choices[p.selected].hint)+'</span>':p.card!=null&&state.phase!=='flip'?'<span class="cardtext">MOVE<br>'+p.card+' SPACE'+(p.card===1?'':'S')+'</span>':p.pitStage===0?'<span class="cardtext">WAITING<br>FOR PIT 1</span>':p.pitStage===1?'<span class="cardtext">PIT 1 → PIT 2</span>':p.pitStage===2?'<span class="cardtext">PIT 2<br>READY TO GO</span>':p.skips&&state.phase==='flip'?'<span class="cardtext">🌀 SKIP<br>THIS FLIP</span>':'<span class="cardtext">'+(p.ready?'READY':'FLIP TO MOVE')+'</span>';
+let cardStr=p.card!=null&&state.phase!=='flip'?'<span class="bigcard">'+p.card+'</span>':'<span class="bigcard hiddenCard">✦</span>';
+let inv=[p.bubble?'🫧 BUBBLE':'',p.tireDamaged?'🛞 PUNCTURE':'',p.needsPit?'🔧 PIT DUE':'',p.fuel?'⛽×'+p.fuel:'',p.repair?'🔧×'+p.repair:'',p.guard?'🛡️×'+p.guard:'',p.cones?'🚧-'+p.cones:'',p.nitro?'⚡NITRO':'',p.flat?'🛞FLAT':''].filter(Boolean).join(' · ')||'No active items';
+div.innerHTML='<div class="seathead"><span class="seatname"><span class="carbullet"></span>'+safeText(p.displayName||p.name)+' '+(onlineMode?(p.id===onlinePlayerId?'YOU':p.isBot?'CPU':'RIVAL'):(p.cpu?'CPU':'DRIVER'))+'</span><span class="laps">LAP '+Math.min(3,p.laps+1)+'/3</span></div><div class="cardview">'+cardStr+status+'</div><div class="controls"><button class="control primary" data-id="'+i+'" data-op="flip" '+(!canFlip?'disabled':'')+'>'+(choiceActive?'✓ SELECT':p.ready?'✓ READY':'🃏 FLIP')+' <span class="key">'+keys[i][0].toUpperCase()+'</span></button><button class="control route" data-id="'+i+'" data-op="route" '+(!choiceActive||p.cpu?'disabled':'')+'>⇄ ROUTE <span class="key">'+keys[i][1].toUpperCase()+'</span></button></div><div class="effects">'+safeText(inv)+'</div>'+combatControls(p,i);div.innerHTML='<div class="stationFace">'+div.innerHTML+'</div>'}
+$('roundBadge').textContent='ROUND '+state.round;let choice=state.choice!=null&&state.phase==='choice'&&(!onlineMode||state.choice===onlinePlayerId);$('routePrompt').classList.toggle('visible',choice);$('routePrompt').innerHTML=choice?'<strong>🛣️ '+state.players[state.choice].name+' — CHOOSE A ROUTE</strong><span>'+safeText(forks[state.players[state.choice].node][state.players[state.choice].selected].name)+' · ROUTE to cycle, FLIP to select</span>':'';$('feed').innerHTML=state.logs.slice(0,3).map(l=>'<div>'+safeText(l)+'</div>').join('');$('inventory').innerHTML=state.players.map(p=>'<span class="chip" style="border-color:'+C[p.id]+'">'+p.name+': '+p.laps+'/3 LAPS</span>').join('');$('boardCaption').textContent=choice?'🛣️ '+state.players[state.choice].name+' choose your path!':state.phase==='flip'?'🃏 Everyone FLIP — movement reveals together':state.phase==='done'?'🏆 Checkered flag!': '🏎️ Racing! ⚑ Flag events · ⚡ Extra flips';
+$('leaderHud').innerHTML=state.players.map(p=>'<div class="hudchip '+(!p.cpu?'me':'')+'" style="--driver:'+C[p.id]+'"><i class="dot"></i>'+safeText(p.displayName||p.name)+' <small>'+(p.finished?'FINISH':(p.laps+'/3'))+'</small>'+(p.isBot?'<small>CPU</small>':'')+'</div>').join('');
+$('eventTicker').textContent=state.logs[0]||'';eventAudio(state.logs[0]||'');$('combatHUD').innerHTML='<b>🎴 COMBAT</b><small>'+((state.players?.[onlineMode?onlinePlayerId:0]?.combat?.length)||0)+'/2 CARDS</small>';
 }
 const W=1200,H=800;
 const rand=(seed)=>{let n=Math.sin(seed*12.9898)*43758.5453;return n-Math.floor(n)};
@@ -589,11 +299,11 @@ ctx.fillStyle='#cba462';ctx.beginPath();ctx.ellipse(1019,180,188,166,0,0,7);ctx.
 // terrain decorations, deterministic, keep away from roads
 for(let i=0;i<110;i++){let x=35+rand(i+14)*1130,y=40+rand(i+404)*694;let onRoad=edges.some(e=>pointDist(x,y,nodes[e.a].x,nodes[e.a].y,nodes[e.b].x,nodes[e.b].y)<38);if(onRoad)continue;if(x>380&&x<755&&y>374&&y<540)continue;let sz=6+rand(i+170)*11;if(x>860&&y<330){ctx.fillStyle='#dabb82';ctx.beginPath();ctx.ellipse(x,y,sz*1.2,sz*.57,-.3,0,7);ctx.fill();ctx.strokeStyle='#8c753f';ctx.lineWidth=2;ctx.stroke()}else{ctx.fillStyle='#0c3e35';ctx.beginPath();ctx.ellipse(x+2,y+4,sz*.75,sz*.37,0,0,7);ctx.fill();ctx.fillStyle=i%2?'#50b765':'#318a55';ctx.beginPath();ctx.moveTo(x,y-sz*1.5);ctx.lineTo(x-sz,y+sz*.6);ctx.lineTo(x+sz,y+sz*.6);ctx.closePath();ctx.fill();ctx.fillStyle='#70cc75';ctx.beginPath();ctx.moveTo(x,y-sz*1.5);ctx.lineTo(x-sz*.6,y+.3*sz);ctx.lineTo(x+.5*sz,y+.3*sz);ctx.closePath();ctx.fill()}}
 // grandstand and spotlights
-rr(332,340,163,50,12,'#102739','#bfc8d5',3);for(let k=0;k<20;k++){ctx.fillStyle=['#fc6276','#ffd45b','#55d0ec','#f2f5ff'][k%4];ctx.beginPath();ctx.arc(342+(k%10)*15,348+Math.floor(k/10)*18,4,0,7);ctx.fill()}label(412,366,'🎉',22,'#e8f8ff');
-rr(486,544,228,69,13,'#091c2abb','#7ec5d9',3);label(600,566,'🏁',27,'#ffc84d');label(600,592,'3 LAPS',15,'#f3ffff');
+rr(332,340,163,50,12,'#102739','#bfc8d5',3);for(let k=0;k<20;k++){ctx.fillStyle=['#fc6276','#ffd45b','#55d0ec','#f2f5ff'][k%4];ctx.beginPath();ctx.arc(342+(k%10)*15,348+Math.floor(k/10)*18,4,0,7);ctx.fill()}label(412,366,'SPECTATORS',14,'#e8f8ff');
+rr(486,544,228,69,13,'#091c2abb','#7ec5d9',3);label(600,566,'FLIP CARS',29,'#ffc84d');label(600,592,'⚑ 3 LAPS TO VICTORY ⚑',13,'#f3ffff');
 for(let i=0;i<12;i++){let x=1030+(i%4)*30,y=55+Math.floor(i/4)*20;ctx.fillStyle=i%3?'#e5c27f':'#6f583c';ctx.beginPath();ctx.arc(x,y,4,0,7);ctx.fill()}
 // pit building
-rr(406,764,305,33,7,'#253b4c','#a5dfe5',2);label(558,781,'🔧 PIT LANE',14,'#ffffff');
+rr(406,764,305,33,7,'#253b4c','#a5dfe5',2);label(558,781,'🔧   PIT SERVICE   •   2 ROUNDS',14,'#ffffff');
 // framing
 ctx.strokeStyle='#f0a54388';ctx.lineWidth=14;ctx.strokeRect(7,7,W-14,H-14);ctx.strokeStyle='#f1d68e';ctx.lineWidth=2;ctx.strokeRect(16,16,W-32,H-32);
 }
@@ -601,11 +311,9 @@ function pointDist(px,py,x1,y1,x2,y2){let dx=x2-x1,dy=y2-y1,t=Math.max(0,Math.mi
 function renderRoads(){for(let pass=0;pass<4;pass++)for(let e of edges){let c=colors[e.group]||'#b7e6e6';roadPart(e);ctx.lineCap='round';if(pass===0){ctx.strokeStyle='#051b24bb';ctx.lineWidth=53}else if(pass===1){ctx.strokeStyle=c;ctx.lineWidth=47}else if(pass===2){ctx.strokeStyle=e.group==='pit'?'#576273':'#343c47';ctx.lineWidth=38}else{ctx.strokeStyle='#66727e';ctx.lineWidth=1.7;ctx.setLineDash([6,17])}ctx.stroke();ctx.setLineDash([])}
 // Tiny striped race curbs at regular intervals add depth without hiding game spaces.
 for(const e of edges){if(e.group==='pit')continue;let a=nodes[e.a],b=nodes[e.b],ang=Math.atan2(b.y-a.y,b.x-a.x),dx=Math.cos(ang+Math.PI/2),dy=Math.sin(ang+Math.PI/2);const len=Math.hypot(b.x-a.x,b.y-a.y);let steps=Math.max(1,Math.floor(len/18));for(let j=0;j<steps;j++){let t=(j+.35)/steps,rx=a.x+(b.x-a.x)*t,ry=a.y+(b.y-a.y)*t;ctx.strokeStyle=j%2?'#fffaf0':'#f66b57';ctx.lineWidth=4.2;for(let side of [-1,1]){ctx.beginPath();ctx.moveTo(rx+dx*side*21,ry+dy*side*21);ctx.lineTo(rx+dx*side*21+Math.cos(ang)*9,ry+dy*side*21+Math.sin(ang)*9);ctx.stroke();}}}
-for(let n of Object.values(nodes)){if(n.type==='pit')continue;ctx.save();let tangent=null;let nextId=n.next;if(!nextId&&forks[n.id])nextId=forks[n.id][0].first;if(!nextId)nextId=start;let next=nodes[nextId];let angle=Math.atan2(next.y-n.y,next.x-n.x);ctx.translate(n.x,n.y);ctx.rotate(angle);ctx.lineWidth=2;ctx.strokeStyle='#dde7f677';ctx.beginPath();ctx.moveTo(0,-14);ctx.lineTo(0,14);ctx.stroke();ctx.restore();if(settingsFor(state).combat&&combatTiles.has(n.id)){rr(n.x-15,n.y-15,30,30,7,'#55264edc','#f9d48d',3);label(n.x,n.y,'🎴',19)}if((n.type==='flag'&&settingsFor(state).flags)||(n.type==='boost'&&settingsFor(state).turbos)){ctx.beginPath();ctx.arc(n.x,n.y,18,0,7);ctx.fillStyle=n.type==='flag'?'#091b35':'#0b737e';ctx.fill();ctx.strokeStyle=n.type==='flag'?'#f7f8ff':'#65ffff';ctx.lineWidth=3;ctx.stroke();label(n.x,n.y,n.type==='flag'?'⚑':'⚡',21,n.type==='flag'?'#fff':'#fcff6b')}}
+for(let n of Object.values(nodes)){if(n.type==='pit')continue;ctx.save();let tangent=null;let nextId=n.next;if(!nextId&&forks[n.id])nextId=forks[n.id][0].first;if(!nextId)nextId=start;let next=nodes[nextId];let angle=Math.atan2(next.y-n.y,next.x-n.x);ctx.translate(n.x,n.y);ctx.rotate(angle);ctx.lineWidth=2;ctx.strokeStyle='#dde7f677';ctx.beginPath();ctx.moveTo(0,-14);ctx.lineTo(0,14);ctx.stroke();ctx.restore();if(combatTiles.has(n.id)){rr(n.x-15,n.y-15,30,30,7,'#55264edc','#f9d48d',3);label(n.x,n.y,'🎴',19)}if(n.type==='flag'||n.type==='boost'){ctx.beginPath();ctx.arc(n.x,n.y,18,0,7);ctx.fillStyle=n.type==='flag'?'#091b35':'#0b737e';ctx.fill();ctx.strokeStyle=n.type==='flag'?'#f7f8ff':'#65ffff';ctx.lineWidth=3;ctx.stroke();label(n.x,n.y,n.type==='flag'?'⚑':'⚡',21,n.type==='flag'?'#fff':'#fcff6b')}}
 // Oil traps occupy track spaces until a car lands there.
-for(const trap of (state?.traps||[])){const n=nodes[trap.node];if(!n)continue;ctx.save();ctx.translate(n.x,n.y);ctx.rotate(-.2);ctx.shadowColor='#000b';ctx.shadowBlur=10;
-for(const [dx,dy,rx,ry] of [[0,0,26,12],[-16,8,10,7],[18,5,13,8],[6,-9,13,7],[-19,-3,9,5]]){ctx.beginPath();ctx.ellipse(dx,dy,rx,ry,0,0,Math.PI*2);ctx.fillStyle='#101319';ctx.fill()}
-ctx.shadowBlur=0;ctx.strokeStyle='#efffff94';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(-6,-4,12,3,-.1,3.5,5.6);ctx.stroke();ctx.beginPath();ctx.arc(27,-7,4,0,7);ctx.fillStyle='#101319';ctx.fill();ctx.restore()}
+for(const trap of (state?.traps||[])){const n=nodes[trap.node];if(!n)continue;ctx.save();ctx.beginPath();ctx.ellipse(n.x,n.y,24,13,-.3,0,7);ctx.fillStyle='#0b111aeb';ctx.fill();ctx.strokeStyle='#ffd562';ctx.lineWidth=3;ctx.stroke();ctx.restore();label(n.x,n.y-2,'🛢️',18)}
 // Pit guidance appears only while at least one driver has a required stop.
 let pitNeedy=state?.players.filter(p=>p.needsPit&&p.pitStage<0)||[];
 if(pitNeedy.length){ctx.save();ctx.lineCap='round';ctx.strokeStyle='#ffe260';ctx.lineWidth=5;ctx.shadowColor='#ffd65f';ctx.shadowBlur=19;for(let e of edges.filter(e=>e.group==='pit'&&e.a!==pitTwo)){roadPart(e);ctx.stroke()}ctx.restore();rr(374,696,160,25,7,'#3a2417ef','#ffd15a',2);label(454,708,'🔧 PIT REQUIRED',13,'#ffe59a')}
@@ -614,10 +322,10 @@ ctx.save();ctx.translate(565,665);for(let row=0;row<2;row++)for(let col=0;col<6;
 // pit spaces
 for(let [id,symbol,name] of [[pitWait,'◉','WAIT'],[pitOne,'🔧','PIT 1'],[pitTwo,'🔧','PIT 2']]){let n=nodes[id];rr(n.x-26,n.y-18,52,37,8,'#1a3143','#d9eefb',2);label(n.x,n.y-4,symbol,16);label(n.x,n.y+11,name,10,'#f8df86')}
 // fork labels
-for(let [id,txt] of [[fork1,'FORK 1'],[fork2,'FORK 2'],[fork3,'FORK 3']]){let n=nodes[id];ctx.beginPath();ctx.arc(n.x,n.y,21,0,7);ctx.fillStyle='#ffbd34';ctx.fill();ctx.strokeStyle='#222';ctx.lineWidth=4;ctx.stroke();label(n.x,n.y,'Y',19,'#112638');label(n.x,n.y,txt.slice(-1),20,'#112638')}
+for(let [id,txt] of [[fork1,'FORK 1'],[fork2,'FORK 2'],[fork3,'FORK 3']]){let n=nodes[id];ctx.beginPath();ctx.arc(n.x,n.y,21,0,7);ctx.fillStyle='#ffbd34';ctx.fill();ctx.strokeStyle='#222';ctx.lineWidth=4;ctx.stroke();label(n.x,n.y,'Y',19,'#112638');rr(n.x-44,n.y-50,88,24,5,'#061c2d','#f3cd71',2);label(n.x,n.y-38,txt,12,'#ffe889')}
 // route names near path
 function routeTag(x,y,str,c){rr(x-59,y-12,118,24,7,'#081b29d9',c,2);label(x,y,str,11,'#fff')}
-if(state?.phase==='choice'){let id=state.players[state.choice]?.node;if(id===fork1){routeTag(754,442,'SPRINT','#6dd5ff');routeTag(1038,420,'THRILL','#ffb26c')}else if(id===fork2){routeTag(594,103,'SKYLINE','#d58dff');routeTag(605,215,'EXPRESS','#f2f1ac');routeTag(602,329,'RIVER','#72e4bb')}else if(id===fork3){routeTag(153,423,'FOREST','#69ccff');routeTag(366,467,'TUNNEL','#f5b54e')}}}
+routeTag(754,442,'SHORT CUT','#6dd5ff');routeTag(1038,420,'RISK ROUTE','#ffb26c');routeTag(594,103,'SKYLINE','#d58dff');routeTag(605,215,'EXPRESS','#f2f1ac');routeTag(602,329,'RIVERSIDE','#72e4bb');routeTag(153,423,'FOREST','#69ccff');routeTag(366,467,'TUNNEL','#f5b54e');}
 function carIcon(p,x,y,angle,scale=1){
  ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.scale(scale,scale);
  const metal=carPaint(p);
@@ -658,7 +366,7 @@ function drawAll(){
  }
  ctx.save();ctx.beginPath();ctx.rect(0,0,cw,ch);ctx.clip();ctx.translate(cw/2,ch/2);ctx.scale(scale,scale);ctx.translate(-camX,-camY);
  renderScenery();renderRoads();renderCars();ctx.restore();
- if(state && !fxRunning)renderSeats();
+ if(state)renderSeats();
 }
 function scheduleBoardResize(){if(resizeQueued)return;resizeQueued=true;requestAnimationFrame(()=>{resizeQueued=false;drawAll()})}
 
@@ -685,11 +393,11 @@ async function serverBase(){
  return String(invitedServer||published||preferredServer||storeGet('flipcars_server')||'').trim().replace(/\/+$/,'');
 }
 function onlineFormError(msg){let el=$('onlineError');if(el){el.textContent=msg;el.setAttribute('role','status')}}
-function showOnlineSetup(msg=''){$('dialogContent').classList.remove('mainMenu');
+function showOnlineSetup(msg=''){
  const joining=Boolean(invitedRoom);
  const top=joining?'<h2>🏁 You’re invited to race!</h2><div class="guestIntro"><span class="guestMark">🚗</span><span><strong>Join your friends in Flip Cars</strong><small>No account, app download, or password needed.</small></span></div><div class="inviteBanner">ROOM '+invitedRoom+'</div>':'<h2>🌐 Race with friends</h2><div class="guestIntro"><span class="guestMark">🏎️</span><span><strong>Race together from different devices</strong><small>Create a private room, then send one link. Your guests just enter a nickname.</small></span></div>';
  $('dialogContent').innerHTML='<h1>FLIP <span>CARS</span></h1>'+top+'<label class="onlineNote" for="onlineName">YOUR RACING NICKNAME</label><input class="onlineInput" id="onlineName" maxlength="18" placeholder="e.g. Speedster" autocomplete="nickname" enterkeyhint="go">'+(joining?'<button class="start onlineStart" id="joinRoom">🏁 JOIN RACE</button>':'<button class="start onlineStart" id="createRoom">+ HOST A RACE</button><div class="hostTools"><label class="onlineNote" for="roomInput">ALREADY HAVE A ROOM CODE?</label><input class="onlineInput" id="roomInput" maxlength="6" placeholder="Enter 6-letter code" autocomplete="off" autocapitalize="characters"><button class="start onlineStart" id="joinRoom">→ JOIN WITH CODE</button></div>')+colorSelector()+'<div id="resumeRoomBox"></div><div class="onlineError" id="onlineError" aria-live="polite"></div><p class="helper">Just want to play now? Solo and local racing work offline.</p><button class="mini" id="backOffline">← PLAY OFFLINE INSTEAD</button>';
- $('onlineName').value=loadTag()||storeGet('flipcars_name')||'';wireColors();$('onlineName').insertAdjacentHTML('afterend','<p class="helper">'+(loadTag()?'Driver tag <b>'+safeText(loadTag())+'</b> is prefilled. Change this field to race under a different name for this room.':'Create a permanent driver tag from the main-menu Stats tab, or race as a guest.')+'</p>');
+ $('onlineName').value=storeGet('flipcars_name')||'';wireColors();
  if($('roomInput')){$('roomInput').value=invitedRoom;$('roomInput').addEventListener('input',ev=>ev.target.value=ev.target.value.toUpperCase().replace(/[^A-HJ-NP-Z2-9]/g,''));}
  const btnCreate=$('createRoom'),btnJoin=$('joinRoom');if(btnCreate)btnCreate.onclick=()=>onlineEnter('create');if(btnJoin)btnJoin.onclick=()=>onlineEnter('join');
  $('onlineName').addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();onlineEnter(joining?'join':'create')}});
@@ -700,9 +408,6 @@ function showOnlineSetup(msg=''){$('dialogContent').classList.remove('mainMenu')
  if(joining && !$('onlineName').value)setTimeout(()=>{$('onlineName')?.focus()},40);
 }
 async function ensureDriverProfile(name,base){try{const d=JSON.parse(storeGet('flipcars_profile')||'null');if(d?.id&&d?.token&&d?.backend===base)return d;const res=await fetch(base+'/api/profile/create',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name})});if(!res.ok)return null;const info=await res.json();const profile={id:info.id,token:info.token,backend:base};storeSet('flipcars_profile',JSON.stringify(profile));return profile}catch{return null}}
-async function syncOnlineTag(profile,tag){
- try{if(!profile?.backend||!profile.token||!tag)return;await fetch(profile.backend+'/api/profile/'+encodeURIComponent(profile.id)+'/update',{method:'POST',headers:{Authorization:'Bearer '+profile.token,'content-type':'application/json'},body:JSON.stringify({name:tag})})}catch{}
-}
 async function onlineEnter(mode){
  const name=($('onlineName')?.value||'RACER').trim().slice(0,18)||'RACER';const code=(invitedRoom||$('roomInput')?.value||'').trim().toUpperCase();
  if(mode==='join'&&!/^[A-HJ-NP-Z2-9]{6}$/.test(code))return onlineFormError('Enter the 6-character room code from your host.');
@@ -710,11 +415,11 @@ async function onlineEnter(mode){
  try{
   const base=await serverBase();
   if(!isSafeServer(base))throw new Error('Online hosting is not connected yet. The publisher must configure the multiplayer service once.');
-  const driver=await ensureDriverProfile(loadTag()||name,base);if(driver&&loadTag())await syncOnlineTag(driver,loadTag());
+  const driver=await ensureDriverProfile(name,base);
   const api=base+(mode==='create'?'/api/rooms':'/api/rooms/'+encodeURIComponent(code)+'/join');
-  const res=await fetch(api,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,color:selectedCarColor||storeGet('flipcars_color')||'RED',profileId:driver?.id,profileToken:driver?.token,settings:menuOptions})});
+  const res=await fetch(api,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,color:storeGet('flipcars_color')||'RED',profileId:driver?.id,profileToken:driver?.token})});
   const data=await res.json();if(!res.ok)throw new Error(data.error||'Cannot connect to the race');
-  storeSet('flipcars_server',base);if(!loadTag())storeSet('flipcars_name',name);preferredServer=base;invitedRoom='';
+  storeSet('flipcars_server',base);storeSet('flipcars_name',name);preferredServer=base;invitedRoom='';
   onlineBackend=base;onlineMode=true;onlineRoom=data.code;onlineToken=data.token;onlinePlayerId=data.playerId;onlineHost=!!data.host;onlineWinnerShown=false;recordedRace=false;state=null;
   storeSet('flipcars_last_room',JSON.stringify({code:onlineRoom,token:onlineToken,id:onlinePlayerId,backend:onlineBackend}));
   document.body.classList.add('solo');document.body.classList.remove('multi');viewMode=(window.innerWidth<650&&window.innerHeight>window.innerWidth)?'follow':'fit';updateViewControls();connectRoom();
@@ -743,7 +448,7 @@ function connectRoom(){
  try{if(onlineWs){onlineWs.onclose=null;onlineWs.close()}}catch{}
  const url=onlineBackend.replace(/^http/,'ws')+'/api/rooms/'+encodeURIComponent(onlineRoom)+'/ws';
  onlineWs=new WebSocket(url,['flipcars','seat.'+onlineToken]);onlineWs.onopen=()=>{$('onlineBtn').textContent='● ONLINE';$('onlineBtn').style.color='#93f7ba'};
- onlineWs.onmessage=event=>{let data;try{data=JSON.parse(event.data)}catch{return};if(data.type==='error'){onlineFormError(data.error);return}if(data.type==='welcome'||data.type==='snapshot'){onlineRoster=data.members||[];onlineRoomSettings=data.settings||null;onlineHost=data.host===onlinePlayerId;if(data.started&&data.game){applyOnlineState(data.game)}else showOnlineLobby()}};
+ onlineWs.onmessage=event=>{let data;try{data=JSON.parse(event.data)}catch{return};if(data.type==='error'){onlineFormError(data.error);return}if(data.type==='welcome'||data.type==='snapshot'){onlineRoster=data.members||[];onlineHost=data.host===onlinePlayerId;if(data.started&&data.game){applyOnlineState(data.game)}else showOnlineLobby()}};
  onlineWs.onclose=()=>{if(!onlineMode)return;$('onlineBtn').textContent='○ OFFLINE';$('onlineBtn').style.color='#ffb6a3';if(state?.phase!=='done')showOnlineDisconnected()};
  onlineWs.onerror=()=>onlineFormError('Connection failed. Confirm your Worker is deployed and the server URL is correct.');
  }catch(err){showOnlineSetup('Connection failed: '+err.message)}
@@ -752,15 +457,14 @@ function showOnlineLobby(){
  if(!onlineMode)return;
  const members=onlineRoster.map(m=>'<div class="lobbyPlayer"><span style="color:'+C[m.id]+'">🏎️ '+safeText(m.name)+'</span><span class="onlineStatus">'+(m.isBot?'CPU':m.online?'CONNECTED':'WAITING')+'</span></div>').join('');
  const invite=getInviteLink();
- $('dialogContent').classList.remove('mainMenu');
- $('dialogContent').innerHTML='<h1>FLIP <span>CARS</span></h1><h2>🏁 Private Race Garage</h2><p>'+(onlineHost?'Your race is ready! Send the invite link. Guests open it, enter a nickname, and tap Join Race.':'You’re in! Wait here for the host to start.')+'</p><div class="roomCode" id="copyRoom" title="Copy room code">'+onlineRoom+'</div>'+(onlineHost?'<div class="inviteActions"><button class="start onlineStart" id="shareInvite">↗ SHARE INVITE</button><button class="start onlineStart" id="copyInvite">⧉ COPY LINK</button></div><input class="shareLink" id="inviteLink" readonly aria-label="Shareable race invitation" value="'+safeText(invite)+'"><p class="onlineNote">No guest account or server setup needed. Simply send this link.</p>':'<p class="onlineNote">Room code: '+onlineRoom+'</p>')+'<p class="onlineNote">Host settings: '+safeText(optionsSummary(onlineRoomSettings||menuOptions))+'</p><p class="onlineNote">Players: '+onlineRoster.filter(m=>!m.isBot).length+' of 4</p>'+members+(onlineHost?'<div class="selectrow"><label for="lobbyCpu">Fill empty slots with CPU opponents</label><select id="lobbyCpu"></select></div><button class="start" id="startOnline">🏁 START THE RACE</button>':'<p class="modalResult">Waiting for the host to start the race…</p>')+'<div class="onlineError" id="onlineError" aria-live="polite"></div><button class="mini" id="leaveRoom">← LEAVE ROOM</button>';
+ $('dialogContent').innerHTML='<h1>FLIP <span>CARS</span></h1><h2>🏁 Private Race Garage</h2><p>'+(onlineHost?'Your race is ready! Send the invite link. Guests open it, enter a nickname, and tap Join Race.':'You’re in! Wait here for the host to start.')+'</p><div class="roomCode" id="copyRoom" title="Copy room code">'+onlineRoom+'</div>'+(onlineHost?'<div class="inviteActions"><button class="start onlineStart" id="shareInvite">↗ SHARE INVITE</button><button class="start onlineStart" id="copyInvite">⧉ COPY LINK</button></div><input class="shareLink" id="inviteLink" readonly aria-label="Shareable race invitation" value="'+safeText(invite)+'"><p class="onlineNote">No guest account or server setup needed. Simply send this link.</p>':'<p class="onlineNote">Room code: '+onlineRoom+'</p>')+'<p class="onlineNote">Players: '+onlineRoster.filter(m=>!m.isBot).length+' of 4</p>'+members+(onlineHost?'<div class="selectrow"><label for="lobbyCpu">Fill empty slots with CPU opponents</label><select id="lobbyCpu"></select></div><button class="start" id="startOnline">🏁 START THE RACE</button>':'<p class="modalResult">Waiting for the host to start the race…</p>')+'<div class="onlineError" id="onlineError" aria-live="polite"></div><button class="mini" id="leaveRoom">← LEAVE ROOM</button>';
  $('copyRoom').onclick=async()=>{const ok=await copyInviteText(onlineRoom);onlineFormError(ok?'Room code copied':'Select the room code to copy it.')};
  $('leaveRoom').onclick=()=>{disconnectOnline();$('onlineBtn').textContent='🌐 ONLINE';$('onlineBtn').style.color='';showOnlineSetup()};
  if(onlineHost){
   $('shareInvite').onclick=shareInvite;
   $('copyInvite').onclick=async()=>{const ok=invite&&await copyInviteText(invite);onlineFormError(ok?'Invite link copied! Send it to your friends.':'Select and copy the link above.');};
   const sl=$('lobbyCpu');sl.innerHTML=Array.from({length:5-onlineRoster.length},(_,i)=>'<option value="'+i+'">'+i+' CPU</option>').join('');sl.value=String(Math.max(0,4-onlineRoster.length));
-  $('startOnline').onclick=()=>{if(onlineWs?.readyState===1)onlineWs.send(JSON.stringify({type:'start',cpu:+sl.value,settings:menuOptions}));else onlineFormError('Not connected yet. Check your internet connection.')};
+  $('startOnline').onclick=()=>{if(onlineWs?.readyState===1)onlineWs.send(JSON.stringify({type:'start',cpu:+sl.value}));else onlineFormError('Not connected yet. Check your internet connection.')};
   if(!invite)onlineFormError('The game needs a public website URL before you can share clickable invitations.');
  }
  $('startModal').classList.remove('hidden');
@@ -770,9 +474,9 @@ function showOnlineDisconnected(){
  $('reconnectRoom').onclick=connectRoom;$('leaveDisconnected').onclick=()=>{disconnectOnline();$('onlineBtn').textContent='🌐 ONLINE';showSetup()};$('startModal').classList.remove('hidden');
 }
 function applyOnlineState(game){
- const old=state;const incoming=game.players.map(p=>({...p,cpu:p.id!==onlinePlayerId}));state={...game,players:incoming,humans:1};if(old?.players?.some(p=>state.players[p.id]?.node!==p.node))sfx('engine',.26);
+ const old=state;const incoming=game.players.map(p=>({...p,cpu:p.id!==onlinePlayerId}));state={...game,players:incoming,humans:1};if(old?.players?.some(p=>state.players[p.id]?.node!==p.node))sfx('engine',.15);
  document.body.classList.add('solo');document.body.classList.remove('multi');
- if(game.phase==='done'){if(!onlineWinnerShown){onlineWinnerShown=true;recordResult();showWinner((game.placements||[]).map(x=>state.players[x.id]))}}else $('startModal').classList.add('hidden');
+ if(game.phase==='done'){if(!onlineWinnerShown){onlineWinnerShown=true;recordResult();showWinner((game.winner||[]).map(id=>state.players[id]))}}else $('startModal').classList.add('hidden');
  renderSeats();drawAll();
 }
 
@@ -788,22 +492,22 @@ $('fullBtn').onclick=async()=>{
  $('fullBtn').textContent=(document.fullscreenElement||shell.classList.contains('theater'))?'⛶ EXIT':'⛶ FULL';setTimeout(scheduleBoardResize,60);
 };
 document.addEventListener('fullscreenchange',()=>{$('fullBtn').textContent=document.fullscreenElement?'⛶ EXIT':'⛶ FULL';scheduleBoardResize()});
-window.addEventListener('resize',()=>{syncStationSizes();scheduleBoardResize()},{passive:true});window.addEventListener('orientationchange',()=>setTimeout(scheduleBoardResize,150));
-if(typeof ResizeObserver!=='undefined'){new ResizeObserver(()=>{syncStationSizes();scheduleBoardResize()}).observe($('boardwrap'))}
-$('soundBtn').onclick=()=>{soundOn=!soundOn;menuOptions.sfx=soundOn;storeSet(OPTIONS_KEY,JSON.stringify(menuOptions));$('soundBtn').textContent=soundOn?'🔊 SFX':'🔇 SFX';if(!soundOn)engineAudio.pause();else sfx('engine',.2)};
-$('musicBtn').onclick=()=>{$('dialogContent').classList.remove('cardDetails');$('dialogContent').innerHTML='<h1>🎵 RACE <span>RADIO</span></h1><p>Five original looping instrumentals. Select a station after interacting with the page. Sound effects have their own toggle.</p>'+playlist.map(([id,name],ix)=>'<button class="start" data-song="'+id+'">'+['🌇','🎸','🚘','🌊','🌃'][ix]+' '+name+(currentlyPlaying===id?' ✓':'')+'</button>').join('')+'<button class="start" data-song="off">🔇 STOP MUSIC</button><button class="mini" id="closeMusic">BACK</button>';$('startModal').classList.remove('hidden');$('dialogContent').querySelectorAll('[data-song]').forEach(b=>b.onclick=()=>{playTrack(b.dataset.song);$('startModal').classList.add('hidden')});$('closeMusic').onclick=()=>$('startModal').classList.add('hidden')};
-$('tableBtn').onclick=()=>{tabletop=!tabletop;document.body.classList.toggle('tabletop',tabletop);$('tableBtn').textContent=tabletop?'⇄ TABLE ✓':'⇄ TABLE';syncStationSizes();scheduleBoardResize()};
-async function openProfile(){$('dialogContent').classList.remove('mainMenu');const local=loadStats(),profile=(()=>{try{return JSON.parse(storeGet('flipcars_profile')||'null')}catch{return null}})();
+window.addEventListener('resize',scheduleBoardResize,{passive:true});window.addEventListener('orientationchange',()=>setTimeout(scheduleBoardResize,150));
+if(typeof ResizeObserver!=='undefined'){new ResizeObserver(scheduleBoardResize).observe($('boardwrap'))}
+$('soundBtn').onclick=()=>{soundOn=!soundOn;$('soundBtn').textContent=soundOn?'♫ ON':'♫ OFF';if(soundOn)beep(620,.1)};
+$('musicBtn').onclick=()=>{$('dialogContent').innerHTML='<h1>🎵 RACE <span>RADIO</span></h1><p>Five original looping instrumentals. Select a station after interacting with the page. Sound effects have their own toggle.</p>'+playlist.map(([id,name],ix)=>'<button class="start" data-song="'+id+'">'+['🌇','🎸','🚘','🌊','🌃'][ix]+' '+name+(currentlyPlaying===id?' ✓':'')+'</button>').join('')+'<button class="start" data-song="off">🔇 STOP MUSIC</button><button class="mini" id="closeMusic">BACK</button>';$('startModal').classList.remove('hidden');$('dialogContent').querySelectorAll('[data-song]').forEach(b=>b.onclick=()=>{playTrack(b.dataset.song);$('startModal').classList.add('hidden')});$('closeMusic').onclick=()=>$('startModal').classList.add('hidden')};
+$('tableBtn').onclick=()=>{tabletop=!tabletop;document.body.classList.toggle('tabletop',tabletop);$('tableBtn').textContent=tabletop?'⇄ TABLE ✓':'⇄ TABLE';scheduleBoardResize()};
+async function openProfile(){const local=loadStats(),profile=(()=>{try{return JSON.parse(storeGet('flipcars_profile')||'null')}catch{return null}})();
  $('dialogContent').innerHTML='<h1>👤 DRIVER <span>CARD</span></h1>'+heroHTML+'<h2>YOUR STATS</h2><div class="modalResult">🏆 '+local.wins+' local/device wins · 🏁 '+local.races+' completed races · 🃏 '+(local.flips||0)+' movement flips</div>'+(profile?'<p>YOUR FRIEND CODE: <strong>'+safeText(profile.id)+'</strong></p><button class="mini" id="copyFriendCode">COPY CODE</button><div id="friendRows">Loading friends…</div><label class="onlineNote">ADD FRIEND BY 10-CHARACTER CODE</label><input id="friendCode" class="onlineInput" placeholder="Friend code" maxlength="10" autocapitalize="characters"><button class="start" id="addFriend">+ ADD FRIEND</button>':'<p>Your friend list can use a guest driver profile. This profile stays linked to this browser. Keep your code; clearing browser data removes access.</p><button class="start" id="createProfile">CREATE FREE DRIVER PROFILE</button>')+'<div id="profileError" class="onlineError"></div><button class="mini" id="closeProfile">BACK TO GAME</button>';
  $('startModal').classList.remove('hidden');$('closeProfile').onclick=()=>$('startModal').classList.add('hidden');
- if(!profile){$('createProfile').onclick=async()=>{try{const base=await serverBase();if(!isSafeServer(base))throw Error('Multiplayer server is not yet connected');let res=await fetch(base+'/api/profile/create',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:loadTag()||storeGet('flipcars_name')||'RACER'})});const data=await res.json();if(!res.ok)throw Error(data.error);storeSet('flipcars_profile',JSON.stringify({id:data.id,token:data.token,backend:base}));openProfile()}catch(e){$('profileError').textContent=e.message}};return}
+ if(!profile){$('createProfile').onclick=async()=>{try{const base=await serverBase();if(!isSafeServer(base))throw Error('Multiplayer server is not yet connected');let res=await fetch(base+'/api/profile/create',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:storeGet('flipcars_name')||'RACER'})});const data=await res.json();if(!res.ok)throw Error(data.error);storeSet('flipcars_profile',JSON.stringify({id:data.id,token:data.token,backend:base}));openProfile()}catch(e){$('profileError').textContent=e.message}};return}
  $('copyFriendCode').onclick=()=>copyInviteText(profile.id).then(ok=>$('profileError').textContent=ok?'Friend code copied!':'Select and copy the code');
- async function refreshFriends(){try{let r=await fetch(profile.backend+'/api/profile/'+encodeURIComponent(profile.id)+'/view',{headers:{Authorization:'Bearer '+profile.token}});const j=await r.json();if(!r.ok)throw Error(j.error);$('friendRows').innerHTML='<h3>ONLINE PROGRESSION</h3><div class="modalResult">LEVEL '+j.level+' · '+j.xp+' XP · '+j.wins+' WINS · '+j.races+' RACES · '+(j.placements||[]).map((x,i)=>rankMarks[i]+' '+x).join(' · ')+'</div><h3>FRIENDS ('+j.friends.length+')</h3>'+(j.friends.length?j.friends.map(f=>'<div class="lobbyPlayer">'+safeText(f.name)+' <small>'+safeText(f.id)+'</small></div>').join(''):'<p>None yet. Share your friend code!</p>')}catch(e){$('profileError').textContent=e.message}}await refreshFriends();
+ async function refreshFriends(){try{let r=await fetch(profile.backend+'/api/profile/'+encodeURIComponent(profile.id)+'/view',{headers:{Authorization:'Bearer '+profile.token}});const j=await r.json();if(!r.ok)throw Error(j.error);$('friendRows').innerHTML='<h3>ONLINE PROGRESSION</h3><div class="modalResult">LEVEL '+j.level+' · '+j.xp+' XP · '+j.wins+' WINS · '+j.races+' RACES</div><h3>FRIENDS ('+j.friends.length+')</h3>'+(j.friends.length?j.friends.map(f=>'<div class="lobbyPlayer">'+safeText(f.name)+' <small>'+safeText(f.id)+'</small></div>').join(''):'<p>None yet. Share your friend code!</p>')}catch(e){$('profileError').textContent=e.message}}await refreshFriends();
  $('addFriend').onclick=async()=>{try{const code=$('friendCode').value.trim().toUpperCase();let r=await fetch(profile.backend+'/api/profile/'+profile.id+'/friend',{method:'POST',headers:{'content-type':'application/json',Authorization:'Bearer '+profile.token},body:JSON.stringify({code})});const j=await r.json();if(!r.ok)throw Error(j.error);$('profileError').textContent='Friend added.';await refreshFriends()}catch(e){$('profileError').textContent=e.message}}
 }
-$('profileBtn').onclick=()=>showSetup('stats');
-$('helpBtn').onclick=()=>showSetup('rules');
+$('profileBtn').onclick=openProfile;
+$('helpBtn').onclick=()=>{let box=$('dialogContent');box.innerHTML='<h1>FLIP <span>CARS</span></h1><h2>🏁 Race rules & controls</h2><ul><li><b>Three laps:</b> First car to finish lap 3 wins. If multiple finish together, more movement remaining after crossing breaks the tie.</li><li><b>Simultaneous flips:</b> All drivers have the same distribution: eight 1s, seven 2s, five 3s, four 4s, three 5s. Cards are only revealed after all humans flip. CPU opponents flip automatically. Decks reshuffle when empty.</li><li><b>Forks:</b> Your car pauses at a fork. ROUTE cycles available paths; FLIP confirms. Longer paths carry more flag opportunities.</li><li><b>Flag spaces ⚑:</b> Draw bonus or hazard cards on landing. Fuel Canister, Repair Kit, and Guard Rail are stored for later. Turbo moves +2 now, cones -2 next flip, caught cheating -3 now, catch cheater +3 now, Spin Out misses one flip. Nitro +1 and Flat Tire -1 per flip until the next lap line.</li><li><b>Boost ⚡:</b> Landing on a boost grants an extra movement card immediately (maximum 2 bonus flips per driver per round).</li><li><b>Crashes:</b> Cars finishing the round on the same space crash and each unprotected driver misses one flip and must pit. Guard Rail prevents a crash; Repair Kit prevents the required pit, but not the missed flip.</li><li><b>Pit lane 🔧:</b> If a pit is required, automatically enter WAIT before the line. Next round advance to PIT 1 without flipping, following round to PIT 2 without flipping, then flip again and rejoin after the lap line. Taking the pit counts as crossing that lap line.</li><li><b>Keyboard:</b> Red Q/W, Blue A/S, Yellow K/L, Green N/M. First key flips/selects, second cycles routes. In solo play the board dominates and CPU drivers appear as compact status chips. Use FIT / FOLLOW to change your camera.</li></ul><button class="start" id="closeRules">BACK TO RACE</button>';$('startModal').classList.remove('hidden');$('closeRules').onclick=()=>$('startModal').classList.add('hidden')};
 $('newBtn').onclick=()=>{if(state&&state.phase!=='done'&&!window.confirm('Leave this race and start a new one?'))return;if(onlineMode){disconnectOnline();showOnlineSetup()}else showSetup()};
-$('onlineBtn').onclick=()=>{if(onlineMode&&state?.phase!=='done'&&!confirm('Leave your online race?'))return;if(onlineMode)disconnectOnline();showOnlineSetup()};updateViewControls();drawAll();if(invitedRoom)showOnlineSetup();else showSetup();
+$('humanCount').addEventListener('change',()=>updateCpuOptions());$('startBtn').onclick=initGame;$('onlineStartBtn').onclick=showOnlineSetup;$('onlineBtn').onclick=()=>{if(onlineMode&&state?.phase!=='done'&&!confirm('Leave your online race?'))return;if(onlineMode)disconnectOnline();showOnlineSetup()};updateCpuOptions();updateViewControls();drawAll();if(invitedRoom)showOnlineSetup();else showSetup();
 })();
 </script></body></html>
