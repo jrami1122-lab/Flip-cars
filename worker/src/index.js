@@ -38,8 +38,8 @@ const movement=p=>{if(!p.deck.length)p.deck=deck();p.flipCount++;return p.deck.p
 const event=s=>{if(!s.eventDeck.length)s.eventDeck=eventDeck(s.settings);return s.eventDeck.pop()};
 const weapon=s=>{if(!s.combatDeck.length)s.combatDeck=combatDeck();return s.combatDeck.pop()};
 function makePlayer(id,m){return {id,name:m.name||('AI Racer '+(id+1)),displayName:m.name||('AI Racer '+(id+1)),secondary:m.secondary||'',profileId:m.profileId||null,color:m.color||COLORS[id],isBot:!!m.isBot,cpu:!!m.isBot,node:TRACK.start,laps:0,deck:deck(),card:null,ready:false,remaining:0,skips:0,needsPit:false,pitStage:-1,fuel:0,repair:0,guard:0,cones:0,nitro:false,flat:false,tireDamaged:false,history:[],moved:false,finished:false,finishRound:null,overshoot:0,bonuses:0,flags:0,flipCount:0,selected:0,selectedNode:null,triggeredNode:null,combat:[],pendingCombat:null,combatUses:0,combatHits:0,crashes:0,spinUntil:0,crashUntil:0,bubble:false,team:m.team??-1,relayRole:m.relayRole||'',relayWaiting:!!m.relayWaiting,relayRetired:false,deviceGroup:m.deviceGroup||''}}
-function prepare(s){if(s.phase==='done')return;s.phase='flip';s.choice=null;for(const p of s.players){p.ready=false;p.card=null;p.moved=false;p.remaining=0;p.bonuses=0;p.flags=0;if(!p.finished)p.overshoot=0;p.selected=0;p.selectedNode=null;p.triggeredNode=null;if(p.finished||p.relayWaiting||p.pitStage===0||p.pitStage===1||p.skips>0){p.ready=true}else if(p.isBot){p.card=movement(p);p.ready=true}}if(s.players.every(p=>p.ready))reveal(s)}
-export function startRace(members,settings=DEFAULT_SETTINGS){const lastShifts=settings.lastShifts||{};settings=sanitizeSettings(settings);const s={version:4,round:1,phase:'lobby',players:members.map((m,i)=>makePlayer(i,m)),settings,placements:[],eventDeck:eventDeck(settings),combatDeck:combatDeck(),traps:[],active:0,choice:null,logs:['🏁 Flip together! The combat deck is live.'],winner:null,handoff:null,lastShifts:{...lastShifts},lastTaunt:null,tauntCount:0};if(settings.mode==='team'){s.settings.laps=2;for(const p of s.players){if(p.relayRole==='reserve'){p.relayWaiting=true;p.node=TRACK.pit.wait;p.pitStage=-1;}else{p.relayWaiting=false;}}s.logs.unshift('🏎️ PIT WARS: reach the checkered line to release your reserve racer.')}prepare(s);return s}
+function prepare(s){if(s.phase==='done')return;s.phase='flip';s.choice=null;for(const p of s.players){p.ready=false;p.card=null;p.moved=false;p.remaining=0;p.bonuses=0;p.flags=0;if(!p.finished)p.overshoot=0;p.selected=0;p.selectedNode=null;p.triggeredNode=null;if(p.finished||p.relayWaiting||p.pitStage===0||p.pitStage===1||p.skips>0){p.ready=true}else if(p.isBot){p.card=movement(p);p.ready=true}}if(s.players.every(p=>p.ready)&&!activeHandoffs(s).length)reveal(s)}
+export function startRace(members,settings=DEFAULT_SETTINGS){const lastShifts=settings.lastShifts||{};settings=sanitizeSettings(settings);const s={version:4,round:1,phase:'lobby',players:members.map((m,i)=>makePlayer(i,m)),settings,placements:[],eventDeck:eventDeck(settings),combatDeck:combatDeck(),traps:[],active:0,choice:null,logs:['🏁 Flip together! The combat deck is live.'],winner:null,handoff:null,handoffs:[],lastShifts:{...lastShifts},lastTaunt:null,tauntCount:0};if(settings.mode==='team'){s.settings.laps=2;for(const p of s.players){if(p.relayRole==='reserve'){p.relayWaiting=true;p.node=TRACK.pit.two;p.pitStage=-1;}else{p.relayWaiting=false;}}s.logs.unshift('🏎️ PIT WARS: reach the checkered line to release your reserve racer.')}prepare(s);return s}
 export function validGearSequence(x){return typeof x==='string'&&x.length===4&&new Set(x).size===4&&[...'1234'].every(n=>x.includes(n))}
 // Teams are assigned at race start: locally paired racers are kept together, even if seat IDs are nonadjacent.
 export function assignRelayTeams(members){
@@ -50,29 +50,72 @@ export function assignRelayTeams(members){
  if(pairs.length!==2||pairs.some(g=>g.length!==2))throw Error('Team Racer requires four racers including AI.');
  pairs.forEach((group,team)=>group.forEach((m,i)=>{m.team=team;m.relayRole=i?'reserve':'lead'}));return members;
 }
-function relaySwap(s,h,penalty=false){const a=s.players[h.lead],b=s.players[h.reserve];a.relayRetired=true;a.finished=true;a.remaining=0;a.node=TRACK.pit.wait;a.pitStage=-1;b.relayWaiting=false;b.node=TRACK.pit.exit;b.laps=1;b.history=[];b.pitStage=-1;if(penalty)b.skips++;log(s,`🔧 ${a.name} pits after crossing the checkered line. ${b.name} merges at the pit exit${penalty?' with a one-flip delay':''}!`);s.handoff=null;s.active++;resolve(s)}
-function beginRelayHandoff(s,p){const b=s.players.find(x=>x.team===p.team&&x.relayRole==='reserve');const shared=!!(p.deviceGroup&&p.deviceGroup===b.deviceGroup);
- const h={team:p.team,lead:p.id,reserve:b.id,stage:'lead',deadline:Date.now()+25000,submitted:{},valid:false,sequence:null};s.handoff=h;s.phase='handoff';p.remaining=0;log(s,`🏁 ${p.name} reaches the checkered line! ${b.name} waits at pit exit.`);
- if(shared||p.isBot||b.isBot){log(s,shared?'🤝 Shared-screen handoff: automatic.':'🤖 AI handoff: no guessing or interception.');s.phase='resolve';relaySwap(s,h,false)}
+// Every team's relay is independent. Gear challenges never freeze the rival team's movement rounds.
+function activeHandoffs(s){return s.handoffs||(s.handoffs=[])}
+function relaySwap(s,h,penalty=false){
+ const a=s.players[h.lead],b=s.players[h.reserve];
+ a.relayRetired=true;a.finished=true;a.remaining=0;a.node=TRACK.pit.wait;a.pitStage=-1;
+ b.relayWaiting=false;b.node=TRACK.pit.two;b.laps=1;b.history=[];b.pitStage=-1;
+ // The reserve begins at PIT 2. Their FIRST movement step is PIT 2 -> exit merge, not a teleport.
+ // No lap increment on that merge: the team has already completed lap one.
+ if(penalty)b.skips++;
+ if(s.phase==='flip'){
+  if(penalty){b.ready=true;b.card=null}
+  else if(b.isBot){b.card=movement(b);b.ready=true}
+  else {b.ready=false;b.card=null}
+ }
+ log(s,`🔧 ${a.name} parks at pit entrance. ${b.name} takes over from PIT 2${penalty?' after a one-flip penalty':''}.`);
+ s.handoffs=activeHandoffs(s).filter(x=>x!==h);s.handoff=s.handoffs[0]||null;
+ if(s.phase==='flip'&&s.handoffs.length===0&&s.players.every(p=>p.ready))reveal(s);
 }
-export function shiftAction(s,id,op,code){const h=s.handoff;if(s.phase!=='handoff'||!h)return false;if(!validGearSequence(code))return false;
- if(op==='set'&&id===h.lead&&h.stage==='lead'){
-  h.sequence=code;h.valid=code!==s.lastShifts[h.team];h.stage='guess';h.deadline=Date.now()+20000;log(s,`⚙️ ${s.players[id].name} locks the secret four-gear shift!`);return true}
- if(op==='guess'&&h.stage==='guess'&&!h.submitted[id]){
-  const other=s.players.find(x=>x.team!==h.team&&x.relayRole==='reserve');if(id!==h.reserve&&id!==other?.id)return false;
-  h.submitted[id]={match:h.valid&&code===h.sequence,at:Date.now()};if(id===h.reserve){
-   const intercepted=!!(other&&h.submitted[other.id]?.match);const matched=h.submitted[id].match;const penalty=!matched||intercepted;
-   log(s,`⚙️ ${matched&&!penalty?'PERFECT SHIFT!':intercepted?'SHIFT INTERCEPTED!':'SHIFT MISSED!'} ${penalty?'One-turn delay.':'Seamless launch.'}`);
-   if(h.valid)s.lastShifts[h.team]=h.sequence;s.phase='resolve';relaySwap(s,h,penalty)
-  }return true}
- return false}
-export function expireHandoff(s){if(s.phase!=='handoff'||!s.handoff||Date.now()<s.handoff.deadline)return false;const h=s.handoff;if(h.stage==='lead'){h.sequence='';h.valid=false;}log(s,'⏱️ Gear challenge timed out — one-turn pit delay.');s.phase='resolve';relaySwap(s,h,true);return true}
+function beginRelayHandoff(s,p){
+ const b=s.players.find(x=>x.team===p.team&&x.relayRole==='reserve');if(!b)return;
+ const shared=!!(p.deviceGroup&&p.deviceGroup===b.deviceGroup);
+ p.relayRetired=true;p.finished=true;p.remaining=0;p.node=TRACK.pit.wait;p.pitStage=-1;
+ log(s,`🏁 ${p.name} crosses the checkered line! ${b.name} stands by in PIT 2.`);
+ const h={team:p.team,lead:p.id,reserve:b.id,stage:'lead',deadline:Date.now()+25000,submitted:{},valid:false,sequence:null};
+ if(shared||p.isBot||b.isBot){
+  log(s,shared?'🤝 Shared-device handoff: automatic.':'🤖 AI handoff: no guessing or interception.');
+  relaySwap(s,h,false);return;
+ }
+ activeHandoffs(s).push(h);s.handoff=s.handoffs[0];
+}
+export function shiftAction(s,id,op,code,teamTarget=null){
+ if(!validGearSequence(code))return false;
+ const h=activeHandoffs(s).find(x=>(teamTarget==null||x.team===Number(teamTarget)) && (op==='set'?x.stage==='lead'&&id===x.lead:x.stage==='guess'&&(id===x.reserve||s.players.some(p=>p.id===id&&p.team!==x.team&&p.relayRole==='reserve'&&p.relayWaiting&&!p.isBot))));
+ if(!h)return false;
+ if(op==='set'){
+  h.sequence=code;h.valid=code!==s.lastShifts[h.team];h.stage='guess';h.deadline=Date.now()+20000;
+  log(s,`⚙️ ${s.players[id].name} locks a secret shift. Both pit racers may guess.`);return true;
+ }
+ if(op==='guess'&&!h.submitted[id]){
+  const other=s.players.find(x=>x.team!==h.team&&x.relayRole==='reserve'&&x.relayWaiting&&!x.isBot);
+  if(id!==h.reserve&&id!==other?.id)return false;
+  h.submitted[id]={match:h.valid&&code===h.sequence,at:Date.now()};
+  if(id===h.reserve){
+   const intercepted=!!(other&&h.submitted[other.id]?.match),matched=h.submitted[id].match,penalty=!matched||intercepted;
+   log(s,`⚙️ ${matched&&!penalty?'PERFECT SHIFT!':intercepted?'SHIFT INTERCEPTED!':'SHIFT MISSED!'} ${penalty?'One-turn delay.':'Seamless handoff.'}`);
+   if(h.valid)s.lastShifts[h.team]=h.sequence;
+   relaySwap(s,h,penalty);
+  }return true;
+ }
+ return false;
+}
+export function expireHandoff(s){
+ let changed=false;
+ for(const h of [...activeHandoffs(s)])if(Date.now()>=h.deadline){
+  log(s,'⏱️ Gear challenge timed out — one-turn pit delay.');
+  relaySwap(s,h,true);changed=true;
+ }
+ return changed;
+}
 function cross(s,p){p.laps++;p.nitro=false;p.flat=false;p.cones=0;p.bubble=false;log(s,`🏁 ${p.name} lap ${p.laps}/${s.settings.laps}!`);if(s.settings.mode==='team'&&p.relayRole==='lead'&&p.laps===1){beginRelayHandoff(s,p);return}if(p.laps>=s.settings.laps){p.finished=true;p.finishRound=s.round;p.overshoot=p.remaining;log(s,`🏆 ${p.name} finishes!`)}}
 function step(s,p){const {nodes,forks,pit,start}=TRACK;
- if(p.pitStage===2&&p.node===pit.two){p.pitStage=-1;p.needsPit=false;p.flat=false;p.tireDamaged=false;p.bubble=false;p.node=pit.exit;p.remaining=Math.max(0,p.remaining-1);p.history.push({node:pit.two,lapCross:true});p.moved=true;cross(s,p);log(s,`🔧 ${p.name} exits pit, repaired.`);return p.relayRetired?'handoff':'ok'}
+ if(s.settings.mode==='team'&&p.relayRole==='reserve'&&!p.relayWaiting&&p.node===pit.two){p.node=pit.exit;p.remaining=Math.max(0,p.remaining-1);p.history.push({node:pit.two,lapCross:false});p.moved=true;log(s,`🏎️ ${p.name} merges from PIT 2 onto the course.`);return 'ok'}
+ if(p.pitStage===2&&p.node===pit.two){p.pitStage=-1;p.needsPit=false;p.flat=false;p.tireDamaged=false;p.bubble=false;p.node=pit.exit;p.remaining=Math.max(0,p.remaining-1);p.history.push({node:pit.two,lapCross:true});p.moved=true;cross(s,p);log(s,`🔧 ${p.name} exits pit, repaired.`);return 'ok'}
  if(p.node===pit.approach&&p.needsPit){p.node=pit.wait;p.remaining=0;p.pitStage=0;p.needsPit=false;p.bubble=false;p.moved=true;log(s,`🔧 ${p.name} enters pit lane.`);return 'pit'}
  let next;if(forks[p.node]){if(!p.selectedNode){if(p.isBot){const opts=forks[p.node],short=opts.findIndex(o=>/INSIDE|EXPRESS|TUNNEL/.test(o.name)),ix=Math.random()<.6?Math.max(0,short):Math.floor(Math.random()*opts.length);p.selected=ix;p.selectedNode=opts[ix].first;log(s,`🛣️ ${p.name} takes ${opts[ix].name}.`)}else{s.phase='choice';s.choice=p.id;p.selected=0;return 'choice'}}next=p.selectedNode;p.selectedNode=null}else next=nodes[p.node].next;
- if(!next){p.remaining=0;log(s,'Track routing error.');return 'error'}let old=p.node;p.history.push({node:old,lapCross:next===start});if(p.history.length>360)p.history.shift();p.node=next;p.remaining--;p.moved=true;if(next===start&&old!==start)cross(s,p);return p.relayRetired?'handoff':'ok'}
+ if(!next){p.remaining=0;log(s,'Track routing error.');return 'error'}let old=p.node;p.history.push({node:old,lapCross:next===start});if(p.history.length>360)p.history.shift();p.node=next;p.remaining--;p.moved=true;if(next===start&&old!==start)cross(s,p);return 'ok'}
 function reverse(s,p,n){while(n-->0&&p.history.length){const e=p.history.pop();if(p.node===TRACK.start&&e.lapCross&&p.laps>0){p.laps--;p.finished=false}p.node=e.node;p.moved=true}}
 function protectedHit(s,p,label){if(p.bubble){p.bubble=false;log(s,`🫧 ${p.name}'s bubble blocks ${label}!`);return true}return false}
 function flag(s,p){let id=event(s);p.flags++;log(s,`⚑ ${p.name} draws ${id.toUpperCase()}`);switch(id){case 'lowfuel':if(p.fuel)p.fuel--;else p.needsPit=true;break;case 'fuel':p.fuel++;break;case 'turbo':p.remaining+=2;break;case 'spin':if(!protectedHit(s,p,'a spin-out')){p.skips++;p.spinUntil=s.round+1}break;case 'repair':if(p.tireDamaged){p.tireDamaged=false;p.needsPit=false;log(s,`🔧 ${p.name} repairs a puncture.`)}else p.repair++;break;case 'guard':p.guard++;break;case 'cones':p.cones+=2;break;case 'cheat':reverse(s,p,3);break;case 'catch':p.remaining+=3;break;case 'nitro':p.nitro=true;break;case 'flat':if(!protectedHit(s,p,'a flat tire'))p.flat=true;break}}
@@ -121,7 +164,7 @@ export function action(s,playerId,op,arg={}){const p=s.players[playerId];if(!p||
  if(op==='combat')return useCombat(s,playerId,arg.index,arg.target);
  if(s.phase==='choice'){if(s.choice!==playerId)return false;if(op==='route'){p.selected=(p.selected+1)%TRACK.forks[p.node].length;return true}if(op==='flip'){p.selectedNode=TRACK.forks[p.node][p.selected].first;s.phase='resolve';s.choice=null;log(s,`🛣️ ${p.name} chooses ${TRACK.forks[p.node][p.selected].name}.`);resolve(s);return true}return false}
  if(s.phase==='flip'&&op==='flip'&&!p.ready&&!p.pendingCombat){p.card=movement(p);p.ready=true;if(s.players.every(q=>q.ready))reveal(s);return true}return false}
-export function publicGame(s,viewerId=-1){if(!s)return null;return {version:4,round:s.round,phase:s.phase,handoff:s.handoff?{team:s.handoff.team,lead:s.handoff.lead,reserve:s.handoff.reserve,stage:s.handoff.stage,deadline:s.handoff.deadline,submitted:Object.keys(s.handoff.submitted||{}),previous:s.lastShifts[s.handoff.team]||''}:null,lastTaunt:s.lastTaunt,lastSignal:s.lastSignal||null,choice:s.choice,logs:s.logs,winner:s.winner,placements:s.placements||[],settings:s.settings||DEFAULT_SETTINGS,traps:s.traps,humans:1,players:s.players.map(p=>({id:p.id,name:p.name,displayName:p.displayName,profileId:p.profileId||null,color:p.color,secondary:p.secondary||'',isBot:p.isBot,cpu:p.isBot,team:p.team,relayRole:p.relayRole,relayWaiting:p.relayWaiting,relayRetired:p.relayRetired,lastTauntRound:p.lastTauntRound??-2,deviceGroup:p.deviceGroup,node:p.node,laps:p.laps,card:s.phase==='flip'?null:p.card,ready:p.ready,remaining:p.remaining,skips:p.skips,needsPit:p.needsPit,pitStage:p.pitStage,fuel:p.fuel,repair:p.repair,guard:p.guard,cones:p.cones,nitro:p.nitro,flat:p.flat,tireDamaged:p.tireDamaged,moved:p.moved,finished:p.finished,overshoot:p.overshoot,bonuses:p.bonuses,flags:p.flags,flipCount:p.flipCount,selected:p.selected,selectedNode:p.selectedNode,history:[],triggeredNode:p.triggeredNode,combat:p.id===viewerId?p.combat:[],combatCount:p.combat.length,bubble:p.bubble,pendingCombat:p.id===viewerId?p.pendingCombat:null,combatUses:p.combatUses,combatHits:p.combatHits,crashes:p.crashes,spinUntil:p.spinUntil,crashUntil:p.crashUntil}))}}
+export function publicGame(s,viewerId=-1){if(!s)return null;return {version:4,round:s.round,phase:s.phase,handoffs:activeHandoffs(s).map(h=>({team:h.team,lead:h.lead,reserve:h.reserve,stage:h.stage,deadline:h.deadline,submitted:Object.keys(h.submitted||{}),previous:s.lastShifts[h.team]||''})),handoff:s.handoff?{team:s.handoff.team,lead:s.handoff.lead,reserve:s.handoff.reserve,stage:s.handoff.stage,deadline:s.handoff.deadline,submitted:Object.keys(s.handoff.submitted||{}),previous:s.lastShifts[s.handoff.team]||''}:null,lastTaunt:s.lastTaunt,lastSignal:s.lastSignal||null,choice:s.choice,logs:s.logs,winner:s.winner,placements:s.placements||[],settings:s.settings||DEFAULT_SETTINGS,traps:s.traps,humans:1,players:s.players.map(p=>({id:p.id,name:p.name,displayName:p.displayName,profileId:p.profileId||null,color:p.color,secondary:p.secondary||'',isBot:p.isBot,cpu:p.isBot,team:p.team,relayRole:p.relayRole,relayWaiting:p.relayWaiting,relayRetired:p.relayRetired,lastTauntRound:p.lastTauntRound??-2,deviceGroup:p.deviceGroup,node:p.node,laps:p.laps,card:s.phase==='flip'?null:p.card,ready:p.ready,remaining:p.remaining,skips:p.skips,needsPit:p.needsPit,pitStage:p.pitStage,fuel:p.fuel,repair:p.repair,guard:p.guard,cones:p.cones,nitro:p.nitro,flat:p.flat,tireDamaged:p.tireDamaged,moved:p.moved,finished:p.finished,overshoot:p.overshoot,bonuses:p.bonuses,flags:p.flags,flipCount:p.flipCount,selected:p.selected,selectedNode:p.selectedNode,history:[],triggeredNode:p.triggeredNode,combat:p.id===viewerId?p.combat:[],combatCount:p.combat.length,bubble:p.bubble,pendingCombat:p.id===viewerId?p.pendingCombat:null,combatUses:p.combatUses,combatHits:p.combatHits,crashes:p.crashes,spinUntil:p.spinUntil,crashUntil:p.crashUntil}))}}
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'content-type':'application/json','cache-control':'no-store','Access-Control-Allow-Origin':'*'}});
 const cleanName=x=>String(x||'RACER').replace(/[^a-zA-Z0-9 _-]/g,'').trim().slice(0,18)||'RACER';
 const cleanColor=x=>['RED','BLUE','YELLOW','GREEN','PURPLE','ORANGE','WHITE','PINK'].includes(String(x).toUpperCase())?String(x).toUpperCase():'RED';
@@ -176,13 +219,13 @@ export class GameRoom{
   r.started=false;r.game=null;r.awarded=false;
   await this.save(r);this.broadcast(r);return;
  }
- if(r.started&&r.game&&msg.type==='signal'&&r.game.handoff?.stage==='lead'&&r.game.handoff.lead===id&&['up','down','mix','ready'].includes(msg.signal)){r.game.lastSignal={team:r.game.handoff.team,signal:msg.signal};await this.save(r);this.broadcast(r);return}
- if(r.started&&r.game&&msg.type==='shift'){if(shiftAction(r.game,id,msg.op,msg.code)){await this.save(r);this.broadcast(r);if(r.game.handoff)await this.ctx.storage.setAlarm(r.game.handoff.deadline)}return}
+ if(r.started&&r.game&&msg.type==='signal'&&activeHandoffs(r.game).some(h=>h.stage==='lead'&&h.lead===id)&&['up','down','mix','ready'].includes(msg.signal)){r.game.lastSignal={team:activeHandoffs(r.game).find(h=>h.lead===id).team,signal:msg.signal};await this.save(r);this.broadcast(r);return}
+ if(r.started&&r.game&&msg.type==='shift'){if(shiftAction(r.game,id,msg.op,msg.code,msg.team)){await this.save(r);this.broadcast(r);if(activeHandoffs(r.game).length)await this.ctx.storage.setAlarm(Math.min(...activeHandoffs(r.game).map(h=>h.deadline)))}return}
  if(r.started&&r.game&&msg.type==='taunt'&&r.settings.mode==='team'){const p=r.game.players[id],target=r.game.players.find(x=>x.team!==p?.team&&x.relayRole==='lead'&&!x.relayRetired);if(p?.relayWaiting&&target&&Number.isInteger(msg.effect)&&msg.effect>=0&&msg.effect<=3&&r.game.round-(p.lastTauntRound||-2)>=2){p.lastTauntRound=r.game.round;r.game.tauntCount++;r.game.lastTaunt={serial:r.game.tauntCount,from:p.name,target:target.id,effect:msg.effect};await this.save(r);this.broadcast(r)}return}
- if(r.started&&r.game&&['action','combat','discard'].includes(msg.type)){let op=msg.type==='action'?msg.op:msg.type,arg=msg.type==='action'?{}:{index:msg.index,target:msg.target};if(action(r.game,id,op,arg)){await this.award(r);await this.save(r);this.broadcast(r);if(r.game.handoff)await this.ctx.storage.setAlarm(r.game.handoff.deadline)}}
+ if(r.started&&r.game&&['action','combat','discard'].includes(msg.type)){let op=msg.type==='action'?msg.op:msg.type,arg=msg.type==='action'?{}:{index:msg.index,target:msg.target};if(action(r.game,id,op,arg)){await this.award(r);await this.save(r);this.broadcast(r);if(activeHandoffs(r.game).length)await this.ctx.storage.setAlarm(Math.min(...activeHandoffs(r.game).map(h=>h.deadline)))}}
  })}
  async webSocketClose(ws){return this.ctx.blockConcurrencyWhile(async()=>{let r=await this.data();if(!r)return;let id=ws.deserializeAttachment()?.id,other=this.ctx.getWebSockets().some(w=>w!==ws&&w.deserializeAttachment()?.id===id);if(r.started&&!other&&Number.isInteger(id)){let p=r.game?.players[id];if(p&&!p.finished){p.isBot=true;p.cpu=true;if(r.game.phase==='flip'&&!p.ready){p.isBot=false;action(r.game,id,'flip');p.isBot=true}if(r.game.phase==='choice'&&r.game.choice===id){p.selectedNode=TRACK.forks[p.node][0].first;r.game.phase='resolve';r.game.choice=null;resolve(r.game)}if(p.pendingCombat!=null){p.combat[0]=p.pendingCombat;p.pendingCombat=null}await this.award(r);await this.save(r)}}this.broadcast(r)})}
- async alarm(){const r=await this.data();if(r?.game?.handoff&&expireHandoff(r.game)){await this.save(r);this.broadcast(r)}if(r&&Date.now()-r.updated>=24*3600000){for(const ws of this.ctx.getWebSockets())try{ws.close(1000,'Room expired')}catch{}await this.ctx.storage.deleteAll()}else await this.ctx.storage.setAlarm(r?.game?.handoff?.deadline||Date.now()+24*3600000)}
+ async alarm(){const r=await this.data();if(r?.game&&expireHandoff(r.game)){await this.save(r);this.broadcast(r)}if(r&&Date.now()-r.updated>=24*3600000){for(const ws of this.ctx.getWebSockets())try{ws.close(1000,'Room expired')}catch{}await this.ctx.storage.deleteAll()}else await this.ctx.storage.setAlarm(activeHandoffs(r?.game||{}).length?Math.min(...activeHandoffs(r.game).map(h=>h.deadline)):Date.now()+24*3600000)}
 }
 // Guest profiles are stored per-browser. A cleared browser loses its bearer secret; no claims of secure identity recovery.
 export class DriverProfile{
