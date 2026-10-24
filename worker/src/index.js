@@ -6,7 +6,8 @@ const COLORS=['RED','BLUE','YELLOW','GREEN'];
 const DEFAULT_SETTINGS={combat:true,flags:true,turbos:true,laps:3,mode:'classic'};
 // Match rules are authoritative; preserve boolean rules and validate the race length.
 export const sanitizeSettings=x=>({combat:x?.combat!==false,flags:x?.flags!==false,turbos:x?.turbos!==false,laps:x?.mode==='team'?2:([3,5,10].includes(Number(x?.laps))?Number(x.laps):3),mode:x?.mode==='team'?'team':'classic'});
-const MOVEMENT=[...Array(8).fill(1),...Array(7).fill(2),...Array(5).fill(3),...Array(4).fill(4),...Array(3).fill(5)];
+export const MOVEMENT_COUNTS=Object.freeze({1:5,2:7,3:8,4:4,5:3});
+const MOVEMENT=Object.entries(MOVEMENT_COUNTS).flatMap(([number,count])=>Array(count).fill(Number(number)));
 const EVENTS={lowfuel:3,fuel:3,turbo:4,spin:3,repair:2,guard:2,cones:3,cheat:2,catch:2,nitro:2,flat:2};
 export const COMBAT_COUNTS={oil:9,spikes:7,missile:7,sniper:4,stall:1,bubble:3};
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
@@ -182,7 +183,7 @@ async function verifiedProfile(env,b){try{const id=String(b?.profileId||'');if(!
 
 export default {async fetch(req,env){const url=new URL(req.url),path=url.pathname;
  if(req.method==='OPTIONS')return new Response(null,{status:204,headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'content-type,authorization,x-driver-id','Access-Control-Allow-Methods':'GET,POST,OPTIONS'}});
- if(path==='/api/health')return json({ok:true,game:'Flip Cars',version:'4.5',hybrid:true,teamRelay:true,combat:true,placements:true,matchOptions:true,social:!!env.PROFILES,socialV2:!!env.SOCIAL});
+ if(path==='/api/health')return json({ok:true,game:'Flip Cars',version:'4.5.2',hybrid:true,teamRelay:true,combat:true,placements:true,matchOptions:true,social:!!env.PROFILES,socialV2:!!env.SOCIAL});
  if(path.startsWith('/api/social/'))return socialApi(req,env,verifiedProfile);
  if(path==='/api/profile/create'&&req.method==='POST'){let b;try{b=await req.json()}catch{return json({error:'Bad JSON'},400)}const id=code(10),secret=token(),stub=env.PROFILES?.get(env.PROFILES.idFromName(id));if(!stub)return json({error:'Profiles not configured'},503);return stub.fetch(new Request('https://profile.internal/create',{method:'POST',body:JSON.stringify({id,secret,name:cleanName(b.name)})}))}
  const pm=path.match(/^\/api\/profile\/([A-HJ-NP-Z2-9]{10})\/(view|friend|remove|stats|update)$/);if(pm){if(!env.PROFILES)return json({error:'Profiles unavailable'},503);let auth=req.headers.get('authorization')||'',stub=env.PROFILES.get(env.PROFILES.idFromName(pm[1]));return stub.fetch(new Request('https://profile.internal/'+pm[2],{method:req.method,headers:{Authorization:auth},body:req.method==='POST'?await req.text():undefined}))}
@@ -191,13 +192,18 @@ export default {async fetch(req,env){const url=new URL(req.url),path=url.pathnam
  for(let i=0;i<5;i++){let c=code(),stub=env.ROOMS.get(env.ROOMS.idFromName(c));const result=await stub.fetch(new Request('https://room.internal/init',{method:'POST',body:JSON.stringify({name:cleanName(b.name),color:cleanColor(b.color),secondary:cleanSecondary(b.secondary),profileId:await verifiedProfile(env,b),plusOne:additional,code:c})}));if(result.ok)return result}return json({error:'Could not create room'},503)}
  const m=path.match(/^\/api\/rooms\/([A-HJ-NP-Z2-9]{6})\/(join|ws|snapshot)$/);if(!m)return json({error:'Not found'},404);const stub=env.ROOMS.get(env.ROOMS.idFromName(m[1]));if(m[2]==='join'&&req.method==='POST'){let b;try{b=await req.json()}catch{return json({error:'Bad JSON'},400)}return stub.fetch(new Request('https://room.internal/join',{method:'POST',body:JSON.stringify({name:cleanName(b.name),color:cleanColor(b.color),secondary:cleanSecondary(b.secondary),profileId:await verifiedProfile(env,b),plusOne:b.plusOne?{name:cleanName(b.plusOne.name),color:cleanColor(b.plusOne.color),secondary:cleanSecondary(b.plusOne.secondary)}:null})}));}if(m[2]==='ws'&&req.headers.get('upgrade')==='websocket')return stub.fetch(new Request('https://room.internal/ws',{headers:req.headers}));if(m[2]==='snapshot'&&req.method==='GET')return stub.fetch(new Request('https://room.internal/snapshot',{headers:req.headers}));return json({error:'Unsupported'},405)
 }};
+// Race-room-only ephemeral messages: no history is stored, and only a two-device party can chat.
+export function raceChatDeviceCount(members=[]){return new Set(members.filter(m=>!m.isBot).map(m=>m.deviceGroup||'seat-'+m.id)).size}
+export function raceChatAvailable(members=[]){return raceChatDeviceCount(members)===2}
+export function raceChatOnlineGroups(members=[],sockets=[]){const groups=new Set();for(const w of sockets){if(w.readyState!==1)continue;const player=members.find(m=>!m.isBot&&m.id===w.deserializeAttachment()?.id);if(player)groups.add(player.deviceGroup||'seat-'+player.id)}return groups.size}
+export function cleanRaceChat(value){return typeof value==='string'?value.replace(/[\x00-\x1f\x7f]/g,' ').replace(/\s+/g,' ').trim().slice(0,180):''}
 export class GameRoom{
  constructor(ctx,env){this.ctx=ctx;this.env=env}
  async data(){return await this.ctx.storage.get('room')||null}
  async save(r){r.updated=Date.now();await this.ctx.storage.put('room',r)}
  async award(r){if(r.awarded||!r.game||r.game.phase!=='done')return;r.awarded=true;for(const member of r.members){if(!member.profileId||member.isBot)continue;try{const profile=this.env.PROFILES.get(this.env.PROFILES.idFromName(member.profileId));await profile.fetch(new Request('https://profile.internal/award',{method:'POST',body:JSON.stringify({race:r.code,win:r.game.winner?.includes(member.id)||!!(r.settings.mode==='team'&&r.game.players[member.id]?.team===r.game.players[r.game.winner?.[0]]?.team),flips:r.game.players[member.id]?.flipCount||0,combat:r.game.players[member.id]?.combatUses||0,place:r.game.placements?.find(x=>x.id===member.id)?.place||(r.settings.mode==='team'?r.game.placements?.find(x=>r.game.players[x.id]?.team===r.game.players[member.id]?.team)?.place||0:0)})}))}catch(e){console.warn('Profile award deferred',String(e))}}}
 
- present(r,viewer=-1){return {type:'snapshot',code:r.code,started:r.started,host:r.hostId,settings:r.settings||DEFAULT_SETTINGS,members:r.members.map(m=>({id:m.id,name:m.name,color:m.color,secondary:m.secondary||'',isBot:m.isBot,profileId:m.profileId||null,deviceGroup:m.deviceGroup||'',team:m.team??-1,relayRole:m.relayRole||'',online:this.ctx.getWebSockets().some(w=>w.deserializeAttachment()?.id===m.id)})),game:publicGame(r.game,viewer)}}
+ present(r,viewer=-1){return {type:'snapshot',code:r.code,started:r.started,host:r.hostId,settings:r.settings||DEFAULT_SETTINGS,chatEnabled:raceChatAvailable(r.members)&&raceChatOnlineGroups(r.members,this.ctx.getWebSockets())===2,chatDevices:raceChatDeviceCount(r.members),members:r.members.map(m=>({id:m.id,name:m.name,color:m.color,secondary:m.secondary||'',isBot:m.isBot,profileId:m.profileId||null,deviceGroup:m.deviceGroup||'',team:m.team??-1,relayRole:m.relayRole||'',online:this.ctx.getWebSockets().some(w=>w.deserializeAttachment()?.id===m.id)})),game:publicGame(r.game,viewer)}}
  broadcast(r){for(const ws of this.ctx.getWebSockets())try{ws.send(JSON.stringify(this.present(r,ws.deserializeAttachment()?.id)))}catch{}}
  async fetch(req){return this.ctx.blockConcurrencyWhile(()=>this.handleFetch(req))}
  async handleFetch(req){const path=new URL(req.url).pathname;
@@ -210,6 +216,21 @@ export class GameRoom{
   if(path==='/ws'&&req.headers.get('upgrade')==='websocket'){const protocols=(req.headers.get('Sec-WebSocket-Protocol')||'').split(',').map(s=>s.trim()),t=protocols.find(x=>x.startsWith('seat.'))?.slice(5);if(!protocols.includes('flipcars'))return json({error:'Unauthorized'},401);const m=r.members.find(m=>!m.isBot&&m.token===t);if(!m)return json({error:'Unauthorized'},401);const pair=new WebSocketPair(),[client,server]=Object.values(pair);this.ctx.acceptWebSocket(server);server.serializeAttachment({id:m.id});if(r.game?.players[m.id]){r.game.players[m.id].isBot=false;r.game.players[m.id].cpu=false;await this.save(r)}server.send(JSON.stringify({...this.present(r,m.id),type:'welcome',playerId:m.id}));this.broadcast(r);return new Response(null,{status:101,webSocket:client,headers:{'Sec-WebSocket-Protocol':'flipcars'}})}
   return json({error:'Not found'},404)}
  async webSocketMessage(ws,message){return this.ctx.blockConcurrencyWhile(async()=>{let id=ws.deserializeAttachment()?.id;if(!Number.isInteger(id)||typeof message!=='string'||message.length>1024)return;let msg;try{msg=JSON.parse(message)}catch{return}if(!msg||typeof msg!=='object'||Array.isArray(msg))return;const r=await this.data();if(!r||!r.members.some(m=>m.id===id&&!m.isBot))return;
+ if(msg.type==='roomChat'){
+  const author=r.members.find(m=>m.id===id&&!m.isBot);
+  if(!raceChatAvailable(r.members)||raceChatOnlineGroups(r.members,this.ctx.getWebSockets())!==2){ws.send(JSON.stringify({type:'roomChatError',message:'Race chat requires exactly two connected devices.'}));return}
+  const body=cleanRaceChat(msg.text);
+  if(!body){ws.send(JSON.stringify({type:'roomChatError',message:'Enter a message (up to 180 characters).'}));return}
+  const now=Date.now();r.chatRate??={};const group=author.deviceGroup||'seat-'+id;
+  if(now-(r.chatRate[group]||0)<900){ws.send(JSON.stringify({type:'roomChatError',message:'Sending too fast. Try again in a moment.'}));return}
+  r.chatRate[group]=now;await this.save(r);
+  const event=JSON.stringify({type:'roomChatMessage',id:crypto.randomUUID(),from:author.name,deviceGroup:group,text:body,at:now});
+  for(const target of this.ctx.getWebSockets())try{
+   const member=r.members.find(m=>m.id===target.deserializeAttachment()?.id&&!m.isBot);
+   if(member&&target.readyState===1)target.send(event)
+  }catch{}
+  return;
+ }
  if(msg.type==='start'&&!r.started&&id===r.hostId){let cpu=Math.max(0,Math.min(4-r.members.length,Math.floor(Number(msg.cpu)||0)));while(cpu--){let i=r.members.length;r.members.push({id:i,name:uniqueRoomName('AI Racer '+(r.members.filter(m=>m.isBot).length+1),r.members),color:COLORS[i],secondary:uniqueSecondary(COLORS[i],'AUTO',r.members),token:null,isBot:true,deviceGroup:'ai-'+i})}if(r.members.length<2){ws.send(JSON.stringify({type:'error',error:'Add a friend or a CPU racer.'}));return}r.started=true;r.awarded=false;r.settings=sanitizeSettings(msg.settings);if(r.settings.mode==='team'){if(r.members.length!==4){ws.send(JSON.stringify({type:'error',error:'Team Racer needs exactly four racers (AI may fill seats).'}));r.started=false;return}assignRelayTeams(r.members)}else for(const m of r.members){m.team=-1;m.relayRole=''}r.game=startRace(r.members,{...r.settings,lastShifts:r.lastShifts||{}});await this.save(r);this.broadcast(r);return}
  // A rematch opens a fresh lobby under the same room code and guest credentials.
  // Only the host may reset a fully completed race, after rewards were credited.
