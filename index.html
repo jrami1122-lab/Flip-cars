@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091525"><title>Flip Cars 4.5.2 — Race Chat & Rebalanced Movement</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091525"><title>Flip Cars 4.5.3 — Voice & Open Text Chat</title>
 <!-- Flip Cars 4.4 installable web app. Online gaming stays on Cloudflare. -->
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -760,21 +760,42 @@ body .arena .seat.cpu{display:none!important}
 .fcRaceChatForm{padding:10px;display:flex;gap:7px;border-top:1px solid #3c627c}.fcRaceChatForm input{flex:1;min-width:0;background:#071b2c;color:white;border:1px solid #5d91af;border-radius:8px;font-size:14px;padding:10px}.fcRaceChatForm button{background:linear-gradient(#ffe098,#ffbd5b);border:0;border-radius:8px;color:#1c3040;font-weight:950;padding:8px 12px}
 .fcRaceChatNote{font-size:10px;color:#a9bacc;padding:0 11px 10px;margin:0}.fcRaceChatNote.error{color:#ffb8a1}
 @media(max-width:600px){.head-actions #raceChatBtn{font-size:0!important;min-width:37px}.head-actions #raceChatBtn::after{content:'💬';font-size:16px}.fcRaceChat{top:auto;bottom:max(9px,env(safe-area-inset-bottom));max-height:calc(100dvh - 20px);right:9px}.fcRaceChatMessages{max-height:36dvh}}
+
+/* 4.5.3 — optional microphone chat shares no settings or state with text chat. */
+#voiceOpenBtn{border-color:#85cfaa;background:#164736;color:#d6ffe2;white-space:nowrap}
+#voiceOpenBtn:disabled{opacity:.42}
+.fcVoicePanel[hidden]{display:none!important}
+.fcVoicePanel{position:fixed;z-index:560;right:max(12px,env(safe-area-inset-right));top:max(60px,env(safe-area-inset-top));width:min(340px,calc(100vw - 20px));border:2px solid #86cba8;border-radius:16px;background:#102639f9;color:#eff9fd;box-shadow:0 18px 55px #000a;overflow:hidden}
+.fcVoicePanel #voiceStatus{padding:12px;margin:0;color:#c4e1f0;font-size:13px;line-height:1.45}
+.fcVoiceControls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 12px 12px}
+.fcVoiceControls button{border:1px solid #85a8ba;background:#24455f;color:#f5fbff;border-radius:10px;padding:10px 7px;min-height:42px;font-size:12px;font-weight:800}
+.fcVoiceControls #voiceJoin{background:linear-gradient(#bbe7b0,#67c991);color:#08211a;grid-column:span 2;border-color:#66c491}
+.fcVoiceControls button:disabled{opacity:.4}
+.fcVoiceHelp{padding:0 12px 12px;margin:0;color:#a7c3cf;font-size:11px;line-height:1.4}
+@media(max-width:600px){.head-actions #voiceOpenBtn{font-size:0!important;min-width:37px}.head-actions #voiceOpenBtn::after{content:'🎙';font-size:16px}.fcVoicePanel{top:auto;bottom:max(9px,env(safe-area-inset-bottom));right:9px}}
 </style>
 </head>
 <body>
 <div class="pwaSplash" id="pwaSplash" aria-hidden="true"><img src="icons/icon-192.png" alt=""><strong>FLIP CARS</strong><span>READY. SET. FLIP.</span></div>
 <div class="pwaOfflineFlag" id="pwaOfflineFlag" hidden>📡 OFFLINE · Online rooms and friends need internet</div>
-<div class="shell" id="gameShell"><header class="header"><div class="brand"><div><div class="logo">FLIP <span>CARS</span> 🏁</div><div class="sub">Edition 4.5.2 · Hybrid & Team Racing</div></div></div><div class="head-actions"><span class="badge" id="roundBadge">ROUND 1</span><button class="mini" id="onlineBtn" title="Create or join an online race">🌐 ONLINE</button><button class="mini" id="focusBtn" title="Toggle complete circuit / follow camera" aria-label="Change board camera">◎ FIT</button><button class="mini" id="fullBtn" title="Use full screen" aria-label="Toggle fullscreen">⛶ FULL</button><button class="mini" id="soundBtn" aria-label="Toggle sound">♫ ON</button><button class="mini" id="musicBtn" title="Choose music">🎵</button><button class="mini" id="profileBtn" title="Driver stats and friends">👤</button><button class="mini" id="raceChatBtn" title="Race chat works with exactly two devices" hidden disabled>💬 CHAT</button><button class="mini" id="socialBtn" title="Friends, invites and messages">👥 FRIENDS</button><button class="mini" id="tableBtn" title="Tabletop seating directions">⇄ TABLE</button><button class="mini pwaHeaderInstall" id="pwaHeaderInstall" type="button" title="Install Flip Cars as an app" aria-label="Install Flip Cars">⬇ APP</button><button class="mini" id="helpBtn">? RULES</button><button class="mini" id="newBtn" aria-label="Open race menu">☰ MENU</button></div></header>
+<div class="shell" id="gameShell"><header class="header"><div class="brand"><div><div class="logo">FLIP <span>CARS</span> 🏁</div><div class="sub">Edition 4.5.3 · Hybrid & Team Racing</div></div></div><div class="head-actions"><span class="badge" id="roundBadge">ROUND 1</span><button class="mini" id="onlineBtn" title="Create or join an online race">🌐 ONLINE</button><button class="mini" id="focusBtn" title="Toggle complete circuit / follow camera" aria-label="Change board camera">◎ FIT</button><button class="mini" id="fullBtn" title="Use full screen" aria-label="Toggle fullscreen">⛶ FULL</button><button class="mini" id="soundBtn" aria-label="Toggle sound">♫ ON</button><button class="mini" id="musicBtn" title="Choose music">🎵</button><button class="mini" id="profileBtn" title="Driver stats and friends">👤</button><button class="mini" id="raceChatBtn" title="Text chat for two to four connected devices" hidden disabled>💬 CHAT</button><button class="mini" id="voiceOpenBtn" title="Opt-in voice chat, two connected devices" hidden disabled>🎙 VOICE</button><button class="mini" id="socialBtn" title="Friends, invites and messages">👥 FRIENDS</button><button class="mini" id="tableBtn" title="Tabletop seating directions">⇄ TABLE</button><button class="mini pwaHeaderInstall" id="pwaHeaderInstall" type="button" title="Install Flip Cars as an app" aria-label="Install Flip Cars">⬇ APP</button><button class="mini" id="helpBtn">? RULES</button><button class="mini" id="newBtn" aria-label="Open race menu">☰ MENU</button></div></header>
 <main class="arena"><section class="seat" data-position="top" id="seat0" style="--color:#ff5959"></section><section class="seat" data-position="left" id="seat1" style="--color:#40b5ff"></section><div class="boardwrap" id="boardwrap"><div class="leaderhud" id="leaderHud" aria-label="Race standings"></div><canvas id="board" width="1200" height="800" aria-label="Interactive racing circuit, with three forks and two pit-stop spaces"></canvas><div class="routePrompt" id="routePrompt"></div><div class="boardcaption" id="boardCaption">🏁 Three laps. Three forks. Flip cards together.</div><div class="eventTicker" id="eventTicker"></div><div id="combatHUD" class="combatHUD" aria-label="Combat card deck">🎴 COMBAT DECK</div><div class="followHint" id="followHint">FOLLOW CAM · TAP FIT FOR WHOLE TRACK</div></div><section class="seat" data-position="right" id="seat2" style="--color:#ffdc55"></section><section class="seat" data-position="bottom" id="seat3" style="--color:#62e2a1"></section></main>
 <div class="strip"><div class="feed"><div class="feedtitle">RACE CONTROL / FLAG EVENTS</div><div class="feedtext" id="feed">Choose the number of drivers to start your race.</div><div id="inventory" class="legend"></div></div><div class="rules"><h3>HOW TO RACE</h3><p>Every driver has the same shuffled 1–5 movement deck. Flip simultaneously, then all cars move. <b>⚑ Flags</b> draw a surprise event; <b>⚡ boosts</b> grant an extra flip. Pick routes at forks. A shared space causes a crash. Pit on the next approach to the lap line when required.</p><div class="legend"><span>⚑ Flag</span><span>⚡ Boost</span><span>🔧 Pit</span><span>🏁 3 laps wins</span></div></div></div>
 </div>
 <section id="raceChatPanel" class="fcRaceChat" role="dialog" aria-label="Private race chat" hidden>
  <div class="fcRaceChatTop"><strong>💬 PIT RADIO · RACE CHAT</strong><div><button id="raceChatMute" type="button" title="Mute chat notifications" aria-label="Mute chat notifications">🔔</button><button id="raceChatClose" type="button" title="Close race chat" aria-label="Close chat">✕</button></div></div>
- <div id="raceChatMeta" class="fcRaceChatMeta">Two devices can chat in the same party.</div>
+ <div id="raceChatMeta" class="fcRaceChatMeta">Text chat allows 2–4 devices. Voice is optional for exactly 2 devices.</div>
  <div id="raceChatMessages" class="fcRaceChatMessages" role="log" aria-live="polite"><p class="fcRaceChatNote">Messages stay in this race only. No public race narration.</p></div>
- <form id="raceChatForm" class="fcRaceChatForm"><input id="raceChatInput" placeholder="Message the other device…" aria-label="Race chat message" maxlength="180" autocomplete="off"><button type="submit">SEND</button></form>
- <p id="raceChatNote" class="fcRaceChatNote">Two devices only · 180 characters max</p>
+ <form id="raceChatForm" class="fcRaceChatForm"><input id="raceChatInput" placeholder="Message the room…" aria-label="Race chat message" maxlength="180" autocomplete="off"><button type="submit">SEND</button></form>
+ <p id="raceChatNote" class="fcRaceChatNote">2–4 devices · 180 characters max</p>
+</section>
+
+<section id="voicePanel" class="fcVoicePanel" aria-label="Private room voice controls" hidden>
+ <div class="fcRaceChatTop"><strong>🎙 PIT RADIO · VOICE</strong><button type="button" id="voiceClose" title="Close voice controls">✕</button></div>
+ <p id="voiceStatus" role="status" aria-live="polite">Voice is off. Each device must choose Join Voice.</p>
+ <div class="fcVoiceControls"><button id="voiceJoin" type="button">🎙 JOIN VOICE</button><button id="voiceMic" type="button" disabled>🎤 MUTE MIC</button><button id="voiceDeafen" type="button" disabled>🔊 DEAFEN</button><button id="voiceLeave" type="button" disabled>⛔ LEAVE</button></div>
+ <p class="fcVoiceHelp">Microphone permission is requested only when you join. Voice works with exactly two connected devices; joining a third device ends the call. Audio is not recorded or stored by Flip Cars.</p>
+ <audio id="voiceRemoteAudio" autoplay playsinline></audio>
 </section>
 <div id="socialNotifyCorner" role="region" aria-label="Social notifications" aria-live="polite"></div>
 <div class="modal" id="startModal"><div class="dialog" id="dialogContent"><h1>FLIP <span>CARS</span></h1><h2>Every flip is a race. Every route is a gamble.</h2><p>Up to four local drivers race toy cars around a winding circuit. Take alternate routes, pull risky flag cards, stockpile defensive items, dodge collisions, and complete 3 laps first.</p><div class="selectrow"><label for="humanCount">Human drivers</label><select id="humanCount"><option value="1">1 player</option><option value="2">2 players</option><option value="3">3 players</option><option value="4">4 players</option></select></div><div class="selectrow"><label for="cpuCount">CPU rivals</label><select id="cpuCount"><option value="3">3 CPU</option><option value="2">2 CPU</option><option value="1">1 CPU</option><option value="0">No CPU</option></select></div><button class="start" id="startBtn">🏁 START LOCAL RACE</button><button class="start onlineStart" id="onlineStartBtn">🌐 CREATE / JOIN ONLINE RACE</button><p class="helper">Local keyboard controls: Red Q / W · Blue A / S · Yellow K / L · Green N / M. First key = flip / select. Second = cycle route. Single player can use Space / →. On tablets, use the two on-screen buttons at each player's station.</p><div class="cardCounts">Identical movement decks: 1 × 5, 2 × 7, 3 × 8, 4 × 4, 5 × 3 (27 cards per driver). Decks reshuffle automatically.</div></div></div>
@@ -792,7 +813,7 @@ body .arena .seat.cpu{display:none!important}
 (()=>{'use strict';
 // Keep every in-game dialog, including combat card selection, inside the fullscreen element.
 const fullscreenRoot=document.getElementById('gameShell');
-for(const id of ['startModal','socialNotifyCorner','pwaInstallLayer','pwaOfflineFlag','raceChatPanel'])fullscreenRoot.appendChild(document.getElementById(id));
+for(const id of ['startModal','socialNotifyCorner','pwaInstallLayer','pwaOfflineFlag','raceChatPanel','voicePanel'])fullscreenRoot.appendChild(document.getElementById(id));
 const canvas=document.getElementById('board'),ctx=canvas.getContext('2d');
 const C=['#ff5959','#40b5ff','#ffdc55','#62e2a1'];
 const palette={RED:'#ff5959',BLUE:'#40b5ff',YELLOW:'#ffdc55',GREEN:'#62e2a1',PURPLE:'#b197ff',ORANGE:'#ff9955',WHITE:'#e4ebff',PINK:'#ff73ce'};
@@ -1007,7 +1028,7 @@ let fcLegacyReturn=null;
 const fcModeName=()=>fcNavMode==='team'?'Pit Wars · Team Relay':'Classic Race';
 function fcPage(title,sub,body,back=null){
  const pane=$('dialogContent');pane.classList.remove('cardDetails','fcUXLobbyRoot','fcUXOnlineForm');pane.classList.add('mainMenu','fcUXMenu');
- pane.innerHTML='<div class="fcUXTop"><button type="button" class="fcUXBack" id="fcUXBack" aria-label="Go back">← BACK</button><div class="fcUXBrand">🏎️ FLIP <span>CARS</span></div><span class="fcUXVersion">V4.5.2</span></div><div class="fcUXPage"><div class="fcUXHeading"><span class="fcUXEyebrow">'+safeText(sub)+'</span><h1>'+title+'</h1></div>'+body+'</div>';
+ pane.innerHTML='<div class="fcUXTop"><button type="button" class="fcUXBack" id="fcUXBack" aria-label="Go back">← BACK</button><div class="fcUXBrand">🏎️ FLIP <span>CARS</span></div><span class="fcUXVersion">V4.5.3</span></div><div class="fcUXPage"><div class="fcUXHeading"><span class="fcUXEyebrow">'+safeText(sub)+'</span><h1>'+title+'</h1></div>'+body+'</div>';
  $('fcUXBack').onclick=back||(()=>showSetup());$('startModal').classList.remove('hidden');
 }
 function showSetup(tab='home'){
@@ -1023,7 +1044,7 @@ function showSetup(tab='home'){
  const resume=inGame?'<button class="fcUXResume" id="fcResume">▶ RESUME CURRENT RACE</button>':'';
  const body='<div class="fcUXHero"><div class="fcUXRoad" aria-hidden="true"><span class="fcUXCarOne">🏎️</span><span class="fcUXCarTwo">🏁</span></div><div><span class="fcUXKicker">MULTIPLAYER RACING · COMBAT CIRCUIT</span><h2>READY TO <em>RACE?</em></h2><p>Flip cards. Outsmart rivals. Rule the circuit.</p><button class="fcUXPlay" id="fcHomePlay">🏁 PLAY <span>›</span></button>'+resume+'</div></div><div class="fcUXHomeGrid">'+[
   ['friends','👥','FRIENDS','Crew · Chats · Invites',unread],['stats','🏆','GARAGE','Driver · Paint · Trophies',0],['options','⚙️','OPTIONS','Audio · Display · Rules',0],['rules','📖','HOW TO PLAY','Classic · Combat · Relay',0]
- ].map(([tab,icon,name,desc,count])=>'<button class="fcUXHomeCard" data-fc-home="'+tab+'"><span class="fcUXCardIcon">'+icon+'</span><strong>'+name+(count?'<b class="fcUXCount">'+Math.min(99,count)+'</b>':'')+'</strong><small>'+desc+'</small></button>').join('')+'</div><div class="fcUXFooter"><span>FLIP CARS 4.5.2 · ONLINE & LOCAL</span><button id="pwaInstallCTA" class="fcUXFooterInstall" type="button">⬇ INSTALL APP</button></div>';
+ ].map(([tab,icon,name,desc,count])=>'<button class="fcUXHomeCard" data-fc-home="'+tab+'"><span class="fcUXCardIcon">'+icon+'</span><strong>'+name+(count?'<b class="fcUXCount">'+Math.min(99,count)+'</b>':'')+'</strong><small>'+desc+'</small></button>').join('')+'</div><div class="fcUXFooter"><span>FLIP CARS 4.5.3 · ONLINE & LOCAL</span><button id="pwaInstallCTA" class="fcUXFooterInstall" type="button">⬇ INSTALL APP</button></div>';
  fcPage('FLIP CARS','HOME',body,()=>{if(inGame)$('startModal').classList.add('hidden')});
  $('fcUXBack').hidden=!inGame;
  $('fcHomePlay').onclick=fcPickMode;
@@ -1297,15 +1318,15 @@ const raceChatSeen=new Set();
 function updateRaceChatVisibility(){
  const count=new Set(onlineRoster.filter(m=>!m.isBot).map(m=>m.deviceGroup||'seat-'+m.id)).size;
  const active=new Set(onlineRoster.filter(m=>m.online&&!m.isBot).map(m=>m.deviceGroup||'seat-'+m.id)).size;
- const allowed=onlineMode&&count===2&&active===2;
+ const allowed=onlineMode&&count>=2&&count<=4&&active>=2;
  raceChatAvailable=allowed;
  const btn=$('raceChatBtn');btn.hidden=!onlineMode;btn.disabled=!allowed;
- btn.title=allowed?'Chat with the other connected device':'Race chat is available only when exactly two devices join the party.';
+ btn.title=allowed?'Text chat with connected racers in this room':'Text chat unlocks when a second device connects.';
  btn.textContent=allowed?'💬 CHAT'+(raceChatUnread?' ('+Math.min(99,raceChatUnread)+')':''):'💬 OFF';btn.classList.toggle('hasUnread',allowed&&raceChatUnread>0);
  if(!allowed)$('raceChatPanel').hidden=true;
- const intro=$('raceChatMeta');intro.textContent=allowed?'Private to this two-device party · messages are not saved to Friends Garage.':(count>=3?'Chat disabled: 3 or more devices in this party.':count===2?'Chat unlocks when both devices connect.':'Chat unlocks when a second device joins.');
- const hint=$('raceChatLobbyHint');if(hint)hint.textContent=count===2?'💬 Private race chat is available from this lobby or the racing toolbar.':(count>=3?'💬 Race chat off — 3 or more devices are in this party.':count===2?'💬 Chat unlocks when both devices connect.':'💬 Race chat unlocks when a second device joins.');
- const button=$('raceChatLobbyBtn');if(button){button.disabled=!allowed;button.textContent=allowed?'💬 OPEN RACE CHAT':'💬 CHAT UNAVAILABLE'}
+ const intro=$('raceChatMeta');intro.textContent=allowed?'Visible to connected racers in this room · messages are not saved to Friends Garage.':(count>=2?'Chat unlocks once another device connects.':'Chat unlocks when a second device joins.');
+ const hint=$('raceChatLobbyHint');if(hint)hint.textContent=allowed?'💬 Text chat is open to all connected devices (up to four).':'💬 Text chat unlocks when two devices connect.';
+ const button=$('raceChatLobbyBtn');if(button){button.disabled=!allowed;button.textContent=allowed?'💬 OPEN RACE CHAT':'💬 CHAT UNAVAILABLE'};const voiceBtn=$('voiceLobbyBtn');if(voiceBtn){voiceBtn.disabled=!voiceAllowed();voiceBtn.textContent=voiceAllowed()?'🎙 VOICE (OPTIONAL)':'🎙 VOICE REQUIRES 2 DEVICES'}
 }
 function showRaceChat(){if(!raceChatAvailable)return;$('raceChatPanel').hidden=false;raceChatUnread=0;updateRaceChatVisibility();$('raceChatMessages').scrollTop=$('raceChatMessages').scrollHeight;$('raceChatInput').focus()}
 function incomingRaceChat(data){if(!raceChatAvailable||raceChatSeen.has(data.id))return;
@@ -1321,8 +1342,64 @@ function resetRaceChat(){raceChatAvailable=false;raceChatUnread=0;raceChatSeen.c
 $('raceChatBtn').onclick=()=>{$('raceChatPanel').hidden?showRaceChat():$('raceChatPanel').hidden=true};
 $('raceChatClose').onclick=()=>$('raceChatPanel').hidden=true;
 $('raceChatMute').onclick=()=>{raceChatMuted=!raceChatMuted;$('raceChatMute').textContent=raceChatMuted?'🔕':'🔔';$('raceChatMute').title=raceChatMuted?'Unmute chat alerts':'Mute chat alerts';if(raceChatMuted){raceChatUnread=0;updateRaceChatVisibility()}};
-$('raceChatForm').onsubmit=e=>{e.preventDefault();if(!raceChatAvailable)return;const txt=$('raceChatInput').value.trim(),ws=onlineConnections.get(onlinePlayerId);if(!txt||!ws||ws.readyState!==1){$('raceChatNote').textContent='Chat unavailable. Reconnect to your room.';return}ws.send(JSON.stringify({type:'roomChat',text:txt}));$('raceChatInput').value='';$('raceChatNote').classList.remove('error');$('raceChatNote').textContent='Messages are visible only while both devices are connected.'};
-function disconnectOnline(){resetRaceChat();for(const ws of onlineConnections.values())try{ws.onclose=null;ws.close(1000,'Leaving room')}catch{}onlineConnections.clear();onlineSeats=[];onlinePrivateHands.clear();onlineWs=null;onlineMode=false;onlinePlayerId=-1;onlineRoom='';onlineToken='';onlineWinnerShown=false;fc45HideShift();updateRaceChatVisibility()}
+$('raceChatForm').onsubmit=e=>{e.preventDefault();if(!raceChatAvailable)return;const txt=$('raceChatInput').value.trim(),ws=onlineConnections.get(onlinePlayerId);if(!txt||!ws||ws.readyState!==1){$('raceChatNote').textContent='Chat unavailable. Reconnect to your room.';return}ws.send(JSON.stringify({type:'roomChat',text:txt}));$('raceChatInput').value='';$('raceChatNote').classList.remove('error');$('raceChatNote').textContent='Room messages are temporary and visible to connected racers.'};
+
+// WebRTC 1:1 room voice: TWO browser devices only, and never auto-enable the microphone.
+// The Worker authenticates device groups and forwards SDP/ICE only; audio is peer-to-peer.
+let voiceStream=null,voicePC=null,voiceJoined=false,voiceMuted=false,voiceDeafened=false;
+let voiceLocalGroup='',voicePeerGroup='',voiceReadyGroups=[],voiceIceQueue=[],voiceConnecting=false;
+const voiceConfig={iceServers:[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302']}]};
+function voiceStatus(msg){$('voiceStatus').textContent=msg}
+function voiceMyGroup(){return onlineRoster.find(m=>m.id===onlinePlayerId)?.deviceGroup||''}
+function voiceSocket(){return onlineConnections.get(onlinePlayerId)}
+function voiceSend(message){const w=voiceSocket();if(w?.readyState===WebSocket.OPEN){w.send(JSON.stringify(message));return true}return false}
+function voiceAllowed(){const peers=[...new Set(onlineRoster.filter(m=>!m.isBot).map(m=>m.deviceGroup||'seat-'+m.id))];const online=[...new Set(onlineRoster.filter(m=>!m.isBot&&m.online).map(m=>m.deviceGroup||'seat-'+m.id))];return onlineMode&&peers.length===2&&online.length===2}
+function voiceClosePeer(){if(voicePC){try{voicePC.onicecandidate=null;voicePC.ontrack=null;voicePC.onconnectionstatechange=null;voicePC.close()}catch{}voicePC=null}voicePeerGroup='';voiceIceQueue=[];voiceConnecting=false;const a=$('voiceRemoteAudio');a.pause();a.srcObject=null}
+function voiceStop(reason='',announce=true){if(voiceJoined&&announce)voiceSend({type:'voicePresence',join:false});voiceJoined=false;voiceClosePeer();if(voiceStream){for(const t of voiceStream.getTracks())t.stop();voiceStream=null}voiceReadyGroups=[];voiceMuted=false;voiceDeafened=false;refreshVoiceUI();if(reason)voiceStatus(reason);else voiceStatus('Voice is off. Join when another device is connected.')}
+function refreshVoiceUI(){const allowed=voiceAllowed(),btn=$('voiceOpenBtn');btn.hidden=!onlineMode;btn.disabled=!allowed;btn.title=allowed?'Voice call with the other connected device':'Voice needs exactly two connected devices.';btn.textContent=voiceJoined?'🎙 ON AIR':'🎙 VOICE';$('voiceJoin').disabled=!allowed||voiceJoined;$('voiceMic').disabled=!voiceJoined;$('voiceDeafen').disabled=!voiceJoined;$('voiceLeave').disabled=!voiceJoined;$('voiceMic').textContent=voiceMuted?'🎤 UNMUTE':'🎤 MUTE MIC';$('voiceDeafen').textContent=voiceDeafened?'🔇 UNDEAFEN':'🔊 DEAFEN';$('voiceRemoteAudio').muted=voiceDeafened;if(voiceJoined&&!allowed)voiceStop('Voice ended because the room no longer has exactly two connected devices.',false)}
+async function voiceStart(){if(voiceJoined||!voiceAllowed())return;
+ if(!navigator.mediaDevices?.getUserMedia||typeof RTCPeerConnection==='undefined'){voiceStatus('Voice requires a compatible browser and a secure HTTPS page.');return}
+ $('voiceJoin').disabled=true;voiceStatus('Requesting microphone permission…');
+ try{
+  const media=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
+  if(!voiceAllowed()||!voiceSocket()||voiceSocket().readyState!==WebSocket.OPEN){media.getTracks().forEach(t=>t.stop());throw Error('The two-device room connection has changed.')}
+  voiceStream=media;voiceJoined=true;voiceLocalGroup=voiceMyGroup();
+  if(!voiceLocalGroup||!voiceSend({type:'voicePresence',join:true})){voiceStop('Could not connect voice signaling.',false);return}
+  voiceStatus('Microphone on. Waiting for the other device to join voice…');refreshVoiceUI();
+ }catch(err){voiceStatus(err?.name==='NotAllowedError'?'Microphone permission denied. Enable it in your browser to use voice.':(err?.message||'Microphone unavailable.'));refreshVoiceUI()}
+}
+function voiceMakePeer(peerGroup){if(voicePC&&voicePeerGroup===peerGroup)return voicePC;voiceClosePeer();voicePeerGroup=peerGroup;
+ const pc=new RTCPeerConnection(voiceConfig);voicePC=pc;
+ for(const track of voiceStream.getAudioTracks())pc.addTrack(track,voiceStream);
+ pc.onicecandidate=ev=>{if(ev.candidate&&voiceJoined&&voicePC===pc)voiceSend({type:'voiceSignal',kind:'ice',candidate:ev.candidate.toJSON()})};
+ pc.ontrack=ev=>{const audio=$('voiceRemoteAudio');audio.srcObject=ev.streams[0]||new MediaStream([ev.track]);audio.muted=voiceDeafened;audio.play().catch(()=>voiceStatus('Voice connected. Tap Join Voice / voice controls to allow playback on this device.'))};
+ pc.onconnectionstatechange=()=>{if(voicePC!==pc)return;const status=pc.connectionState;if(status==='connected')voiceStatus('✅ Voice connected · '+(voiceMuted?'Microphone muted':'Microphone live'));else if(status==='failed')voiceStatus('Voice could not connect on this network. A TURN relay may be required.');else if(status==='disconnected')voiceStatus('Voice connection interrupted; attempting to recover…')};
+ return pc;
+}
+async function voiceSync(ready){voiceReadyGroups=Array.isArray(ready)?ready:[];if(!voiceJoined||!voiceAllowed())return;
+ const mine=voiceMyGroup(),other=voiceReadyGroups.find(x=>x!==mine);
+ if(!other||!voiceReadyGroups.includes(mine)){if(voicePC)voiceClosePeer();voiceStatus('Microphone on. Waiting for the other device to join voice…');return}
+ if(voicePC&&voicePeerGroup===other)return;
+ const pc=voiceMakePeer(other);if(mine<other&&!voiceConnecting){voiceConnecting=true;try{const offer=await pc.createOffer();if(pc!==voicePC||!voiceJoined)return;await pc.setLocalDescription(offer);voiceSend({type:'voiceSignal',kind:'offer',description:{type:pc.localDescription.type,sdp:pc.localDescription.sdp}});voiceStatus('Connecting voice to the other device…')}catch(e){voiceStatus('Unable to start voice connection: '+e.message)}finally{voiceConnecting=false}}
+}
+async function voiceReceive(data){if(!voiceJoined||!voiceAllowed()||!voiceReadyGroups.includes(data.fromGroup)||data.fromGroup===voiceMyGroup())return;
+ try{const pc=voiceMakePeer(data.fromGroup);
+  if(data.kind==='offer'&&data.description?.type==='offer'){
+   await pc.setRemoteDescription(data.description);const answer=await pc.createAnswer();await pc.setLocalDescription(answer);
+   voiceSend({type:'voiceSignal',kind:'answer',description:{type:pc.localDescription.type,sdp:pc.localDescription.sdp}});
+  }else if(data.kind==='answer'&&data.description?.type==='answer')await pc.setRemoteDescription(data.description);
+  else if(data.kind==='ice'&&data.candidate){if(pc.remoteDescription)await pc.addIceCandidate(data.candidate);else voiceIceQueue.push(data.candidate)}
+  if(pc.remoteDescription&&voiceIceQueue.length){for(const ice of voiceIceQueue.splice(0))await pc.addIceCandidate(ice).catch(()=>{})}
+ }catch(e){voiceStatus('Voice signaling issue: '+(e?.message||'Try leaving and rejoining voice.'))}
+}
+$('voiceOpenBtn').onclick=()=>{$('voicePanel').hidden=!$('voicePanel').hidden;refreshVoiceUI()};
+$('voiceClose').onclick=()=>$('voicePanel').hidden=true;
+$('voiceJoin').onclick=voiceStart;
+$('voiceLeave').onclick=()=>voiceStop('Voice disconnected.');
+$('voiceMic').onclick=()=>{voiceMuted=!voiceMuted;voiceStream?.getAudioTracks().forEach(t=>t.enabled=!voiceMuted);refreshVoiceUI();voiceStatus(voiceMuted?'Microphone muted. You can still hear the other player.':'Microphone live.')};
+$('voiceDeafen').onclick=()=>{voiceDeafened=!voiceDeafened;refreshVoiceUI();voiceStatus(voiceDeafened?'Incoming audio muted.':'Incoming audio enabled.')};
+
+function disconnectOnline(){voiceStop("",true);resetRaceChat();for(const ws of onlineConnections.values())try{ws.onclose=null;ws.close(1000,'Leaving room')}catch{}onlineConnections.clear();onlineSeats=[];onlinePrivateHands.clear();onlineWs=null;onlineMode=false;onlinePlayerId=-1;onlineRoom='';onlineToken='';onlineWinnerShown=false;fc45HideShift();updateRaceChatVisibility()}
 let discoveredServerPromise=null;
 async function discoverServer(){
  if(!discoveredServerPromise)discoveredServerPromise=fetch('server-config.json',{cache:'no-store'}).then(async res=>{
@@ -1390,6 +1467,7 @@ async function shareInvite(){
  const copied=await copyInviteText(url);onlineFormError(copied?'Invite link copied. Send it to your friends!':'Copy the invite URL from the box above to share.');
 }
 function connectRoom(){
+ voiceStop("Reconnected to room. Rejoin voice when ready.",true);
  try{
   for(const sock of onlineConnections.values())try{sock.onclose=null;sock.close()}catch{}onlineConnections.clear();onlinePrivateHands.clear();
   const seats=onlineSeats.length?onlineSeats:[{id:onlinePlayerId,token:onlineToken}];
@@ -1397,8 +1475,8 @@ function connectRoom(){
    const ws=new WebSocket(onlineBackend.replace(/^http/,'ws')+'/api/rooms/'+encodeURIComponent(onlineRoom)+'/ws',['flipcars','seat.'+seat.token]);onlineConnections.set(seat.id,ws);if(seat.id===onlinePlayerId)onlineWs=ws;
    ws.onopen=()=>{$('onlineBtn').textContent='● ONLINE';$('onlineBtn').style.color='#93f7ba'};
    ws.onmessage=event=>{let data;try{data=JSON.parse(event.data)}catch{return}
-    if(data.type==='roomChatMessage'){incomingRaceChat(data);return}if(data.type==='roomChatError'){$('raceChatNote').textContent=data.message||'Message not sent.';$('raceChatNote').classList.add('error');return}if(data.type==='error'){onlineFormError(data.error);return}if(data.type!=='welcome'&&data.type!=='snapshot')return;
-    onlineRoster=data.members||[];onlineRoomSettings=data.settings||null;onlineHost=data.host===onlinePlayerId;updateRaceChatVisibility();
+    if(data.type==='voiceSignal'){void voiceReceive(data);return}if(data.type==='voiceError'){voiceStatus(data.message||'Voice unavailable.');voiceStop(data.message||'Voice unavailable.',false);return}if(data.type==='roomChatMessage'){incomingRaceChat(data);return}if(data.type==='roomChatError'){$('raceChatNote').textContent=data.message||'Message not sent.';$('raceChatNote').classList.add('error');return}if(data.type==='error'){onlineFormError(data.error);return}if(data.type!=='welcome'&&data.type!=='snapshot')return;
+    onlineRoster=data.members||[];onlineRoomSettings=data.settings||null;onlineHost=data.host===onlinePlayerId;updateRaceChatVisibility();refreshVoiceUI();void voiceSync(data.voiceReadyGroups);
     if(data.started&&data.game){const mine=data.game.players.find(p=>p.id===seat.id);if(mine)onlinePrivateHands.set(seat.id,{combat:mine.combat,pendingCombat:mine.pendingCombat});applyOnlineState(data.game)}
     else{state=null;onlineWinnerShown=false;recordedRace=false;fc45HideShift();if(!socialOpen)showOnlineLobby()}
    };
@@ -1421,8 +1499,8 @@ function showOnlineLobby(){
  const hostSettings=onlineHost?'<div class="fcUXLobbySettings"><div class="fcUXLobbySub"><strong>🏁 HOST RACE SETTINGS</strong><small>Only the host can start or edit rules.</small></div><div class="fcUXLobbyMode"><button id="fc45Classic" class="fc45ModeButton '+(!team?'active':'')+'" type="button">🏎️ CLASSIC<br><small>3 / 5 / 10 laps</small></button><button id="fc45Team" class="fc45ModeButton '+(team?'active':'')+'" type="button">🔧 PIT WARS<br><small>2-lap team relay</small></button></div><p class="fcUXHint" id="fc45TeamDesc">'+(team?'Two teams. Reserve cars wait at PIT 2. Remote teammates use Gear Sync.':'Standard four-car racing with solo or duo connections.')+'</p><div class="fcUXLobbySettingsRow"><label class="fcUXField">AI FILL<select id="lobbyCpu"></select></label><label class="fcUXField">LAPS<select id="lobbyLaps">'+lapOptions(selectedLapCount)+'</select></label></div><details class="fcUXAdvanced"><summary>⚙ Current race rules</summary><p>'+safeText(optionsSummary(menuOptions))+' · Adjust default rules from Options before creating the room.</p></details><button class="fcUXCTA" id="startOnline">🏁 START '+(team?'PIT WARS':'RACE')+'</button></div>':'<div class="fcUXGuestWaiting"><strong>✓ YOU’RE IN THE PARTY</strong><span>The host will choose race settings and press Start.</span></div>';
  $('dialogContent').classList.remove('mainMenu','fcUXMenu','fcUXOnlineForm');
  $('dialogContent').classList.add('fcUXLobbyRoot');
- $('dialogContent').innerHTML='<div class="fcUXTop"><button type="button" id="leaveRoom" class="fcUXBack">← LEAVE</button><div class="fcUXBrand">🏎️ FLIP <span>CARS</span></div><button class="fcUXBack" id="fcLobbyFriends">🔔 FRIENDS</button></div><div class="fcUXLobbyBody"><span class="fcUXEyebrow">PRIVATE ONLINE PARTY</span><h1>RACE LOBBY</h1><p class="fcUXHint">'+filled+' / 4 racer seats · '+groups.length+' connected device'+(groups.length===1?'':'s')+'. Duos occupy two seats.</p><div class="fcUXCodeLine"><button class="fcUXCode" id="copyRoom" title="Copy room code">'+safeText(onlineRoom)+'</button><span>Tap code to copy</span></div>'+(onlineHost?'<div class="fcUXLobbyInvite"><button type="button" id="shareInvite" class="start onlineStart">↗ SHARE INVITE</button><button type="button" id="copyInvite" class="start onlineStart">⧉ COPY LINK</button></div><input class="shareLink" id="inviteLink" readonly aria-label="Party invitation link" value="'+safeText(invite)+'"><button class="mini" id="inviteFriendsFromLobby">👥 INVITE FROM FRIENDS GARAGE</button>':'<p class="fcUXHint">To invite another racer, ask the host to share the room code.</p>')+'<div class="fcUXLobbySub"><strong>RACER SEATS</strong><small>Up to 4 racers on 1–4 devices</small></div><div class="fcUXSeats">'+slots+'</div><p id="raceChatLobbyHint" class="fcUXHint" style="margin:12px 0 4px"></p><button type="button" class="mini" id="raceChatLobbyBtn" disabled>💬 CHAT UNAVAILABLE</button>'+hostSettings+'<div class="onlineError" id="onlineError" aria-live="polite"></div></div>';
- $('fcLobbyFriends').onclick=()=>showSocialHub('activity');$('raceChatLobbyBtn').onclick=showRaceChat;updateRaceChatVisibility();
+ $('dialogContent').innerHTML='<div class="fcUXTop"><button type="button" id="leaveRoom" class="fcUXBack">← LEAVE</button><div class="fcUXBrand">🏎️ FLIP <span>CARS</span></div><button class="fcUXBack" id="fcLobbyFriends">🔔 FRIENDS</button></div><div class="fcUXLobbyBody"><span class="fcUXEyebrow">PRIVATE ONLINE PARTY</span><h1>RACE LOBBY</h1><p class="fcUXHint">'+filled+' / 4 racer seats · '+groups.length+' connected device'+(groups.length===1?'':'s')+'. Duos occupy two seats.</p><div class="fcUXCodeLine"><button class="fcUXCode" id="copyRoom" title="Copy room code">'+safeText(onlineRoom)+'</button><span>Tap code to copy</span></div>'+(onlineHost?'<div class="fcUXLobbyInvite"><button type="button" id="shareInvite" class="start onlineStart">↗ SHARE INVITE</button><button type="button" id="copyInvite" class="start onlineStart">⧉ COPY LINK</button></div><input class="shareLink" id="inviteLink" readonly aria-label="Party invitation link" value="'+safeText(invite)+'"><button class="mini" id="inviteFriendsFromLobby">👥 INVITE FROM FRIENDS GARAGE</button>':'<p class="fcUXHint">To invite another racer, ask the host to share the room code.</p>')+'<div class="fcUXLobbySub"><strong>RACER SEATS</strong><small>Up to 4 racers on 1–4 devices</small></div><div class="fcUXSeats">'+slots+'</div><p id="raceChatLobbyHint" class="fcUXHint" style="margin:12px 0 4px"></p><button type="button" class="mini" id="raceChatLobbyBtn" disabled>💬 CHAT UNAVAILABLE</button><button type="button" class="mini" id="voiceLobbyBtn" disabled>🎙 VOICE (2 DEVICES)</button>'+hostSettings+'<div class="onlineError" id="onlineError" aria-live="polite"></div></div>';
+ $('fcLobbyFriends').onclick=()=>showSocialHub('activity');$('raceChatLobbyBtn').onclick=showRaceChat;$('voiceLobbyBtn').onclick=()=>$('voiceOpenBtn').click();updateRaceChatVisibility();refreshVoiceUI();
  if($('inviteFriendsFromLobby'))$('inviteFriendsFromLobby').onclick=()=>showSocialHub('friends');
  $('dialogContent').querySelectorAll('.lobbyProfileBtn').forEach(b=>b.onclick=()=>showDriverCard(b.dataset.driver));
  $('copyRoom').onclick=async()=>{const ok=await copyInviteText(onlineRoom);onlineFormError(ok?'Room code copied.':'Select and copy your room code.');};
@@ -1511,7 +1589,7 @@ function fc45ShowTaunt(value){if(!value||value.serial===fc45LastTauntSerial)retu
 
 // UI wiring: event delegation survives re-render.
 document.querySelector('.arena').addEventListener('click',ev=>{const tauntBtn=ev.target.closest('[data-pit-taunt]');if(tauntBtn){fc45OpenTaunts(+tauntBtn.dataset.pitTaunt);return}const profileBtn=ev.target.closest('[data-player-profile]');if(profileBtn){showDriverCard(profileBtn.dataset.playerProfile);return}const combat=ev.target.closest('[data-combat]');if(combat&&!combat.disabled){chooseCombat(+combat.dataset.id,+combat.dataset.combat);return}const discard=ev.target.closest('[data-discard]');if(discard){discardCombat(+discard.dataset.id,+discard.dataset.discard);return}let btn=ev.target.closest('[data-id][data-op]');if(btn&&!btn.disabled)playerAction(+btn.dataset.id,btn.dataset.op)});
-window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('raceChatPanel').hidden){$('raceChatPanel').hidden=true;return}if(e.repeat||e.altKey||e.ctrlKey||e.metaKey||e.target?.closest?.('input,textarea,select,[contenteditable]')||!$('raceChatPanel').hidden)return;let key=e.key.toLowerCase();if(key==='escape'&&$('startModal').classList.contains('hidden')){$('helpBtn').click();return}if(!$('startModal').classList.contains('hidden'))return;if(state&&state.humans===1&&(key===' '||key==='enter'||key==='arrowright')){e.preventDefault();playerAction(onlineMode?onlinePlayerId:0,key==='arrowright'?'route':'flip');return}let found=keys.findIndex(pair=>pair.includes(key));if(found>=0){e.preventDefault();playerAction(found,keys[found][0]===key?'flip':'route')}});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('raceChatPanel').hidden){$('raceChatPanel').hidden=true;return}if(e.key==='Escape'&&!$('voicePanel').hidden){$('voicePanel').hidden=true;return}if(e.repeat||e.altKey||e.ctrlKey||e.metaKey||e.target?.closest?.('input,textarea,select,[contenteditable]')||!$('raceChatPanel').hidden||!$('voicePanel').hidden)return;let key=e.key.toLowerCase();if(key==='escape'&&$('startModal').classList.contains('hidden')){$('helpBtn').click();return}if(!$('startModal').classList.contains('hidden'))return;if(state&&state.humans===1&&(key===' '||key==='enter'||key==='arrowright')){e.preventDefault();playerAction(onlineMode?onlinePlayerId:0,key==='arrowright'?'route':'flip');return}let found=keys.findIndex(pair=>pair.includes(key));if(found>=0){e.preventDefault();playerAction(found,keys[found][0]===key?'flip':'route')}});
 $('focusBtn').onclick=()=>{viewMode=viewMode==='fit'?'follow':'fit';updateViewControls();drawAll();beep(550,.06)};
 $('fullBtn').onclick=async()=>{
  const shell=$('gameShell');

@@ -7,4 +7,4 @@ test('Play mode and local or online selection are implemented',()=>{for(const t 
 test('Online Party setup supports hosting, joining and duos',()=>{for(const t of ['onlineFormIntent', 'fc45LocalCount', 'fc45DuoFields', 'function showOnlineLobby()'])assert.ok(html.includes(t),t)});
 test('Online lobby distinguishes exactly four racer seats and host-only start',()=>{assert.ok(html.includes('Array.from({length:4}'));assert.ok(html.includes('fcUXSeat'));assert.ok(html.includes('fcUXLobbySettings'))});
 test('Main navigation includes social, garage, preferences, instructions and pause menu',()=>{for(const t of ['data-fc-home','fcLegacyWrapped','fcPauseMenu','FRIENDS','GARAGE','OPTIONS','HOW TO PLAY'])assert.ok(html.includes(t),t)});
-test('PWA cache bumped for 4.5.1',()=>assert.match(sw,/flipcars-v4\.5\.1-static/));
+test('PWA cache bumped for 4.5.3',()=>assert.match(sw,/flipcars-v4\.5\.3-static/));

@@ -183,7 +183,7 @@ async function verifiedProfile(env,b){try{const id=String(b?.profileId||'');if(!
 
 export default {async fetch(req,env){const url=new URL(req.url),path=url.pathname;
  if(req.method==='OPTIONS')return new Response(null,{status:204,headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'content-type,authorization,x-driver-id','Access-Control-Allow-Methods':'GET,POST,OPTIONS'}});
- if(path==='/api/health')return json({ok:true,game:'Flip Cars',version:'4.5.2',hybrid:true,teamRelay:true,combat:true,placements:true,matchOptions:true,social:!!env.PROFILES,socialV2:!!env.SOCIAL});
+ if(path==='/api/health')return json({ok:true,game:'Flip Cars',version:'4.5.3',hybrid:true,teamRelay:true,combat:true,placements:true,matchOptions:true,social:!!env.PROFILES,socialV2:!!env.SOCIAL});
  if(path.startsWith('/api/social/'))return socialApi(req,env,verifiedProfile);
  if(path==='/api/profile/create'&&req.method==='POST'){let b;try{b=await req.json()}catch{return json({error:'Bad JSON'},400)}const id=code(10),secret=token(),stub=env.PROFILES?.get(env.PROFILES.idFromName(id));if(!stub)return json({error:'Profiles not configured'},503);return stub.fetch(new Request('https://profile.internal/create',{method:'POST',body:JSON.stringify({id,secret,name:cleanName(b.name)})}))}
  const pm=path.match(/^\/api\/profile\/([A-HJ-NP-Z2-9]{10})\/(view|friend|remove|stats|update)$/);if(pm){if(!env.PROFILES)return json({error:'Profiles unavailable'},503);let auth=req.headers.get('authorization')||'',stub=env.PROFILES.get(env.PROFILES.idFromName(pm[1]));return stub.fetch(new Request('https://profile.internal/'+pm[2],{method:req.method,headers:{Authorization:auth},body:req.method==='POST'?await req.text():undefined}))}
@@ -192,9 +192,10 @@ export default {async fetch(req,env){const url=new URL(req.url),path=url.pathnam
  for(let i=0;i<5;i++){let c=code(),stub=env.ROOMS.get(env.ROOMS.idFromName(c));const result=await stub.fetch(new Request('https://room.internal/init',{method:'POST',body:JSON.stringify({name:cleanName(b.name),color:cleanColor(b.color),secondary:cleanSecondary(b.secondary),profileId:await verifiedProfile(env,b),plusOne:additional,code:c})}));if(result.ok)return result}return json({error:'Could not create room'},503)}
  const m=path.match(/^\/api\/rooms\/([A-HJ-NP-Z2-9]{6})\/(join|ws|snapshot)$/);if(!m)return json({error:'Not found'},404);const stub=env.ROOMS.get(env.ROOMS.idFromName(m[1]));if(m[2]==='join'&&req.method==='POST'){let b;try{b=await req.json()}catch{return json({error:'Bad JSON'},400)}return stub.fetch(new Request('https://room.internal/join',{method:'POST',body:JSON.stringify({name:cleanName(b.name),color:cleanColor(b.color),secondary:cleanSecondary(b.secondary),profileId:await verifiedProfile(env,b),plusOne:b.plusOne?{name:cleanName(b.plusOne.name),color:cleanColor(b.plusOne.color),secondary:cleanSecondary(b.plusOne.secondary)}:null})}));}if(m[2]==='ws'&&req.headers.get('upgrade')==='websocket')return stub.fetch(new Request('https://room.internal/ws',{headers:req.headers}));if(m[2]==='snapshot'&&req.method==='GET')return stub.fetch(new Request('https://room.internal/snapshot',{headers:req.headers}));return json({error:'Unsupported'},405)
 }};
-// Race-room-only ephemeral messages: no history is stored, and only a two-device party can chat.
+// Room text chat allows 2-4 connected devices; microphone voice is an opt-in TWO-device WebRTC call.
 export function raceChatDeviceCount(members=[]){return new Set(members.filter(m=>!m.isBot).map(m=>m.deviceGroup||'seat-'+m.id)).size}
-export function raceChatAvailable(members=[]){return raceChatDeviceCount(members)===2}
+export function raceChatAvailable(members=[]){const n=raceChatDeviceCount(members);return n>=2&&n<=4}
+export function raceVoiceAvailable(members=[],sockets=[]){return raceChatDeviceCount(members)===2&&raceChatOnlineGroups(members,sockets)===2}
 export function raceChatOnlineGroups(members=[],sockets=[]){const groups=new Set();for(const w of sockets){if(w.readyState!==1)continue;const player=members.find(m=>!m.isBot&&m.id===w.deserializeAttachment()?.id);if(player)groups.add(player.deviceGroup||'seat-'+player.id)}return groups.size}
 export function cleanRaceChat(value){return typeof value==='string'?value.replace(/[\x00-\x1f\x7f]/g,' ').replace(/\s+/g,' ').trim().slice(0,180):''}
 export class GameRoom{
@@ -203,7 +204,7 @@ export class GameRoom{
  async save(r){r.updated=Date.now();await this.ctx.storage.put('room',r)}
  async award(r){if(r.awarded||!r.game||r.game.phase!=='done')return;r.awarded=true;for(const member of r.members){if(!member.profileId||member.isBot)continue;try{const profile=this.env.PROFILES.get(this.env.PROFILES.idFromName(member.profileId));await profile.fetch(new Request('https://profile.internal/award',{method:'POST',body:JSON.stringify({race:r.code,win:r.game.winner?.includes(member.id)||!!(r.settings.mode==='team'&&r.game.players[member.id]?.team===r.game.players[r.game.winner?.[0]]?.team),flips:r.game.players[member.id]?.flipCount||0,combat:r.game.players[member.id]?.combatUses||0,place:r.game.placements?.find(x=>x.id===member.id)?.place||(r.settings.mode==='team'?r.game.placements?.find(x=>r.game.players[x.id]?.team===r.game.players[member.id]?.team)?.place||0:0)})}))}catch(e){console.warn('Profile award deferred',String(e))}}}
 
- present(r,viewer=-1){return {type:'snapshot',code:r.code,started:r.started,host:r.hostId,settings:r.settings||DEFAULT_SETTINGS,chatEnabled:raceChatAvailable(r.members)&&raceChatOnlineGroups(r.members,this.ctx.getWebSockets())===2,chatDevices:raceChatDeviceCount(r.members),members:r.members.map(m=>({id:m.id,name:m.name,color:m.color,secondary:m.secondary||'',isBot:m.isBot,profileId:m.profileId||null,deviceGroup:m.deviceGroup||'',team:m.team??-1,relayRole:m.relayRole||'',online:this.ctx.getWebSockets().some(w=>w.deserializeAttachment()?.id===m.id)})),game:publicGame(r.game,viewer)}}
+ present(r,viewer=-1){return {type:'snapshot',code:r.code,started:r.started,host:r.hostId,settings:r.settings||DEFAULT_SETTINGS,chatEnabled:raceChatAvailable(r.members)&&raceChatOnlineGroups(r.members,this.ctx.getWebSockets())>=2,chatDevices:raceChatDeviceCount(r.members),voiceEnabled:raceVoiceAvailable(r.members,this.ctx.getWebSockets()),voiceReadyGroups:raceVoiceAvailable(r.members,this.ctx.getWebSockets())?Object.keys(r.voiceReady||{}):[],members:r.members.map(m=>({id:m.id,name:m.name,color:m.color,secondary:m.secondary||'',isBot:m.isBot,profileId:m.profileId||null,deviceGroup:m.deviceGroup||'',team:m.team??-1,relayRole:m.relayRole||'',online:this.ctx.getWebSockets().some(w=>w.deserializeAttachment()?.id===m.id)})),game:publicGame(r.game,viewer)}}
  broadcast(r){for(const ws of this.ctx.getWebSockets())try{ws.send(JSON.stringify(this.present(r,ws.deserializeAttachment()?.id)))}catch{}}
  async fetch(req){return this.ctx.blockConcurrencyWhile(()=>this.handleFetch(req))}
  async handleFetch(req){const path=new URL(req.url).pathname;
@@ -211,14 +212,14 @@ export class GameRoom{
  const seats=[{id:0,token:secret}];if(b.plusOne){const m=b.plusOne,t=token();r.members.push({id:1,name:uniqueRoomName(m.name,r.members),color:cleanColor(m.color),secondary:uniqueSecondary(cleanColor(m.color),m.secondary,r.members),profileId:null,token:t,isBot:false,deviceGroup:group});seats.push({id:1,token:t})}await this.save(r);await this.ctx.storage.setAlarm(Date.now()+24*3600000);return json({code:r.code,token:secret,playerId:0,host:true,seats})}
   const r=await this.data();if(!r)return json({error:'Room expired or not found'},404);
   if(path==='/invite-authorize'){const id=req.headers.get('x-profile-id');return !r.started&&r.members.length<4&&r.members[r.hostId]?.profileId===id?json({ok:true}):json({error:'Host only'},403)}
-  if(path==='/join'&&req.method==='POST'){if(r.started)return json({error:'Race already started'},409);const b=await req.json(),wanted=b.plusOne?2:1;if(r.members.length+wanted>4)return json({error:`Only ${4-r.members.length} seat(s) remain. Join as solo. `},409);const group=crypto.randomUUID(),seats=[];for(const [index,m] of [b,b.plusOne].entries()){if(!m)continue;const id=r.members.length,secret=token(),color=cleanColor(m.color);r.members.push({id,name:uniqueRoomName(m.name,r.members),color,secondary:uniqueSecondary(color,m.secondary,r.members),profileId:index===0?b.profileId||null:null,token:secret,isBot:false,deviceGroup:group});seats.push({id,token:secret})}await this.save(r);this.broadcast(r);return json({code:r.code,token:seats[0].token,playerId:seats[0].id,host:false,seats})}
+  if(path==='/join'&&req.method==='POST'){if(r.started)return json({error:'Race already started'},409);const b=await req.json(),wanted=b.plusOne?2:1;if(r.members.length+wanted>4)return json({error:`Only ${4-r.members.length} seat(s) remain. Join as solo. `},409);const group=crypto.randomUUID(),seats=[];for(const [index,m] of [b,b.plusOne].entries()){if(!m)continue;const id=r.members.length,secret=token(),color=cleanColor(m.color);r.members.push({id,name:uniqueRoomName(m.name,r.members),color,secondary:uniqueSecondary(color,m.secondary,r.members),profileId:index===0?b.profileId||null:null,token:secret,isBot:false,deviceGroup:group});seats.push({id,token:secret})}if(raceChatDeviceCount(r.members)!==2)r.voiceReady={};await this.save(r);this.broadcast(r);return json({code:r.code,token:seats[0].token,playerId:seats[0].id,host:false,seats})}
   if(path==='/snapshot'){let m=r.members.find(m=>!m.isBot&&req.headers.get('Authorization')==='Bearer '+m.token);if(!m)return json({error:'Unauthorized'},401);return json(this.present(r,m.id))}
   if(path==='/ws'&&req.headers.get('upgrade')==='websocket'){const protocols=(req.headers.get('Sec-WebSocket-Protocol')||'').split(',').map(s=>s.trim()),t=protocols.find(x=>x.startsWith('seat.'))?.slice(5);if(!protocols.includes('flipcars'))return json({error:'Unauthorized'},401);const m=r.members.find(m=>!m.isBot&&m.token===t);if(!m)return json({error:'Unauthorized'},401);const pair=new WebSocketPair(),[client,server]=Object.values(pair);this.ctx.acceptWebSocket(server);server.serializeAttachment({id:m.id});if(r.game?.players[m.id]){r.game.players[m.id].isBot=false;r.game.players[m.id].cpu=false;await this.save(r)}server.send(JSON.stringify({...this.present(r,m.id),type:'welcome',playerId:m.id}));this.broadcast(r);return new Response(null,{status:101,webSocket:client,headers:{'Sec-WebSocket-Protocol':'flipcars'}})}
   return json({error:'Not found'},404)}
- async webSocketMessage(ws,message){return this.ctx.blockConcurrencyWhile(async()=>{let id=ws.deserializeAttachment()?.id;if(!Number.isInteger(id)||typeof message!=='string'||message.length>1024)return;let msg;try{msg=JSON.parse(message)}catch{return}if(!msg||typeof msg!=='object'||Array.isArray(msg))return;const r=await this.data();if(!r||!r.members.some(m=>m.id===id&&!m.isBot))return;
+ async webSocketMessage(ws,message){return this.ctx.blockConcurrencyWhile(async()=>{let id=ws.deserializeAttachment()?.id;if(!Number.isInteger(id)||typeof message!=='string'||message.length>18000)return;let msg;try{msg=JSON.parse(message)}catch{return}if(!msg||typeof msg!=='object'||Array.isArray(msg)||((msg.type!=='voiceSignal')&&message.length>1024))return;const r=await this.data();if(!r||!r.members.some(m=>m.id===id&&!m.isBot))return;
  if(msg.type==='roomChat'){
   const author=r.members.find(m=>m.id===id&&!m.isBot);
-  if(!raceChatAvailable(r.members)||raceChatOnlineGroups(r.members,this.ctx.getWebSockets())!==2){ws.send(JSON.stringify({type:'roomChatError',message:'Race chat requires exactly two connected devices.'}));return}
+  if(!raceChatAvailable(r.members)||raceChatOnlineGroups(r.members,this.ctx.getWebSockets())<2){ws.send(JSON.stringify({type:'roomChatError',message:'Text chat requires at least two connected devices.'}));return}
   const body=cleanRaceChat(msg.text);
   if(!body){ws.send(JSON.stringify({type:'roomChatError',message:'Enter a message (up to 180 characters).'}));return}
   const now=Date.now();r.chatRate??={};const group=author.deviceGroup||'seat-'+id;
@@ -229,6 +230,33 @@ export class GameRoom{
    const member=r.members.find(m=>m.id===target.deserializeAttachment()?.id&&!m.isBot);
    if(member&&target.readyState===1)target.send(event)
   }catch{}
+  return;
+ }
+
+ // Voice is permission-based at each browser. The Worker relays ONLY signaling, NEVER microphone audio.
+ // Each device must explicitly opt in; one client socket represents a two-seat local duo.
+ if(msg.type==='voicePresence'){
+  const member=r.members.find(m=>m.id===id&&!m.isBot),group=member.deviceGroup||'seat-'+id;
+  r.voiceReady??={};
+  if(msg.join===true){
+   if(!raceVoiceAvailable(r.members,this.ctx.getWebSockets())){ws.send(JSON.stringify({type:'voiceError',message:'Voice is only available with exactly two connected devices.'}));return}
+   r.voiceReady[group]=id;
+  }else if(msg.join===false){
+   if(r.voiceReady[group]===id)delete r.voiceReady[group];
+  }else return;
+  await this.save(r);this.broadcast(r);return;
+ }
+ if(msg.type==='voiceSignal'){
+  if(!raceVoiceAvailable(r.members,this.ctx.getWebSockets()))return;
+  const sender=r.members.find(m=>m.id===id&&!m.isBot),group=sender.deviceGroup||'seat-'+id;
+  const ready=r.voiceReady||{};if(ready[group]!==id||Object.keys(ready).length!==2)return;
+  const peerGroup=Object.keys(ready).find(g=>g!==group),peerId=ready[peerGroup];
+  const kind=msg.kind;let payload;
+  if((kind==='offer'||kind==='answer')&&msg.description?.type===kind&&typeof msg.description.sdp==='string'&&msg.description.sdp.length>0&&msg.description.sdp.length<=12000){payload={description:{type:kind,sdp:msg.description.sdp}}}
+  else if(kind==='ice'&&typeof msg.candidate?.candidate==='string'&&msg.candidate.candidate.length<=2048){payload={candidate:{candidate:msg.candidate.candidate,sdpMid:typeof msg.candidate.sdpMid==='string'?msg.candidate.sdpMid.slice(0,64):null,sdpMLineIndex:Number.isInteger(msg.candidate.sdpMLineIndex)?msg.candidate.sdpMLineIndex:null}}}
+  else return;
+  const event=JSON.stringify({type:'voiceSignal',kind,fromGroup:group,...payload});
+  for(const target of this.ctx.getWebSockets())try{if(target.readyState===1&&target.deserializeAttachment()?.id===peerId)target.send(event)}catch{}
   return;
  }
  if(msg.type==='start'&&!r.started&&id===r.hostId){let cpu=Math.max(0,Math.min(4-r.members.length,Math.floor(Number(msg.cpu)||0)));while(cpu--){let i=r.members.length;r.members.push({id:i,name:uniqueRoomName('AI Racer '+(r.members.filter(m=>m.isBot).length+1),r.members),color:COLORS[i],secondary:uniqueSecondary(COLORS[i],'AUTO',r.members),token:null,isBot:true,deviceGroup:'ai-'+i})}if(r.members.length<2){ws.send(JSON.stringify({type:'error',error:'Add a friend or a CPU racer.'}));return}r.started=true;r.awarded=false;r.settings=sanitizeSettings(msg.settings);if(r.settings.mode==='team'){if(r.members.length!==4){ws.send(JSON.stringify({type:'error',error:'Team Racer needs exactly four racers (AI may fill seats).'}));r.started=false;return}assignRelayTeams(r.members)}else for(const m of r.members){m.team=-1;m.relayRole=''}r.game=startRace(r.members,{...r.settings,lastShifts:r.lastShifts||{}});await this.save(r);this.broadcast(r);return}
@@ -245,7 +273,7 @@ export class GameRoom{
  if(r.started&&r.game&&msg.type==='taunt'&&r.settings.mode==='team'){const p=r.game.players[id],target=r.game.players.find(x=>x.team!==p?.team&&x.relayRole==='lead'&&!x.relayRetired);if(p?.relayWaiting&&target&&Number.isInteger(msg.effect)&&msg.effect>=0&&msg.effect<=3&&r.game.round-(p.lastTauntRound||-2)>=2){p.lastTauntRound=r.game.round;r.game.tauntCount++;r.game.lastTaunt={serial:r.game.tauntCount,from:p.name,target:target.id,effect:msg.effect};await this.save(r);this.broadcast(r)}return}
  if(r.started&&r.game&&['action','combat','discard'].includes(msg.type)){let op=msg.type==='action'?msg.op:msg.type,arg=msg.type==='action'?{}:{index:msg.index,target:msg.target};if(action(r.game,id,op,arg)){await this.award(r);await this.save(r);this.broadcast(r);if(activeHandoffs(r.game).length)await this.ctx.storage.setAlarm(Math.min(...activeHandoffs(r.game).map(h=>h.deadline)))}}
  })}
- async webSocketClose(ws){return this.ctx.blockConcurrencyWhile(async()=>{let r=await this.data();if(!r)return;let id=ws.deserializeAttachment()?.id,other=this.ctx.getWebSockets().some(w=>w!==ws&&w.deserializeAttachment()?.id===id);if(r.started&&!other&&Number.isInteger(id)){let p=r.game?.players[id];if(p&&!p.finished){p.isBot=true;p.cpu=true;if(r.game.phase==='flip'&&!p.ready){p.isBot=false;action(r.game,id,'flip');p.isBot=true}if(r.game.phase==='choice'&&r.game.choice===id){p.selectedNode=TRACK.forks[p.node][0].first;r.game.phase='resolve';r.game.choice=null;resolve(r.game)}if(p.pendingCombat!=null){p.combat[0]=p.pendingCombat;p.pendingCombat=null}await this.award(r);await this.save(r)}}this.broadcast(r)})}
+ async webSocketClose(ws){return this.ctx.blockConcurrencyWhile(async()=>{let r=await this.data();if(!r)return;let id=ws.deserializeAttachment()?.id,other=this.ctx.getWebSockets().some(w=>w!==ws&&w.deserializeAttachment()?.id===id);if(r.voiceReady){for(const [group,owner] of Object.entries(r.voiceReady))if(owner===id&&!other)delete r.voiceReady[group];await this.save(r)}if(r.started&&!other&&Number.isInteger(id)){let p=r.game?.players[id];if(p&&!p.finished){p.isBot=true;p.cpu=true;if(r.game.phase==='flip'&&!p.ready){p.isBot=false;action(r.game,id,'flip');p.isBot=true}if(r.game.phase==='choice'&&r.game.choice===id){p.selectedNode=TRACK.forks[p.node][0].first;r.game.phase='resolve';r.game.choice=null;resolve(r.game)}if(p.pendingCombat!=null){p.combat[0]=p.pendingCombat;p.pendingCombat=null}await this.award(r);await this.save(r)}}this.broadcast(r)})}
  async alarm(){const r=await this.data();if(r?.game&&expireHandoff(r.game)){await this.save(r);this.broadcast(r)}if(r&&Date.now()-r.updated>=24*3600000){for(const ws of this.ctx.getWebSockets())try{ws.close(1000,'Room expired')}catch{}await this.ctx.storage.deleteAll()}else await this.ctx.storage.setAlarm(activeHandoffs(r?.game||{}).length?Math.min(...activeHandoffs(r.game).map(h=>h.deadline)):Date.now()+24*3600000)}
 }
 // Guest profiles are stored per-browser. A cleared browser loses its bearer secret; no claims of secure identity recovery.
